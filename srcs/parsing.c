@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:08:36 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/13 16:01:04 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/13 16:49:47 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,25 @@ void	parse_line(char *line)
 			j = ++i;
 		while (!(isspace(line[j]) || isend(line[j]) || isoperator(line[j]))
 			&& line[j] != '"' && line[j] != '\'')
+		{
+			if (line[j] == '$')
+			{} //manage $
 			j++;
+		}
 		if ((isspace(line[j]) || isend(line[j]) || isoperator(line[j])))
 			ft_lstback(&word_lst, ft_lstnewword(ft_strjoinfree(word,
 						ft_substr(line, i, j - i))));
 		i = j;
-		else 
+		if (line[j] == '"' || line[j] == '\'')
 		{
 			word = ft_strjoinfree(word, ft_substr(line, i, j - i));
 			j++;
 			while (!isend(line[j]) && line[i] != line[j])
+			{
+				if (line[j] == '$' && line[i] == '"')
+				{} //manage $
 				j++;
+			}
 			if (isend(line[j]).)
 				j = i + 1;
 			else
