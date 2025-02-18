@@ -6,14 +6,33 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:08:36 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/13 16:49:47 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/17 17:17:03 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*quotemanagement(char *line, int *i, int *j, char *word)
+{
+	if (j != i)
+		word = ft_strjoinfree(word, ft_substr(line, *i, *j - *i));
+	*i = *j++;
+	while (line[*j] != '\n' && line[*i] != line[*j])
+		*j++;
+	if (line[*j] == '\n')
+		*j = *i + 1;
+	else
+	{
+		if (line[*i] == '\'')
+			word = ft_strjoinfree(word, ft_substr(line, *i + 1, *j - *i - 1, 0));
+		else if (line[*i] == '"')
+			word = ft_strjoinfree(word, ft_substr(line, *i + 1, *j - *i - 1, 1));
+		*i = ++*j;
+	}
+	return (word);
+}
 
-//gère pas '$'
+//refaire substr pour gerer '$'
 void	parse_line(char *line)
 {
 	t_lst	*word_lst;
@@ -24,40 +43,20 @@ void	parse_line(char *line)
 	i = 0;
 	j = 0;
 	word = NULL;
-	while (!isend(line[i]))
+	while (line[i] != '\n')
 	{
-		while (isspace(line[i]))
-			j = ++i;
-		while (!(isspace(line[j]) || isend(line[j]) || isoperator(line[j]))
-			&& line[j] != '"' && line[j] != '\'')
-		{
-			if (line[j] == '$')
-			{} //manage $
-			j++;
-		}
-		if ((isspace(line[j]) || isend(line[j]) || isoperator(line[j])))
+		if (isspace(line[i]))
+			ft_skipspace(line, &i, &j);
+		else if ((istoken(line + j) || isspace(line[j])) && j != i)
 			ft_lstback(&word_lst, ft_lstnewword(ft_strjoinfree(word,
-						ft_substr(line, i, j - i))));
-		i = j;
-		if (line[j] == '"' || line[j] == '\'')
+						ft_substr(line, i, j - i, 1))));
+		else if (line[j] == '"' || line[j] == '\'')
 		{
-			word = ft_strjoinfree(word, ft_substr(line, i, j - i));
-			j++;
-			while (!isend(line[j]) && line[i] != line[j])
-			{
-				if (line[j] == '$' && line[i] == '"')
-				{} //manage $
-				j++;
-			}
-			if (isend(line[j]).)
-				j = i + 1;
-			else
-			{
-				word = ft_strjoinfree(word, ft_substr(line, i + 1, j - i - 1));
-				i = ++j;
-				if (isend(line[i]))
-					ft_lstback(&word_lst, ft_lstnewword(word));
-			}
+			word = quotemanagement(line, &i, &j, word);
+			if (line[i] == '\n')
+				ft_lstback(&word_lst, ft_lstnewword(word));
 		}
+		else
+			j++;
 	}
 }

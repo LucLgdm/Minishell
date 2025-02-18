@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:00:42 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/13 15:59:47 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/17 16:31:46 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_lst
 }	t_lst;
 
 //utils
+int		istoken(char *line);
 int		isspace(char c);
 void	ft_lstback(t_lst **lst, t_lst *new);
 t_lst	*ft_lstnewword(char *word);
