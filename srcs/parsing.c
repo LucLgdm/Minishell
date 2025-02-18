@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:08:36 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/18 14:44:15 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/18 17:54:36 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*quotemanagement(char *line, int *i, int *j, char *word)
 {
 	if (j != i)
-		word = ft_strjoinfree(word, subline(line, i, j, 1));
+		word = ft_strjoinfree(word, subline(line, i, j));
 	*i = (*j)++;
 	while (line[*j] != '\0' && line[*i] != line[*j])
 		(*j)++;
@@ -24,16 +24,76 @@ char	*quotemanagement(char *line, int *i, int *j, char *word)
 	else
 	{
 		(*i)++;
-		if (line[*j] == '\'')
-			word = ft_strjoinfree(word, subline(line, i, j, 0));
-		else if (line[*j] == '"')
-			word = ft_strjoinfree(word, subline(line, i, j, 1));
+			word = ft_strjoinfree(word, subline(line, i, j));
 		*i = ++(*j);
 	}
 	return (word);
 }
 
-//refaire substr pour gerer '$'
+void	skipsimplequote(char *line, int *i)
+{
+	int	start;
+
+	start = *i;
+	(*i)++;
+	while (line[*i] != '\'' || line[*i] != '\0')
+		(*i)++;
+	if (!line[*i])
+		(*i) = start;
+	(*i)++;
+}
+
+void	subdollarmanagement(char *line, int *i, int *j, char **newline)
+{
+	char	*vardup;
+
+	*newline = ft_strjoinfree(*newline, ft_substr(line, (*j), (*i) - (*j)));
+	(*j) = (*i) + 1;
+	if (ft_isdigit(line[(*j)]))
+		vardup = ft_substr(line, (*j), 1);
+	else if (ft_isalnum(line[(*j)]) || line[(*j)] == '_')
+	{
+		while (ft_isalnum(line[(*j)]) || line[(*j)] == '_')
+			(*j)++;
+		vardup = ft_substr(line, (*i) + 1, (*j) - ((*i) + 1));
+	}
+	if (!vardup && (ft_isalnum(line[(*i) + 1]) || line[(*i) + 1] == '_'))
+	{} //malloc error
+	else if (vardup)
+	{
+		printf("%s\n", vardup);
+		*newline = ft_strjoinfree(*newline, ft_strdup(getenv(vardup)));
+		free(vardup);
+		(*i) = (*j);
+	}
+	else
+		(*j) = (*i)++;
+}
+
+char	*dollarmanagement(char *line)
+{
+	char	*vardup;
+	char	*newline;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	newline = NULL;
+	while (line[i])
+	{
+		if (line[i] == '\'')
+			skipsimplequote(line, &i);
+		else if (line[i] == '$')
+			subdollarmanagement(line, &i, &j, &newline);
+		else
+			i++;
+	}
+	newline	= ft_strjoinfree(newline, ft_substr(line, j, i - j));
+	free(line);
+	return (newline);
+}
+
 t_lst	*parse_line(char *line)
 {
 	t_lst	*word_lst;
@@ -51,7 +111,7 @@ t_lst	*parse_line(char *line)
 		else if ((istoken(line + j) || isspace(line[j])) || !line[j])
 		{
 			ft_lstback(&word_lst, ft_lstnewword(ft_strjoinfree(word,
-						subline(line, &i, &j, 1)), j - i));
+						subline(line, &i, &j)), j - i));
 			word = NULL;
 			i = j;
 		}

@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:00:42 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/18 13:29:03 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/18 17:45:16 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,11 @@ typedef struct s_lst
 }	t_lst;
 
 //parsing
+char	*dollarmanagement(char *line);
 t_lst	*parse_line(char *line);
 //utils parsing
 void	ft_skipspaces(char *line, int *i, int *j);
-char	*subline(char *line, int *i, int *j, int manage_dollar);
+char	*subline(char *line, int *i, int *j);
 int		istoken(char *line);
 int		ft_isspace(char c);
 void	ft_lstback(t_lst **lst, t_lst *new);

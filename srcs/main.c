@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:07:39 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/18 14:19:16 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/18 17:45:30 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(int ac, char **av)
 	line = readline("Minishell>");
 	while (line)
 	{
+		line = dollarmanagement(line);
 		words = parse_line(line);
 		if (words)
 		{

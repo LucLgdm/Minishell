@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:21:57 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/18 14:19:51 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/18 17:41:45 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,44 +66,16 @@ char	*get_token(char *line, int *i, int *j)
 	return (ret);
 }
 
-char	*subline(char *line, int *i, int *j, int manage_dollar)
+char	*subline(char *line, int *i, int *j)
 {
 	char	*sub;
 	int		count;
-	int		notvar;
-	char	*vardup;
 
-	notvar = -1;
 	count = -1;
-	if (manage_dollar)
-	{
-		while (++notvar < *j - *i)
-		{
-			if (line[notvar + *i] == '$')
-				break ;
-		}
-	}
-	else
-		notvar = *j - *i;
 	if (*i == *j)
 		if (istoken(line + *i))
 			return (get_token(line, i, j));
-	sub = ft_calloc(notvar + 1, sizeof(char));
-	if (!sub)
-		return (NULL);
-	while (++count < notvar && line[*i + count])
-		sub[count] = line[*i + count];
-	if (notvar != *j - *i)
-	{
-		vardup = ft_substr(line, *i + notvar + 1, *j - (*i + notvar + 1));
-		if (!vardup)
-			return (NULL);
-		sub = ft_strjoinfree(sub, ft_strdup(getenv(vardup)));
-		if (!sub)
-			return (NULL);
-		free(vardup);
-	}
-	return (sub);
+	return (ft_substr(line, *i, *j - *i));
 }
 
 void	ft_skipspaces(char *line, int *i, int *j)

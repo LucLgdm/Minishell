@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:22:03 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/18 14:40:00 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/18 16:19:04 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_lst	*ft_lstnewword(char *word, int ignoretoken)
 {
 	t_lst	*node;
 
-	if (!word || !(*word))
+	if (!word)
 		return (NULL);
 	node = (t_lst *)malloc(sizeof(t_lst) * 1);
 	if (!node)
