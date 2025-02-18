@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:08:36 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/17 17:17:03 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/18 14:44:15 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,26 @@
 char	*quotemanagement(char *line, int *i, int *j, char *word)
 {
 	if (j != i)
-		word = ft_strjoinfree(word, ft_substr(line, *i, *j - *i));
-	*i = *j++;
-	while (line[*j] != '\n' && line[*i] != line[*j])
-		*j++;
-	if (line[*j] == '\n')
+		word = ft_strjoinfree(word, subline(line, i, j, 1));
+	*i = (*j)++;
+	while (line[*j] != '\0' && line[*i] != line[*j])
+		(*j)++;
+	if (line[*j] == '\0')
 		*j = *i + 1;
 	else
 	{
-		if (line[*i] == '\'')
-			word = ft_strjoinfree(word, ft_substr(line, *i + 1, *j - *i - 1, 0));
-		else if (line[*i] == '"')
-			word = ft_strjoinfree(word, ft_substr(line, *i + 1, *j - *i - 1, 1));
-		*i = ++*j;
+		(*i)++;
+		if (line[*j] == '\'')
+			word = ft_strjoinfree(word, subline(line, i, j, 0));
+		else if (line[*j] == '"')
+			word = ft_strjoinfree(word, subline(line, i, j, 1));
+		*i = ++(*j);
 	}
 	return (word);
 }
 
 //refaire substr pour gerer '$'
-void	parse_line(char *line)
+t_lst	*parse_line(char *line)
 {
 	t_lst	*word_lst;
 	int		i;
@@ -43,20 +44,28 @@ void	parse_line(char *line)
 	i = 0;
 	j = 0;
 	word = NULL;
-	while (line[i] != '\n')
+	while (line[i] != '\0')
 	{
-		if (isspace(line[i]))
-			ft_skipspace(line, &i, &j);
-		else if ((istoken(line + j) || isspace(line[j])) && j != i)
+		if (ft_isspace(line[i]))
+			ft_skipspaces(line, &i, &j);
+		else if ((istoken(line + j) || isspace(line[j])) || !line[j])
+		{
 			ft_lstback(&word_lst, ft_lstnewword(ft_strjoinfree(word,
-						ft_substr(line, i, j - i, 1))));
+						subline(line, &i, &j, 1)), j - i));
+			word = NULL;
+			i = j;
+		}
 		else if (line[j] == '"' || line[j] == '\'')
 		{
 			word = quotemanagement(line, &i, &j, word);
-			if (line[i] == '\n')
-				ft_lstback(&word_lst, ft_lstnewword(word));
+			if (istoken(line + i) || isspace(line[j]) || !line[j])
+			{
+				ft_lstback(&word_lst, ft_lstnewword(word, 1));
+				word = NULL;
+			}
 		}
 		else
 			j++;
 	}
+	return (word_lst);
 }

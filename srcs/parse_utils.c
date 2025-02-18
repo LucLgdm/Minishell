@@ -6,13 +6,13 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:21:57 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/18 11:42:00 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/18 14:19:51 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	isspace(char c)
+int	ft_isspace(char c)
 {
 	if (c == ' ' || (c >= 9 && c <= 13))
 		return (1);
@@ -37,6 +37,35 @@ int	istoken(char *line)
 	return (0);
 }
 
+char	*get_token(char *line, int *i, int *j)
+{
+	char	c;
+	char	*ret;
+
+	c = line[*i];
+	if (c == '|' || c == '<' || c == '>' || c == '&')
+	{
+		if (line[*i] == line[*i + 1])
+		{
+			ret = ft_calloc(3, sizeof(char));
+			if (!ret)
+				return (NULL);
+			ret[0] = line[*i];
+			ret[1] = line[*i];
+			*i += 2;
+			*j += 2;
+			return (ret);
+		}
+	}
+	ret = ft_calloc(2, sizeof(char));
+	if (!ret)
+		return (NULL);
+	ret[0] = line[*i];
+	(*i)++;
+	(*j)++;
+	return (ret);
+}
+
 char	*subline(char *line, int *i, int *j, int manage_dollar)
 {
 	char	*sub;
@@ -48,23 +77,25 @@ char	*subline(char *line, int *i, int *j, int manage_dollar)
 	count = -1;
 	if (manage_dollar)
 	{
-		while (++notvar && notvar < *j - *i)
+		while (++notvar < *j - *i)
+		{
 			if (line[notvar + *i] == '$')
 				break ;
+		}
 	}
 	else
 		notvar = *j - *i;
 	if (*i == *j)
-		if (istoken(line + i))
-			return (gettoken(line + i))
+		if (istoken(line + *i))
+			return (get_token(line, i, j));
 	sub = ft_calloc(notvar + 1, sizeof(char));
 	if (!sub)
 		return (NULL);
-	while (++count < notvar && line[i + count])
-		sub[count] = line[i + count];
+	while (++count < notvar && line[*i + count])
+		sub[count] = line[*i + count];
 	if (notvar != *j - *i)
 	{
-		vardup = ft_substr(line, i + vardup + 1, j - (i + vardup + 1));
+		vardup = ft_substr(line, *i + notvar + 1, *j - (*i + notvar + 1));
 		if (!vardup)
 			return (NULL);
 		sub = ft_strjoinfree(sub, ft_strdup(getenv(vardup)));
@@ -73,6 +104,13 @@ char	*subline(char *line, int *i, int *j, int manage_dollar)
 		free(vardup);
 	}
 	return (sub);
+}
+
+void	ft_skipspaces(char *line, int *i, int *j)
+{
+	while (ft_isspace(line[*i]))
+		(*i)++;
+	*j = *i;
 }
 
 char	*ft_strjoinfree(char *dest, char *src)

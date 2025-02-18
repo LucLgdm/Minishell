@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:22:03 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/13 12:30:06 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/18 14:40:00 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 void	ft_lstback(t_lst **lst, t_lst *new)
 {
+	if (!new)
+		return ;
 	if (lst)
 	{
 		while (*lst != NULL)
@@ -24,13 +26,49 @@ void	ft_lstback(t_lst **lst, t_lst *new)
 			lst = &((*lst)->next);
 		}
 		*lst = new;
+		if (!(*lst)->word_type)
+		{
+			if (!(*lst)->prev || ((*lst)->prev->word_type == PIPE
+					|| (*lst)->prev->word_type == OR
+					|| (*lst)->prev->word_type == AND))
+				(*lst)->word_type = CMD;
+			else if (((*lst)->prev->word_type == ARG
+					&& !(((*lst)->prev->prev->word_type) == ARG
+						|| (*lst)->prev->prev->word_type == CMD)))
+				(*lst)->word_type = CMD;
+			else
+			(*lst)->word_type = ARG;
+		}
 	}
 }
 
-t_lst	*ft_lstnewword(char *word)
+int	assign_token(char *word, int ignoretoken)
+{
+	if (!ft_strncmp(word, "|", 2) && !ignoretoken)
+		return (PIPE);
+	if (!ft_strncmp(word, "<", 2) && !ignoretoken)
+		return (INPUT);
+	if (!ft_strncmp(word, ">", 2) && !ignoretoken)
+		return (TRUNC);
+	if (!ft_strncmp(word, ">>", 3) && !ignoretoken)
+		return (APPEND);
+	if (!ft_strncmp(word, "<<", 3) && !ignoretoken)
+		return (HEREDOC);
+	if (!ft_strncmp(word, "&&", 3) && !ignoretoken)
+		return (AND);
+	if (!ft_strncmp(word, "||", 2) && !ignoretoken)
+		return (OR);
+	if (ft_strchr(word, '/'))
+		return (ARG);
+	return (0);
+}
+
+t_lst	*ft_lstnewword(char *word, int ignoretoken)
 {
 	t_lst	*node;
 
+	if (!word || !(*word))
+		return (NULL);
 	node = (t_lst *)malloc(sizeof(t_lst) * 1);
 	if (!node)
 		return (NULL);
@@ -38,6 +76,7 @@ t_lst	*ft_lstnewword(char *word)
 	node->word_type = 0;
 	node->prev = NULL;
 	node->next = NULL;
+	node->word_type = assign_token(word, ignoretoken);
 	return (node);
 }
 
@@ -59,9 +98,8 @@ void	ft_lstclearwords(t_lst **lst)
 		while (*lst != NULL)
 		{
 			nxt = (*lst)->next;
-			ft_lstdelone(*lst);
+			ft_lstdeloneword(*lst);
 			*lst = nxt;
 		}
-		free(lst);
 	}
 }
