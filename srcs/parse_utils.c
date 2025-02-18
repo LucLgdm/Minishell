@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:21:57 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/17 17:50:26 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/18 11:42:00 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,23 @@ char	*subline(char *line, int *i, int *j, int manage_dollar)
 	}
 	else
 		notvar = *j - *i;
-	if (*i = *j)
+	if (*i == *j)
 		if (istoken(line + i))
-			//
-	else
-		sub = ft_calloc(notvar + 1, sizeof(char));
+			return (gettoken(line + i))
+	sub = ft_calloc(notvar + 1, sizeof(char));
 	if (!sub)
 		return (NULL);
 	while (++count < notvar && line[i + count])
 		sub[count] = line[i + count];
-	if (notvar != j - i)
+	if (notvar != *j - *i)
 	{
-		vardup = ft_substr(line, i + vardup + 1, j - (i + vardup + 1))
+		vardup = ft_substr(line, i + vardup + 1, j - (i + vardup + 1));
+		if (!vardup)
+			return (NULL);
 		sub = ft_strjoinfree(sub, ft_strdup(getenv(vardup)));
+		if (!sub)
+			return (NULL);
+		free(vardup);
 	}
 	return (sub);
 }
