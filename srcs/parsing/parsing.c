@@ -6,11 +6,11 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:08:36 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/18 17:54:36 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:59:28 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 char	*quotemanagement(char *line, int *i, int *j, char *word)
 {
@@ -36,7 +36,7 @@ void	skipsimplequote(char *line, int *i)
 
 	start = *i;
 	(*i)++;
-	while (line[*i] != '\'' || line[*i] != '\0')
+	while (line[*i] != '\'' && line[*i] != '\0')
 		(*i)++;
 	if (!line[*i])
 		(*i) = start;
@@ -47,6 +47,7 @@ void	subdollarmanagement(char *line, int *i, int *j, char **newline)
 {
 	char	*vardup;
 
+	vardup = NULL;
 	*newline = ft_strjoinfree(*newline, ft_substr(line, (*j), (*i) - (*j)));
 	(*j) = (*i) + 1;
 	if (ft_isdigit(line[(*j)]))
@@ -61,7 +62,6 @@ void	subdollarmanagement(char *line, int *i, int *j, char **newline)
 	{} //malloc error
 	else if (vardup)
 	{
-		printf("%s\n", vardup);
 		*newline = ft_strjoinfree(*newline, ft_strdup(getenv(vardup)));
 		free(vardup);
 		(*i) = (*j);
@@ -72,7 +72,6 @@ void	subdollarmanagement(char *line, int *i, int *j, char **newline)
 
 char	*dollarmanagement(char *line)
 {
-	char	*vardup;
 	char	*newline;
 	int		i;
 	int		j;
@@ -104,21 +103,21 @@ t_lst	*parse_line(char *line)
 	i = 0;
 	j = 0;
 	word = NULL;
+	word_lst = NULL;
 	while (line[i] != '\0')
 	{
 		if (ft_isspace(line[i]))
 			ft_skipspaces(line, &i, &j);
-		else if ((istoken(line + j) || isspace(line[j])) || !line[j])
+		else if ((istoken(line + j) || ft_isspace(line[j])) || !line[j])
 		{
-			ft_lstback(&word_lst, ft_lstnewword(ft_strjoinfree(word,
-						subline(line, &i, &j)), j - i));
+			ft_lstback(&word_lst, ft_lstnewword(ft_strjoinfree(word, subline(line, &i, &j)), j - i));
 			word = NULL;
 			i = j;
 		}
 		else if (line[j] == '"' || line[j] == '\'')
 		{
 			word = quotemanagement(line, &i, &j, word);
-			if (istoken(line + i) || isspace(line[j]) || !line[j])
+			if (istoken(line + i) || ft_isspace(line[j]) || !line[j])
 			{
 				ft_lstback(&word_lst, ft_lstnewword(word, 1));
 				word = NULL;

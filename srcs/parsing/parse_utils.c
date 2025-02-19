@@ -6,11 +6,11 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:21:57 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/18 17:41:45 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:42:22 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 int	ft_isspace(char c)
 {
@@ -73,9 +73,15 @@ char	*subline(char *line, int *i, int *j)
 
 	count = -1;
 	if (*i == *j)
+	{
 		if (istoken(line + *i))
-			return (get_token(line, i, j));
-	return (ft_substr(line, *i, *j - *i));
+		{
+			sub = get_token(line, i, j);
+			return (sub);
+		}
+	}
+	sub = ft_substr(line, *i, *j - *i);
+	return (sub);
 }
 
 void	ft_skipspaces(char *line, int *i, int *j)

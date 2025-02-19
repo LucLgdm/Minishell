@@ -6,11 +6,11 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:22:03 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/18 16:19:04 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:57:49 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 //fonctions utilitaires pour la liste des mots (commandes, arguments, operateurs, etc...)
 
@@ -77,7 +77,7 @@ t_lst	*ft_lstnewword(char *word, int ignoretoken)
 	node->prev = NULL;
 	node->next = NULL;
 	node->word_type = assign_token(word, ignoretoken);
-	return (node);
+	return (node);	
 }
 
 void	ft_lstdeloneword(t_lst *lst)

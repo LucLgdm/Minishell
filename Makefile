@@ -6,7 +6,7 @@
 #    By: andrean <andrean@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/02/19 11:31:15 by andrean          ###   ########.fr        #
+#    Updated: 2025/02/19 12:41:38 by andrean          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -I $(INCLUDES)
-FLAGS = -lreadline -Llibft -lft $(LIBFT)
+CFLAGS = -Wall -Werror -Wextra -g -I $(INCLUDES)
+FLAGS = -lreadline $(LIBFT)
 
 LIBFT = libft/libft.a
 INCLUDES = includes/

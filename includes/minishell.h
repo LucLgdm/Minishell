@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:00:42 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/19 11:11:54 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/19 11:59:37 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include "libft.h"
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "../libft/libft.h"
 
 # define INPUT		1 // '<'
 # define TRUNC		2 // '>'
