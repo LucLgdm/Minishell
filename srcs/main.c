@@ -12,7 +12,3 @@ int main(int argc, char *argv[], char *envp[]) {
 	prompt();
 	return 0;
 }
-
-
-
-

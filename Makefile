@@ -21,6 +21,7 @@ LIBFT = libft/libft.a
 INCLUDES = includes/
 OBJ_DIR = objs/
 OUTPUT_DIR = output/
+EXEC_DIR = exec/
 # Liste des fichiers source
 SRC_FILES = main.c \
 			$(OUTPUT_DIR)prompt.c
@@ -38,6 +39,7 @@ $(OBJ_DIR)%.o: %.c
 mkdir_obj:
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR)$(OUTPUT_DIR)
+	@mkdir -p $(OBJ_DIR)$(EXEC_DIR)
 
 # Compilation finale
 $(NAME): $(OBJS)

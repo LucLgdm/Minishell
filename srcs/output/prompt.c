@@ -15,13 +15,17 @@ int	prompt(void)
 {
 	char *input;
 
-	signal(SIGINT, handle_signal); 
+	signal(SIGINT, handle_signal);
+	signal(SIGQUIT, SIG_IGN);
 
 	while (1)
 	{
 		input = readline("\033[33mMinishell > \033[0m");
 		if (!input)
+		{
+			printf("\033[32mExit !\n\033[0m");
 			break;
+		}
 		if (*input)
 			add_history(input);
 		if (strcmp(input, "clean") == 0)
