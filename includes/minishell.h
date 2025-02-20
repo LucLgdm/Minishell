@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:00:42 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/19 11:59:37 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/19 14:06:37 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,6 @@ char	*ft_strjoinfree(char *dest, char *src);
 
 // output
 void	handle_signal(int sig);
-int		prompt(void);
+char*	prompt(void);
 
 #endif

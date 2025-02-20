@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:07:39 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/19 13:58:03 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/19 14:10:01 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,20 @@ int	main(void)
 	char	*line;
 	t_lst	*words;
 
-	line = readline("Minishell > ");
-	while (line)
+	while (1)
 	{
-		line = dollarmanagement(line);
-		words = parse_line(line);
-		if (words)
+		line = prompt();
+		if (line)
 		{
-			printlst(words);
-			ft_lstclearwords(&words);
+			line = dollarmanagement(line);
+			words = parse_line(line);
+			if (words)
+			{
+				printlst(words);
+				ft_lstclearwords(&words);
+			}
+			free(line);
 		}
-		free(line);
-		line = readline("Minishell > ");
 	}
 	return (0);
 }

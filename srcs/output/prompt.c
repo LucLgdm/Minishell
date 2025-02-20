@@ -11,25 +11,22 @@ void	handle_signal(int sig)
         rl_redisplay(); 
     }
 }
-int	prompt(void)
+char *prompt(void)
 {
 	char *input;
 
-	signal(SIGINT, handle_signal); 
-
-	while (1)
+	signal(SIGINT, handle_signal);
+	input = readline("\033[33mMinishell > \033[0m");
+	if (!input)
+		return (NULL);
+	if (*input)
+		add_history(input);
+	if (strcmp(input, "clean") == 0)
 	{
-		input = readline("\033[33mMinishell > \033[0m");
-		if (!input)
-			break;
-		if (*input)
-			add_history(input);
-		if (strcmp(input, "clean") == 0)
-		{
-			rl_clear_history();
-			printf("\033[0;32mHistorique effacé\033[0m\n");
-		}
+		rl_clear_history();
+		printf("\033[0;32mHistorique effacé\033[0m\n");
 		free(input);
+		return (NULL);
 	}
-	return 0;
+	return (input);
 }
