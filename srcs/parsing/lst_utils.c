@@ -6,13 +6,22 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:22:03 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/19 13:57:49 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/20 14:59:49 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 //fonctions utilitaires pour la liste des mots (commandes, arguments, operateurs, etc...)
+
+t_lst	*ft_lstlastword(t_lst *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst->next != NULL)
+		lst = lst->next;
+	return (lst);
+}
 
 void	ft_lstback(t_lst **lst, t_lst *new)
 {
@@ -26,19 +35,6 @@ void	ft_lstback(t_lst **lst, t_lst *new)
 			lst = &((*lst)->next);
 		}
 		*lst = new;
-		if (!(*lst)->word_type)
-		{
-			if (!(*lst)->prev || ((*lst)->prev->word_type == PIPE
-					|| (*lst)->prev->word_type == OR
-					|| (*lst)->prev->word_type == AND))
-				(*lst)->word_type = CMD;
-			else if (((*lst)->prev->word_type == ARG
-					&& !(((*lst)->prev->prev->word_type) == ARG
-						|| (*lst)->prev->prev->word_type == CMD)))
-				(*lst)->word_type = CMD;
-			else
-			(*lst)->word_type = ARG;
-		}
 	}
 }
 
@@ -58,8 +54,6 @@ int	assign_token(char *word, int ignoretoken)
 		return (AND);
 	if (!ft_strncmp(word, "||", 2) && !ignoretoken)
 		return (OR);
-	if (ft_strchr(word, '/'))
-		return (ARG);
 	return (0);
 }
 
@@ -76,8 +70,9 @@ t_lst	*ft_lstnewword(char *word, int ignoretoken)
 	node->word_type = 0;
 	node->prev = NULL;
 	node->next = NULL;
+	node->sub = NULL;
 	node->word_type = assign_token(word, ignoretoken);
-	return (node);	
+	return (node);
 }
 
 void	ft_lstdeloneword(t_lst *lst)

@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:00:42 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/19 14:06:37 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/20 15:57:09 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@
 # define PIPE		5 // '|'
 # define OR			6 // '||'
 # define AND		7 // '&&'
-# define CMD		8
-# define ARG		9
 
 //structure temporaire a passer pour executer chaque commande
 typedef struct s_cmd
@@ -47,12 +45,14 @@ typedef struct s_lst
 	int				word_type;
 	struct s_lst	*next;
 	struct s_lst	*prev;
+	struct s_lst	*sub;
 }	t_lst;
 
 //parsing
 char	*dollarmanagement(char *line);
 t_lst	*parse_line(char *line);
 //utils parsing
+int		is_and_or_pipe(char *line);
 void	ft_skipspaces(char *line, int *i, int *j);
 char	*subline(char *line, int *i, int *j);
 int		istoken(char *line);
@@ -61,7 +61,9 @@ void	ft_lstback(t_lst **lst, t_lst *new);
 t_lst	*ft_lstnewword(char *word, int ignoretoken);
 void	ft_lstclearwords(t_lst **lst);
 char	*ft_strjoinfree(char *dest, char *src);
-
+t_lst	*ft_lstlastword(t_lst *lst);
+//exec
+char	**getenvp(void);
 // output
 void	handle_signal(int sig);
 char*	prompt(void);

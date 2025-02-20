@@ -3,22 +3,24 @@
 
 void	handle_signal(int sig)
 {
-    if (sig == SIGINT)
-    {
-        printf("\n");
-        rl_on_new_line();
-        rl_replace_line("", 0); 
-        rl_redisplay(); 
-    }
+	if (sig == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
-char *prompt(void)
+
+char	*prompt(void)
 {
-	char *input;
+	char	*input;
 
 	signal(SIGINT, handle_signal);
+	signal(SIGQUIT, SIG_IGN);
 	input = readline("\033[33mMinishell > \033[0m");
 	if (!input)
-		return (NULL);
+		exit(0);
 	if (*input)
 		add_history(input);
 	if (strcmp(input, "clean") == 0)

@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:21:57 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/19 13:42:22 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/20 15:21:20 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,18 @@ int	ft_isspace(char c)
 	return (0);
 }
 
+int	is_and_or_pipe(char *line)
+{
+	char	c;
+
+	c = line[0];
+	if (!ft_strncmp(line, "&&", 2))
+		return (1);
+	if (c == '|')
+		return (1);
+	return (0);
+}
+
 int	istoken(char *line)
 {
 	char	c;
@@ -26,13 +38,9 @@ int	istoken(char *line)
 	c = line[0];
 	if (c == '\n')
 		return (1);
-	if (!ft_strncmp(line, "&&", 2))
+	if (is_and_or_pipe(line))
 		return (1);
-	if (!ft_strncmp(line, ">>", 2))
-		return (1);
-	if (!ft_strncmp(line, "<<", 2))
-		return (1);
-	if (c == '|' || c == '<' || c == '>')
+	if (c == '<' || c == '>')
 		return (1);
 	return (0);
 }
@@ -86,9 +94,12 @@ char	*subline(char *line, int *i, int *j)
 
 void	ft_skipspaces(char *line, int *i, int *j)
 {
+	if (ft_isspace(line[*i]))
+	{
 	while (ft_isspace(line[*i]))
 		(*i)++;
 	*j = *i;
+	}
 }
 
 char	*ft_strjoinfree(char *dest, char *src)
@@ -97,6 +108,8 @@ char	*ft_strjoinfree(char *dest, char *src)
 	int		lensrc;
 	char	*join;
 
+	if (!src)
+		src = ft_calloc(sizeof(char), 1);
 	if (!dest)
 		return (src);
 	lendest = ft_strlen(dest);

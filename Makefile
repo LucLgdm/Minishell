@@ -6,7 +6,7 @@
 #    By: andrean <andrean@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/02/19 12:41:38 by andrean          ###   ########.fr        #
+#    Updated: 2025/02/20 14:02:54 by andrean          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC_DIR = srcs/
 OBJ_DIR = objs/
 OUTPUT_DIR = output/
 PARSE_DIR = parsing/
+EXEC_DIR = exec/
 # Liste des fichiers source
 SRC_FILES = main.c \
 			$(OUTPUT_DIR)prompt.c\
@@ -44,6 +45,7 @@ mkdir_obj:
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR)$(OUTPUT_DIR)
 	@mkdir -p $(OBJ_DIR)$(PARSE_DIR)
+	@mkdir -p $(OBJ_DIR)$(EXEC_DIR)
 
 # Compilation finale
 $(NAME): $(OBJS)
