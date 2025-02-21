@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:07:39 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/20 15:04:03 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/21 17:08:52 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ void	printlst(t_lst *words)
 	if (!words->word)
 		printf("pas de mot\n");
 	if (words->word_type > 4)
-		printf("address: %p\nword: %s-------> token : %d\n prev: %p -------> next: %p\n", words->prev, words->prev->word, words->prev->word_type, words->prev->prev, words->prev->next);
+		printf("address: %p\nword: %s-------> token : %d\nprev: %p -------> next: %p\n", words->prev, (*(words->prev))->word, (*(words->prev))->word_type, (*(words->prev))->prev, (*(words->prev))->next);
 	while (words)
 	{
-		printf("address: %p\nword: %s-------> token : %d\n prev: %p -------> next: %p\n", words, words->word, words->word_type, words->prev, words->next);
-		if (words->next && words->next->word_type < 0)
+		if ((words)->word_type >= 0)
+			printf("address: %p\nword: %s-------> token : %d\nprev: %p -------> next: %p\n", words, words->word, words->word_type, *(words->prev), *(words->next));
+		if ((words)->word_type < 0)
 		{
-			printf("here\n");
-			printlst(words->next->sub);
+			printlst(*((words)->sub));
 		}
-		words = words->next;
+		words = *(words->next);
 	}
 }
 
@@ -42,12 +42,15 @@ int	main(void)
 		line = prompt();
 		if (line)
 		{
-			line = dollarmanagement(line);
-			words = parse_line(line);
+			words = separate_line(line);
 			if (words)
 			{
-				printlst(words);
-				ft_lstclearwords(&words);
+				get_dollar_in_struct(&words);
+				if (words)
+				{
+					printlst(words);
+					ft_lstclearwords(&words);
+				}
 			}
 			free(line);
 		}

@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:22:03 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/20 14:59:49 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/21 14:03:13 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ t_lst	*ft_lstlastword(t_lst *lst)
 {
 	if (!lst)
 		return (NULL);
-	while (lst->next != NULL)
-		lst = lst->next;
+	while (*(lst->next) != NULL)
+	{
+		lst = *(lst->next);
+	}
 	return (lst);
 }
 
@@ -31,8 +33,8 @@ void	ft_lstback(t_lst **lst, t_lst *new)
 	{
 		while (*lst != NULL)
 		{
-			new->prev = *lst;
-			lst = &((*lst)->next);
+			new->prev = lst;
+			lst = (*lst)->next;
 		}
 		*lst = new;
 	}
@@ -68,9 +70,14 @@ t_lst	*ft_lstnewword(char *word, int ignoretoken)
 		return (NULL);
 	node->word = word;
 	node->word_type = 0;
-	node->prev = NULL;
-	node->next = NULL;
-	node->sub = NULL;
+	node->next = (t_lst **)malloc(sizeof(t_lst *) * 1);
+	node->prev = (t_lst **)malloc(sizeof(t_lst *) * 1);
+	node->sub = (t_lst **)malloc(sizeof(t_lst *) * 1);
+	if (!node->sub || !node->next || !node->prev)
+		;//malloc error
+	*(node->sub) = NULL;
+	*(node->prev) = NULL;
+	*(node->next) = NULL;
 	node->word_type = assign_token(word, ignoretoken);
 	return (node);
 }
@@ -79,6 +86,7 @@ void	ft_lstdeloneword(t_lst *lst)
 {
 	if (lst)
 	{
+		free(lst->sub);
 		free(lst->word);
 		free(lst);
 	}
@@ -92,7 +100,8 @@ void	ft_lstclearwords(t_lst **lst)
 	{
 		while (*lst != NULL)
 		{
-			nxt = (*lst)->next;
+			nxt = *((*lst)->next);
+			ft_lstclearwords((*lst)->sub);
 			ft_lstdeloneword(*lst);
 			*lst = nxt;
 		}

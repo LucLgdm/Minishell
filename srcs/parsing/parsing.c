@@ -6,11 +6,26 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:08:36 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/20 15:28:22 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/21 17:14:06 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+
+
+void	skipquote(char *line, int *i, char c)
+{
+	int	start;
+
+	start = *i;
+	(*i)++;
+	while (line[*i] != c && line[*i] != '\0')
+		(*i)++;
+	if (!line[*i])
+		(*i) = start;
+	(*i)++;
+}
 
 char	*quotemanagement(char *line, int *i, int *j, char *word)
 {
@@ -28,19 +43,6 @@ char	*quotemanagement(char *line, int *i, int *j, char *word)
 		*i = ++(*j);
 	}
 	return (word);
-}
-
-void	skipsimplequote(char *line, int *i)
-{
-	int	start;
-
-	start = *i;
-	(*i)++;
-	while (line[*i] != '\'' && line[*i] != '\0')
-		(*i)++;
-	if (!line[*i])
-		(*i) = start;
-	(*i)++;
 }
 
 void	subdollarmanagement(char *line, int *i, int *j, char **newline)
@@ -82,7 +84,7 @@ char	*dollarmanagement(char *line)
 	while (line[i])
 	{
 		if (line[i] == '\'')
-			skipsimplequote(line, &i);
+			skipquote(line, &i, '\'');
 		else if (line[i] == '$')
 			subdollarmanagement(line, &i, &j, &newline);
 		else
@@ -93,73 +95,150 @@ char	*dollarmanagement(char *line)
 	return (newline);
 }
 
-// t_lst	*parse_line(char *line)
-// {
-// 	t_lst	*word_lst;
-// 	int		i;
-// 	int		j;
-// 	char	*word;
+int manage_pipe(char *line, int *i, int *j)
+{
+	int	j_start;
 
-// 	i = 0;
-// 	j = 0;
-// 	word = NULL;
-// 	word_lst = NULL;
-// 	while (line[i] != '\0')
-// 	{
-// 		if (ft_isspace(line[i]))
-// 			ft_skipspaces(line, &i, &j);
-// 		else if ((istoken(line + j) || ft_isspace(line[j])) || !line[j])
-// 		{
-// 			ft_lstback(&word_lst, ft_lstnewword(ft_strjoinfree(word, subline(line, &i, &j)), j - i));
-// 			word = NULL;
-// 			i = j;
-// 		}
-// 		else if (line[j] == '"' || line[j] == '\'')
-// 		{
-// 			word = quotemanagement(line, &i, &j, word);
-// 			if (istoken(line + i) || ft_isspace(line[j]) || !line[j])
-// 			{
-// 				ft_lstback(&word_lst, ft_lstnewword(word, 1));
-// 				word = NULL;
-// 			}
-// 		}
-// 		else
-// 			j++;
-// 	}
-// 	return (word_lst);
-// }
+	j_start = *j;
+	j_start++;
+	while (ft_isspace(line[j_start]))
+		(j_start)++;
+	if (line[j_start] == '|')
+		return (1);
+	(*i)++;
+	return (0);
+}
+
+void	create_sub(char *line, int *i, int *j, t_lst **word_lst)
+{
+	char	*newline;
+	t_lst	*sub;
+
+	if (line[*i] == '(')
+		if (manage_pipe(line, i, j))
+			return ;
+	newline = ft_substr(line, *i, *j - (*i));
+	sub = ft_lstnewword(newline, 1);
+	*(sub->sub) = separate_line(newline);
+	sub->word_type = -1;
+	ft_lstback(word_lst, sub);
+	
+}
+
+void	manage_and_or(char *line, int *i, int *j, t_lst **word_lst)
+{
+	if (!line[*j] && !(*word_lst))
+	{
+		*word_lst = parse_line(line);
+		*i = *j;
+		return ;
+	}
+	if (!line[*j] && *j == *i)
+		return ;
+	if (*j != *i)
+	{
+		create_sub(line, i, j, word_lst);
+		*i = *j;
+	}
+	ft_lstback(word_lst, ft_lstnewword(subline(line, i, j), 0));
+}
 
 void	manage_parenthesis(char *line, int *i, int *j, t_lst **word_lst)
 {
 	int		open_count;
-	char	*newline;
-	t_lst	*sub;
 
 	open_count = 1;
-	if (*j == *i && (!(*word_lst) || (ft_lstlastword(*word_lst))->word_type > 4))
+	if (*j == *i && (!(*word_lst) || (ft_lstlastword(*word_lst))->word_type != -1))
 	{
-		while (line[++(*j)] && open_count > 0)
+		while (line[(*j)] && open_count > 0)
 		{
+			(*j)++;
 			if (line[*j] == '(')
 				open_count++;
 			if (line[*j] == ')')
 				open_count--;
 		}
-		(*j)--;
 		if (!line[*j])
 			;//parse error
-		newline = ft_substr(line, *i + 1, *j - (*i + 1));
-		sub = ft_lstnewword(newline, 1);
-		sub->sub = parse_line(newline);
-		sub->word_type = -1;
-		ft_lstback(word_lst, sub);
+		create_sub(line, i, j, word_lst);
 		*i = ++(*j);
 		ft_skipspaces(line, i, j);
-		if (!is_and_or_pipe(line + *j) && line[*j])
+		if (!istoken(line + *j) && line[*j])
 			;//parse error
 	}
 	else
 		;//parse error
+}
+
+t_lst	*split_word(t_lst *node)
+{
+	t_lst	*newword;
+	int		i;
+	int		j;
+	char	*word;
+
+	i = 0;
+	j = 0;
+	word = NULL;
+	newword = NULL;
+	node->word = dollarmanagement(node->word);
+	while (node->word[i] != '\0')
+	{
+		ft_skipspaces(node->word, &i, &j);
+		if ((!node->word[j]) || ft_isspace(node->word[j]))
+		{
+			ft_lstback(&newword, ft_lstnewword(ft_strjoinfree(word, subline(node->word, &i, &j)), 1));
+			word = NULL;
+			i = j;
+		}
+		else if (node->word[j] == '\'' || node->word[j] == '"')
+		{
+			word = quotemanagement(node->word, &i, &j, word);
+			if (!node->word[j] || ft_isspace(node->word[j]))
+			{
+				ft_lstback(&newword, ft_lstnewword(word, 1));
+				word = NULL;
+			}
+		}
+		else
+			j++;
+	}
+	return (newword);
+}
+
+void	get_dollar_in_word(t_lst **word)
+{
+	t_lst	*tmp;
+
+	tmp = *word;
+	*word = split_word(*word);
+	if (!*word)
+	{
+		if (*(tmp->prev))
+			(*tmp->prev)->next = tmp->next;
+		if (*(tmp->next))
+			(*tmp->next)->prev = tmp->prev;
+		*word = *(tmp->next);
+	}
+	else
+	{
+	(*word)->prev = tmp->prev;
+	(ft_lstlastword(*word))->next = tmp->next;
+	}
+	ft_lstdeloneword(tmp);
+}
+
+void	get_dollar_in_struct(t_lst **words)
+{
+	while (*words)
+	{
+		if ((*words)->word_type == -1)
+			get_dollar_in_struct((*words)->sub);
+		if ((*words)->word_type == 0)
+			get_dollar_in_word(words);
+		if (*words)
+			words = (*words)->next;
+	}
 }
 
 t_lst	*parse_line(char *line)
@@ -176,23 +255,43 @@ t_lst	*parse_line(char *line)
 	while (line[i] != '\0')
 	{
 		ft_skipspaces(line, &i, &j);
-		if (line[j] == '(')
-			manage_parenthesis(line, &i, &j, &word_lst);
-		if (istoken(line + j) || (!line[j]) || ft_isspace(line[j]))
+		if ((istoken(line + j) || (!line[j]) || ft_isspace(line[j])) && (j != i || istoken(line + j)))
 		{
 			ft_lstback(&word_lst, ft_lstnewword(ft_strjoinfree(word, subline(line, &i, &j)), j - i));
 			word = NULL;
 			i = j;
 		}
-		else if (line[j] == '"' || line[j] == '\'')
-		{
-			word = quotemanagement(line, &i, &j, word);
-			if (istoken(line + i) || !line[j] || ft_isspace(line[j]))
-			{
-				ft_lstback(&word_lst, ft_lstnewword(word, 1));
-				word = NULL;
-			}
-		}
+		else if (line[j] == '\'')
+			skipquote(line, &j, '\'');
+		else if (line[j] == '"')
+			skipquote(line, &j, '"');
+		else
+			j++;
+	}
+	return (word_lst);
+}
+
+t_lst	*separate_line(char *line)
+{
+	t_lst	*word_lst;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	word_lst = NULL;
+	while (line[i] != '\0')
+	{
+		if (i == j)
+			ft_skipspaces(line, &i, &j);
+		if (line[j] == '(')
+			manage_parenthesis(line, &i, &j, &word_lst);
+		else if (is_and_or(line + j) || (!line[j]))
+			manage_and_or(line, &i, &j, &word_lst);
+		else if (line[j] == '"')
+			skipquote(line, &j, '"');
+		else if (line[j] == '\'')
+			skipquote(line, &j, '\'');
 		else
 			j++;
 	}

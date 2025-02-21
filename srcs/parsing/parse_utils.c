@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:21:57 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/20 15:21:20 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/21 16:46:01 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,11 @@ int	ft_isspace(char c)
 	return (0);
 }
 
-int	is_and_or_pipe(char *line)
+int	is_and_or(char *line)
 {
-	char	c;
-
-	c = line[0];
 	if (!ft_strncmp(line, "&&", 2))
 		return (1);
-	if (c == '|')
+	if (!ft_strncmp(line, "||", 2))
 		return (1);
 	return (0);
 }
@@ -38,9 +35,9 @@ int	istoken(char *line)
 	c = line[0];
 	if (c == '\n')
 		return (1);
-	if (is_and_or_pipe(line))
+	if (is_and_or(line))
 		return (1);
-	if (c == '<' || c == '>')
+	if (c == '<' || c == '>' || c == '|')
 		return (1);
 	return (0);
 }
@@ -79,6 +76,7 @@ char	*subline(char *line, int *i, int *j)
 	char	*sub;
 	int		count;
 
+	sub = NULL;
 	count = -1;
 	if (*i == *j)
 	{
@@ -88,7 +86,10 @@ char	*subline(char *line, int *i, int *j)
 			return (sub);
 		}
 	}
-	sub = ft_substr(line, *i, *j - *i);
+	else
+	{
+		sub = ft_substr(line, *i, *j - *i);
+	}
 	return (sub);
 }
 
