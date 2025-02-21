@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 16:39:11 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/02/21 17:03:43 by lde-merc         ###   ########.fr       */
+/*   Created: 2025/02/21 16:56:03 by lde-merc          #+#    #+#             */
+/*   Updated: 2025/02/21 17:17:39 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
-
-int	main(int argc, char **argv, char **envp)
+void	free_all(t_world *world)
 {
-	t_world	*world;
-
-	(void)argv;
-	if (argc == 1)
+	if (world)
 	{
-		world = ft_calloc(1, sizeof(t_world));
-		copy_env(&world->env, envp, world);
-		prompt(world);
-		free_all(world);
+		if (world->env)
+			ft_lstclear(&world->env, free);
+		if (world->prompt)
+			free(world->prompt);
+		free(world->home);
+		free(world);
 	}
-	return (0);
 }

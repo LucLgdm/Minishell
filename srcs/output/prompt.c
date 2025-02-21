@@ -1,39 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prompt.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/21 16:06:20 by lde-merc          #+#    #+#             */
+/*   Updated: 2025/02/21 17:05:09 by lde-merc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
-void	handle_signal(int sig)
-{
-    if (sig == SIGINT)
-    {
-        printf("\n");
-        rl_on_new_line();
-        rl_replace_line("", 0); 
-        rl_redisplay(); 
-    }
-}
-int	prompt(void)
-{
-	char *input;
-
-	signal(SIGINT, handle_signal);
-	signal(SIGQUIT, SIG_IGN);
-
-	while (1)
-	{
-		input = readline("\033[33mMinishell > \033[0m");
-		if (!input)
-		{
-			printf("\033[32mExit !\n\033[0m");
-			break;
-		}
-		if (*input)
-			add_history(input);
-		if (strcmp(input, "clean") == 0)
-		{
-			rl_clear_history();
-			printf("\033[0;32mHistorique effacé\033[0m\n");
-		}
-		free(input);
-	}
-	return 0;
-}

@@ -3,12 +3,13 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: luclgdm <luclgdm@student.42.fr>            +#+  +:+       +#+         #
+#    By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/01/24 07:47:12 by luclgdm          ###   ########.fr        #
+#    Updated: 2025/02/21 17:01:46 by lde-merc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 vpath %.c srcs
 
 NAME = minishell
@@ -22,9 +23,14 @@ INCLUDES = includes/
 OBJ_DIR = objs/
 OUTPUT_DIR = output/
 EXEC_DIR = exec/
+INIT_DIR = init/
+FREE_DIR = free/
+
 # Liste des fichiers source
 SRC_FILES = main.c \
-			$(OUTPUT_DIR)prompt.c
+			$(OUTPUT_DIR)prompt.c \
+			$(INIT_DIR)environement.c \
+			$(FREE_DIR)free.c
 
 # Transforme chaque fichier source en un fichier objet dans $(OBJ_DIR)
 OBJS = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
@@ -40,6 +46,8 @@ mkdir_obj:
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR)$(OUTPUT_DIR)
 	@mkdir -p $(OBJ_DIR)$(EXEC_DIR)
+	@mkdir -p $(OBJ_DIR)$(INIT_DIR)
+	@mkdir -p $(OBJ_DIR)$(FREE_DIR)
 
 # Compilation finale
 $(NAME): $(OBJS)
@@ -63,6 +71,8 @@ fclean: clean
 
 re: fclean all
 
+val: all
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
 	
 
 .PHONY: all clean fclean re
