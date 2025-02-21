@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:08:36 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/21 17:14:06 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/21 17:24:45 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,26 +102,33 @@ int manage_pipe(char *line, int *i, int *j)
 	j_start = *j;
 	j_start++;
 	while (ft_isspace(line[j_start]))
+	{
+		printf("not here\n");
 		(j_start)++;
+	}
 	if (line[j_start] == '|')
+	{
+		printf("where\n");
 		return (1);
+	}
 	(*i)++;
 	return (0);
 }
 
-void	create_sub(char *line, int *i, int *j, t_lst **word_lst)
+int	create_sub(char *line, int *i, int *j, t_lst **word_lst)
 {
 	char	*newline;
 	t_lst	*sub;
 
 	if (line[*i] == '(')
 		if (manage_pipe(line, i, j))
-			return ;
+			return (0);
 	newline = ft_substr(line, *i, *j - (*i));
 	sub = ft_lstnewword(newline, 1);
 	*(sub->sub) = separate_line(newline);
 	sub->word_type = -1;
 	ft_lstback(word_lst, sub);
+	return (1);
 	
 }
 
@@ -160,14 +167,17 @@ void	manage_parenthesis(char *line, int *i, int *j, t_lst **word_lst)
 		}
 		if (!line[*j])
 			;//parse error
-		create_sub(line, i, j, word_lst);
+		if (!create_sub(line, i, j, word_lst))
+			return ;
 		*i = ++(*j);
 		ft_skipspaces(line, i, j);
 		if (!istoken(line + *j) && line[*j])
 			;//parse error
 	}
+	else if (line[*i] == '(')
+		(*j)++;
 	else
-		;//parse error
+		;;//parse error
 }
 
 t_lst	*split_word(t_lst *node)
