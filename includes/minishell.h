@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:00:42 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/21 16:32:20 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/25 15:29:49 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ typedef struct s_lst
 char	*dollarmanagement(char *line);
 t_lst	*parse_line(char *line);
 t_lst	*separate_line(char *line);
+t_lst	*separate_one_pipe(char *line);
 //utils parsing
+void	skipquote(char *line, int *i, char c);
 int		is_and_or(char *line);
 void	ft_skipspaces(char *line, int *i, int *j);
 char	*subline(char *line, int *i, int *j);

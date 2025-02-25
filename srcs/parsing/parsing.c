@@ -6,26 +6,11 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:08:36 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/21 17:24:45 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/25 15:52:41 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-
-
-void	skipquote(char *line, int *i, char c)
-{
-	int	start;
-
-	start = *i;
-	(*i)++;
-	while (line[*i] != c && line[*i] != '\0')
-		(*i)++;
-	if (!line[*i])
-		(*i) = start;
-	(*i)++;
-}
 
 char	*quotemanagement(char *line, int *i, int *j, char *word)
 {
@@ -134,6 +119,12 @@ int	create_sub(char *line, int *i, int *j, t_lst **word_lst)
 
 void	manage_and_or(char *line, int *i, int *j, t_lst **word_lst)
 {
+	if (!line[*j] && *i == 0 && line[*i] == '(')
+	{
+		*word_lst = separate_one_pipe(line);
+		*i = *j;
+		return ;
+	}
 	if (!line[*j] && !(*word_lst))
 	{
 		*word_lst = parse_line(line);
@@ -165,19 +156,19 @@ void	manage_parenthesis(char *line, int *i, int *j, t_lst **word_lst)
 			if (line[*j] == ')')
 				open_count--;
 		}
-		if (!line[*j])
-			;//parse error
+		if (!line[*j] && open_count)
+			exit(0);//parse error
 		if (!create_sub(line, i, j, word_lst))
 			return ;
 		*i = ++(*j);
 		ft_skipspaces(line, i, j);
 		if (!istoken(line + *j) && line[*j])
-			;//parse error
+			exit(0);//parse error
 	}
 	else if (line[*i] == '(')
 		(*j)++;
 	else
-		;;//parse error
+		exit(0);//parse error
 }
 
 t_lst	*split_word(t_lst *node)

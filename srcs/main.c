@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:07:39 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/21 17:08:52 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/25 15:00:56 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	printlst(t_lst *words)
 			printf("address: %p\nword: %s-------> token : %d\nprev: %p -------> next: %p\n", words, words->word, words->word_type, *(words->prev), *(words->next));
 		if ((words)->word_type < 0)
 		{
+			printf("entering sub\n");
 			printlst(*((words)->sub));
 		}
 		words = *(words->next);

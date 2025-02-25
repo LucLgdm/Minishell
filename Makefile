@@ -6,7 +6,7 @@
 #    By: andrean <andrean@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/02/20 14:02:54 by andrean          ###   ########.fr        #
+#    Updated: 2025/02/25 15:29:01 by andrean          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC_FILES = main.c \
 			$(PARSE_DIR)parsing.c\
 			$(PARSE_DIR)parse_utils.c\
 			$(PARSE_DIR)lst_utils.c\
+			$(PARSE_DIR)parse_pipe_with_parenthesis.c\
 
 # Transforme chaque fichier source en un fichier objet dans $(OBJ_DIR)
 OBJS = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))

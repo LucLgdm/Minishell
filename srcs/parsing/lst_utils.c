@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:22:03 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/21 14:03:13 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/25 15:44:13 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,15 @@ void	ft_lstback(t_lst **lst, t_lst *new)
 		return ;
 	if (lst)
 	{
-		while (*lst != NULL)
+		if (*lst)
 		{
-			new->prev = lst;
-			lst = (*lst)->next;
+			while ((*(*lst)->next) != NULL)
+				lst = (*lst)->next;
+			*(new->prev) = *lst;
+			(*(*lst)->next) = new;
 		}
-		*lst = new;
+		else
+			*lst = new;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:21:57 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/21 16:46:01 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/25 15:29:44 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,4 +127,17 @@ char	*ft_strjoinfree(char *dest, char *src)
 	free(src);
 	free(dest);
 	return (join);
+}
+
+void	skipquote(char *line, int *i, char c)
+{
+	int	start;
+
+	start = *i;
+	(*i)++;
+	while (line[*i] != c && line[*i] != '\0')
+		(*i)++;
+	if (!line[*i])
+		(*i) = start;
+	(*i)++;
 }
