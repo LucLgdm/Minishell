@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:08:36 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/25 15:52:41 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/26 13:08:07 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int manage_pipe(char *line, int *i, int *j)
 	}
 	if (line[j_start] == '|')
 	{
-		printf("where\n");
+		printf("i: %c/%i, j: %c/%i\n", line[*i], *i, line[*j], *j);
 		return (1);
 	}
 	(*i)++;
@@ -121,8 +121,11 @@ void	manage_and_or(char *line, int *i, int *j, t_lst **word_lst)
 {
 	if (!line[*j] && *i == 0 && line[*i] == '(')
 	{
+		printf("je passe par la, pouet\n");
 		*word_lst = separate_one_pipe(line);
+		printf("AVANT i : %d, j : %d\n", *i, *j);
 		*i = *j;
+		printf("APRES i : %d, j : %d\n", *i, *j);
 		return ;
 	}
 	if (!line[*j] && !(*word_lst))
@@ -148,6 +151,7 @@ void	manage_parenthesis(char *line, int *i, int *j, t_lst **word_lst)
 	open_count = 1;
 	if (*j == *i && (!(*word_lst) || (ft_lstlastword(*word_lst))->word_type != -1))
 	{
+		printf("pouet\n");
 		while (line[(*j)] && open_count > 0)
 		{
 			(*j)++;
@@ -157,7 +161,10 @@ void	manage_parenthesis(char *line, int *i, int *j, t_lst **word_lst)
 				open_count--;
 		}
 		if (!line[*j] && open_count)
+		{
+			printf("j: %d->%c, count: %d\n", *j, line[*j], open_count);
 			exit(0);//parse error
+		}
 		if (!create_sub(line, i, j, word_lst))
 			return ;
 		*i = ++(*j);
@@ -213,6 +220,10 @@ void	get_dollar_in_word(t_lst **word)
 
 	tmp = *word;
 	*word = split_word(*word);
+	printf("tmp: %p, next: %p, prev: %p\n", tmp, *(tmp->next), *(tmp->prev));
+	printf("word: %p, next: %p, prev->%p\n", (*word), *((*word)->next), *((*word)->prev));
+	if (*(tmp->prev))
+		printf("tmp prev prev?%p\n", *((*(tmp->prev))->prev));
 	if (!*word)
 	{
 		if (*(tmp->prev))
@@ -223,8 +234,12 @@ void	get_dollar_in_word(t_lst **word)
 	}
 	else
 	{
-	(*word)->prev = tmp->prev;
-	(ft_lstlastword(*word))->next = tmp->next;
+		if (*(tmp->next))
+			*((*tmp->next)->prev) = *word;
+		printf("before: word-> %p, prev->%p\n", (*word), *((*word)->prev));
+		(*word)->prev = tmp->prev;
+		printf("middle: word-> %p, prev->%p\n", (*word), *((*word)->prev));
+		(ft_lstlastword(*word))->next = tmp->next;
 	}
 	ft_lstdeloneword(tmp);
 }
@@ -283,6 +298,7 @@ t_lst	*separate_line(char *line)
 	word_lst = NULL;
 	while (line[i] != '\0')
 	{
+		printf("i: %d, j: %d\n", i, j);
 		if (i == j)
 			ft_skipspaces(line, &i, &j);
 		if (line[j] == '(')

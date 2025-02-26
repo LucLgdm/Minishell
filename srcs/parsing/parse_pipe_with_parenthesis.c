@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:12:25 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/25 15:25:53 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/26 12:31:30 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	create_sub_with_pipe(char *line, int *i, int *j, t_lst **word_lst)
 	char	*newline;
 	t_lst	*sub;
 
+	if (line[*i] == '(')
+		(*i)++;
 	newline = ft_substr(line, *i, *j - (*i));
 	sub = ft_lstnewword(newline, 1);
 	*(sub->sub) = separate_line(newline);
