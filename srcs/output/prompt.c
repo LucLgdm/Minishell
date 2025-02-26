@@ -1,10 +1,13 @@
 
 #include "../../includes/minishell.h"
 
+extern int g_stop;
+
 void	handle_signal(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_stop = 1;
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);

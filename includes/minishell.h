@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:00:42 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/25 15:29:49 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/26 15:54:07 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
@@ -29,6 +30,8 @@
 # define PIPE		5 // '|'
 # define OR			6 // '||'
 # define AND		7 // '&&'
+
+int g_stop = 0;
 
 //structure temporaire a passer pour executer chaque commande
 typedef struct s_cmd
@@ -69,6 +72,8 @@ void	ft_lstdeloneword(t_lst *lst);
 void	get_dollar_in_struct(t_lst **words);
 //exec
 char	**getenvp(void);
+char	**cmd_tab(t_lst *words);
+char	**path_tab(void);
 // output
 void	handle_signal(int sig);
 char*	prompt(void);

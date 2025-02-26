@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:08:36 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/26 13:08:07 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/26 15:47:34 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void	manage_parenthesis(char *line, int *i, int *j, t_lst **word_lst)
 	int		open_count;
 
 	open_count = 1;
-	if (*j == *i && (!(*word_lst) || (ft_lstlastword(*word_lst))->word_type != -1))
+	if ((!(*word_lst) || (ft_lstlastword(*word_lst))->word_type != -1))
 	{
 		printf("pouet\n");
 		while (line[(*j)] && open_count > 0)

@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:22:03 by andrean           #+#    #+#             */
-/*   Updated: 2025/02/26 13:11:22 by andrean          ###   ########.fr       */
+/*   Updated: 2025/02/26 13:59:03 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_lst	*ft_lstnewword(char *word, int ignoretoken)
 }
 
 void	ft_lstdeloneword(t_lst *lst)
-{./
+{
 	if (lst)
 	{
 		free(lst->sub);
