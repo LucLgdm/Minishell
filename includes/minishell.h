@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/02/27 14:17:05 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:39:56 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	process_token(char *prompt, char **tmp_token, int *i, char **token, int *j)
 
 // taken 2
 void	handle_quote(char *prompt, char **tmp_token, int *i, char **token, int *j);
+void	handle_parenthesis(char *prompt, char **tmp_token, int *i, char **token, int *j);
 
 // binary_tree
 void	fill_tree(t_world *world);

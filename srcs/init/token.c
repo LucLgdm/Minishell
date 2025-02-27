@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 10:57:50 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/02/27 14:27:38 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:51:38 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,10 @@ char	**tokenization(char *prompt)
 	{
 		while (ft_isspace(prompt[i]))
 			i++;
-		if (prompt[i] == '\0')
-			break ;
+		handle_parenthesis(prompt, &tmp_token, &i, token, &j);
 		handle_quote(prompt, &tmp_token, &i, token, &j);
 		process_token(prompt, &tmp_token, &i, token, &j);
 	}
-	if (tmp_token[0] != '\0')
-		token[j++] = ft_strdup(tmp_token);
 	token[j] = NULL;
 	free(tmp_token);
 	return (token);
@@ -60,10 +57,10 @@ void	process_token(char *prompt, char **tmp_token, int *i, char **token,
 			token[(*j)++] = ft_strdup(*tmp_token);
 		}
 	}
-	else
+	else if (prompt[*i])
 	{
 		ft_case_word(prompt, tmp_token, i);
-		if (prompt[*i - 1] && prompt[*i - 1] != '"' && prompt[*i - 1] != '\'')
+		if (prompt[*i - 1] && prompt[*i - 1] != '"' && prompt[*i - 1] != '\'' && prompt[*i - 1] != ')')
 			token[(*j)++] = ft_strdup(*tmp_token);
 	}
 }
