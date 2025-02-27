@@ -1,38 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   tree_usefull.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 15:59:15 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/02/27 11:06:21 by lde-merc         ###   ########.fr       */
+/*   Created: 2025/02/27 09:59:21 by lde-merc          #+#    #+#             */
+/*   Updated: 2025/02/27 11:39:36 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../includes/minishell.h"
 
-int	ft_atoi(const char *nptr)
+t_node	*new_node(void)
 {
-	int		res;
-	int		sign;
-	size_t	i;
+	t_node	*new_node;
 
-	res = 0;
-	sign = 1;
-	i = 0;
-	while (ft_isspace(nptr[i]))
-		i++;
-	if (nptr[i] == '-' || nptr[i] == '+')
-	{
-		if (nptr[i] == '-')
-			sign *= -1;
-		i++;
-	}
-	while (ft_isdigit(nptr[i]) == 1)
-	{
-		res = 10 * res + nptr[i] - 48;
-		++i;
-	}
-	return (sign * res);
+	new_node = malloc(sizeof(t_node));
+	if (!new_node)
+		return (NULL);
+	new_node->left = NULL;
+	new_node->right = NULL;
+	new_node->cmd = NULL;
+	new_node->token = 0;
+	new_node->pipe_fd[0] = -1;
+	new_node->pipe_fd[0] = -1;
+	new_node->infile = NULL;
+	new_node->outfile = NULL;
+	return (new_node);
 }

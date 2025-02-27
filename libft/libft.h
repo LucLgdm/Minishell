@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 10:20:13 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/01/03 16:06:16 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:06:01 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int						ft_isalpha(int c);
 int						ft_isalnum(int c);
 int						ft_isascii(int c);
 int						ft_isprint(int c);
+int						ft_isspace(char c);
 size_t					ft_strlen(const char *str);
 void					*ft_memset(void *s, int c, size_t size);
 void					ft_bzero(void *s, size_t size);

@@ -6,7 +6,7 @@
 #    By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/02/21 17:01:46 by lde-merc         ###   ########.fr        #
+#    Updated: 2025/02/27 11:33:37 by lde-merc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,9 @@ FREE_DIR = free/
 SRC_FILES = main.c \
 			$(OUTPUT_DIR)prompt.c \
 			$(INIT_DIR)environement.c \
+			$(INIT_DIR)binary_tree.c \
+			$(INIT_DIR)token.c \
+			$(INIT_DIR)tree_usefull.c \
 			$(FREE_DIR)free.c
 
 # Transforme chaque fichier source en un fichier objet dans $(OBJ_DIR)

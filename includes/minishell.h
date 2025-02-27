@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/02/21 17:30:28 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/02/27 12:22:24 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,25 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-//liste chainee pour les differents mots
-typedef struct s_lst
-{
-	char			*word;
-	int				word_type;
-	struct s_lst	**next;
-	struct s_lst	**prev;
-	struct s_lst	**sub;
-}	t_lst;
+// Binary tree
+typedef struct s_node {
+    char **cmd;          // Command and its arguments
+    struct s_node *left;
+    struct s_node *right;
+    char token;          // Operator token (|, &&, ||, ;)
+    char *infile;        // Input redirection file (<)
+    char *outfile;       // Output redirection file (> or >>)
+    int append;          // 1 if >> is used, 0 for >
+    int pipe_fd[2];      // Pipe file descriptors (used if node is a pipe)
+} t_node;
+
 
 typedef struct s_world
 {
 	char	*home;
 	char	*prompt;
 	t_list	*env;
-	t_lst	*prompt_read;
+	t_node	*tree;
 }	t_world;
 
 
@@ -47,11 +50,21 @@ void	handle_signal(int sig);
 // environement
 void	copy_env(t_list **env, char **envp, t_world *world);
 void	prompt(t_world *world);
-void	parse_prompt(t_world *world);
+void	fill_tree(t_world *world);
+
+// token
+char    **tokenization(char *prompt);
+int     ft_isoperator(char c);
+void    ft_case_double(char *prompt, char **ttoken, int *i);
+void	ft_case_word(char *prompt, char **ttoken, int *i);
+
+// binary_tree
+void	fill_tree(t_world *world);
+
+// tree_usefull
+t_node  *new_node(void);
 
 // free
 void	free_all(t_world *world);
-
-t_lst	*parse_line(char *line);
 
 #endif
