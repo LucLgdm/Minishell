@@ -6,12 +6,11 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:39:11 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/02/21 17:03:43 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:39:08 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
 
 int	main(int argc, char **argv, char **envp)
 {

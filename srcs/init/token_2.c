@@ -6,13 +6,14 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 13:00:59 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/02/27 14:49:43 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:40:15 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	handle_quote(char *prompt, char **tmp_token, int *i, char **token, int *j)
+void	handle_quote(char *prompt, char **tmp_token, int *i, char **token,
+		int *j)
 {
 	char	quote_char;
 	int		k;
@@ -38,7 +39,8 @@ void	handle_quote(char *prompt, char **tmp_token, int *i, char **token, int *j)
 	}
 }
 
-void	handle_parenthesis(char *prompt, char **tmp_token, int *i, char **token, int *j)
+void	handle_parenthesis(char *prompt, char **tmp_token, int *i, char **token,
+		int *j)
 {
 	char	parenthesis_char;
 	int		k;
@@ -63,6 +65,5 @@ void	handle_parenthesis(char *prompt, char **tmp_token, int *i, char **token, in
 		}
 		(*tmp_token)[k] = '\0';
 		token[(*j)++] = ft_strdup(*tmp_token);
-		printf("i = %d\n", *i);
 	}
 }

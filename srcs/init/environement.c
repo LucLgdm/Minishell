@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:17:24 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/02/27 12:19:04 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:39:22 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	handle_signal(int sig)
 		rl_redisplay();
 	}
 }
+
 void	prompt(t_world *world)
 {
 	while (42)

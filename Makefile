@@ -6,7 +6,7 @@
 #    By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/02/27 13:08:48 by lde-merc         ###   ########.fr        #
+#    Updated: 2025/02/27 16:44:18 by lde-merc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRC_FILES = main.c \
 			$(INIT_DIR)token.c \
 			$(INIT_DIR)tree_usefull.c \
 			$(INIT_DIR)token_2.c \
+			$(INIT_DIR)parse_token.c \
 			$(FREE_DIR)free.c
 
 # Transforme chaque fichier source en un fichier objet dans $(OBJ_DIR)
@@ -58,20 +59,18 @@ $(NAME): $(OBJS)
 	@echo "\033[32mlibft en cours\033[0m"
 	@make -C libft all --silent
 	@echo "\033[0;32mSUCCESS !\033[0m \033[0;33mlibft\033[0m"
+	@make -C libft clean --silent
 	@echo "\033[32mCompilation minishell en cours\033[0m"
 	@$(CC) $(OBJS) $(FLAGS) -o $(NAME)
 	@echo "\033[0;32mSUCCESS !\033[0m \033[0;33m$(NAME)\033[0m"
 
 clean:
-	@make -C libft clean
-	@echo "\033[0;34mSuppression des objets de la libft\033[0m"
 	@rm -rf $(OBJ_DIR)
 	@echo "\033[0;34mSuppression des objets\033[0m"
 
 fclean: clean
 	@rm -f $(NAME)
-	@make -C libft fclean --silent
-	@echo "\033[0;34mSuppression de l'executable $(NAME) et de la libft.\033[0m"
+	@echo "\033[0;34mSuppression de l'executable $(NAME)\033[0m"
 
 re: fclean all
 

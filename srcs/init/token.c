@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 10:57:50 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/02/27 14:51:38 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:39:35 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void	process_token(char *prompt, char **tmp_token, int *i, char **token,
 	else if (prompt[*i])
 	{
 		ft_case_word(prompt, tmp_token, i);
-		if (prompt[*i - 1] && prompt[*i - 1] != '"' && prompt[*i - 1] != '\'' && prompt[*i - 1] != ')')
+		if (prompt[*i - 1] && prompt[*i - 1] != '"' && prompt[*i - 1] != '\''
+			&& prompt[*i - 1] != ')')
 			token[(*j)++] = ft_strdup(*tmp_token);
 	}
 }

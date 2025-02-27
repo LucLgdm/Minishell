@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/02/27 14:39:56 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:30:40 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@ void	process_token(char *prompt, char **tmp_token, int *i, char **token, int *j)
 void	handle_quote(char *prompt, char **tmp_token, int *i, char **token, int *j);
 void	handle_parenthesis(char *prompt, char **tmp_token, int *i, char **token, int *j);
 
+// parse_token
+t_node	*parse_token(char **token);
+
 // binary_tree
 void	fill_tree(t_world *world);
 
@@ -72,4 +75,8 @@ t_node  *new_node(void);
 // free
 void	free_all(t_world *world);
 
+
+
+int is_parenthesis(char c);
+int is_operator(char c);
 #endif
