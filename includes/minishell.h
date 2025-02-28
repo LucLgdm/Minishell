@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/02/27 15:30:40 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:17:17 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@
 # include <stdio.h>
 # include <stdlib.h>
 
+# include "./lexer.h"
+
 // Binary tree
 typedef struct s_node {
     char **cmd;          // Command and its arguments
     struct s_node *left;
     struct s_node *right;
-    char token;          // Operator token (|, &&, ||, ;)
+    char *token;          // Operator token (|, &&, ||, ;)
     char *infile;        // Input redirection file (<)
     char *outfile;       // Output redirection file (> or >>)
     int append;          // 1 if >> is used, 0 for >
@@ -64,7 +66,7 @@ void	handle_quote(char *prompt, char **tmp_token, int *i, char **token, int *j);
 void	handle_parenthesis(char *prompt, char **tmp_token, int *i, char **token, int *j);
 
 // parse_token
-t_node	*parse_token(char **token);
+t_node	*parse_token(char **token, int *i);
 
 // binary_tree
 void	fill_tree(t_world *world);
@@ -76,7 +78,7 @@ t_node  *new_node(void);
 void	free_all(t_world *world);
 
 
+void print_tab(char **tab);
+void	print_tree(t_node *root);
 
-int is_parenthesis(char c);
-int is_operator(char c);
 #endif

@@ -1,0 +1,45 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/28 14:17:28 by lde-merc          #+#    #+#             */
+/*   Updated: 2025/02/28 14:26:49 by lde-merc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef LEXER_H
+#define LEXER_H
+
+enum	e_char_type {
+	CHAR_GENERAL = -1,
+	CHAR_PIPE = '|',
+	CHAR_GREATER = '>',
+	CHAR_LESSER = '<',
+	CHAR_DOLLER = '$',
+	CHAR_S_QUOTE = 39,
+	CHAR_D_QUOTE = '"',
+};
+
+enum	e_token_type {
+	TOKEN_WORD = 0,
+	TOKEN_PIPE,
+	TOKEN_GREATER,
+	TOKEN_GREATGREATER,
+	TOKEN_LESSER,
+	TOKEN_LESSLESSER,
+};
+
+typedef struct s_token {
+	char			*value;
+	int				token_type;
+	struct s_token	*prev;
+	struct s_token	*next;
+}		t_token;
+
+t_token	*tokenization(char *prompt);
+
+
+#endif
