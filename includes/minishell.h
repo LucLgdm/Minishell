@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/02/28 14:17:17 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:55:57 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,9 @@ void	handle_signal(int sig);
 // environement
 void	copy_env(t_list **env, char **envp, t_world *world);
 void	prompt(t_world *world);
-void	fill_tree(t_world *world);
 
 // taken
-char    **tokenization(char *prompt);
+char    **tokenization_char(char *prompt);
 int     ft_isoperator(char c);
 void    ft_case_double(char *prompt, char **tmp_token, int *i);
 void	ft_case_word(char *prompt, char **tmp_token, int *i);
@@ -63,7 +62,7 @@ void	process_token(char *prompt, char **tmp_token, int *i, char **token, int *j)
 
 // taken 2
 void	handle_quote(char *prompt, char **tmp_token, int *i, char **token, int *j);
-void	handle_parenthesis(char *prompt, char **tmp_token, int *i, char **token, int *j);
+// void	handle_parenthesis(char *prompt, char **tmp_token, int *i, char **token, int *j);
 
 // parse_token
 t_node	*parse_token(char **token, int *i);

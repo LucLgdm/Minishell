@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:59:21 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/02/28 10:01:40 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/03 13:20:40 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void	print_tree(t_node *root){
 	}
 	if (root->left)
 	{
-		printf("%c\n", root->token);
+		printf("%s\n", root->token);
 		print_tree(root->left);
 	}
 	if (root->right){
-		printf("%c\n", root->token);
+		printf("%s\n", root->token);
 		print_tree(root->right);
 	}
 }

@@ -6,13 +6,13 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 10:57:50 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/02/27 16:39:35 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/03 13:19:51 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**tokenization(char *prompt)
+char	**tokenization_char(char *prompt)
 {
 	char	**token;
 	char	*tmp_token;

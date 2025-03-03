@@ -6,7 +6,7 @@
 #    By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/02/27 16:44:18 by lde-merc         ###   ########.fr        #
+#    Updated: 2025/03/03 15:56:20 by lde-merc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,21 +21,21 @@ FLAGS = -lreadline $(LIBFT)
 LIBFT = libft/libft.a
 INCLUDES = includes/
 OBJ_DIR = objs/
-OUTPUT_DIR = output/
 EXEC_DIR = exec/
 INIT_DIR = init/
 FREE_DIR = free/
+LEXER_DIR = lexer/
 
 # Liste des fichiers source
 SRC_FILES = main.c \
-			$(OUTPUT_DIR)prompt.c \
 			$(INIT_DIR)environement.c \
 			$(INIT_DIR)binary_tree.c \
-			$(INIT_DIR)token.c \
 			$(INIT_DIR)tree_usefull.c \
-			$(INIT_DIR)token_2.c \
 			$(INIT_DIR)parse_token.c \
-			$(FREE_DIR)free.c
+			$(FREE_DIR)free.c \
+			$(LEXER_DIR)lexer.c \
+			$(LEXER_DIR)fill_token.c \
+			$(LEXER_DIR)fill_token2.c 
 
 # Transforme chaque fichier source en un fichier objet dans $(OBJ_DIR)
 OBJS = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
@@ -53,6 +53,7 @@ mkdir_obj:
 	@mkdir -p $(OBJ_DIR)$(EXEC_DIR)
 	@mkdir -p $(OBJ_DIR)$(INIT_DIR)
 	@mkdir -p $(OBJ_DIR)$(FREE_DIR)
+	@mkdir -p $(OBJ_DIR)$(LEXER_DIR)
 
 # Compilation finale
 $(NAME): $(OBJS)
