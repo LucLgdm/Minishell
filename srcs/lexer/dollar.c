@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 12:14:31 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/04 14:31:24 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:37:19 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,14 @@ int	handle_dollar(t_token **token_lst)
 	tmp = *token_lst;
 	while (tmp)
 	{
-		if (tmp->token_type == TOKEN_WORD && ft_strchr(tmp->value, CHAR_DOLLAR))
+		if (tmp->token_type == TOKEN_PARENTHESES)
+			handle_dollar(&tmp->sub_token);
+		else if (tmp->token_type == TOKEN_WORD)
 		{
 			new_word = ft_expand(tmp->value);
 			free(tmp->value);
 			tmp->value = new_word;
+			printf("tmp->value = %s\n", tmp->value);
 		}
 		tmp = tmp->next;
 	}
@@ -57,6 +60,8 @@ void	ft_append_char(char **new_word, char c)
 	char	*tmp;
 	int		len;
 
+	if (!new_word || !*new_word)
+		return ;
 	len = ft_strlen(*new_word);
 	tmp = malloc(len + 2);
 	if (!tmp)
@@ -75,7 +80,7 @@ void	ft_single_quote(char **new_word, char *word, int *i)
 	start = ++(*i);
 	while (word[*i] && word[*i] != CHAR_S_QUOTE)
 		(*i)++;
-	ft_strncat(new_word, &word[start], *i - start);
+	ft_strncat(new_word, &word[start], *i - start + 1);
 }
 
 void	ft_double_quote(char **new_word, char *word, int *i)
@@ -85,10 +90,14 @@ void	ft_double_quote(char **new_word, char *word, int *i)
 	start = ++(*i);
 	while (word[*i] && word[*i] != CHAR_D_QUOTE)
 	{
-		if (word[*i] == CHAR_DOLLAR)
+		if (word[*i] == CHAR_DOLLAR){
+			printf("Passe par dollar\n");
 			ft_replace(new_word, word, i);
-		else
+		}
+		else{
+			printf("Passe par append\n");
 			ft_append_char(new_word, word[(*i)++]);
+		}
 	}
 }
 
@@ -100,11 +109,14 @@ void	ft_replace(char **new_word, char *word, int *i)
 	char	*value;
 
 	j = 0;
+	value = NULL;
 	start = ++(*i);
 	while (word[*i] && (ft_isalnum(word[*i]) || word[*i] == '_'))
 		var_name[j++] = word[(*i)++];
 	var_name[j] = '\0';
+	printf("Var_name = %s\n", var_name);
 	value = get_env_value(var_name, get_world()->env);
+	printf("Value = %s\n", value);
 	if (value)
 		ft_strcat(*new_word, value);
 	else
@@ -114,16 +126,22 @@ void	ft_replace(char **new_word, char *word, int *i)
 
 char	*get_env_value(char *name, t_list *env_list)
 {
-	t_list *tmp;
-	char *env_var;
-	size_t name_len;
+	t_list	*tmp;
+	char	*env_var;
+	size_t	name_len;
 
+	env_var = NULL;
 	tmp = env_list;
-	name_len = strlen(name);
+	name_len = ft_strlen(name);
 	while (tmp)
 	{
-		env_var = tmp->content;
-		if (strncmp(env_var, name, name_len) == 0 && env_var[name_len] == '=')
+		env_var = (char *)tmp->content;
+		if (!env_var)
+		{
+			tmp = tmp->next;
+			continue ;
+		}
+		if (ft_strncmp(env_var, name, name_len) == 0 && env_var[name_len] == '=')
 			return (env_var + name_len + 1);
 		tmp = tmp->next;
 	}

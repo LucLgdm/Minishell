@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/04 09:58:09 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:25:59 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdlib.h>
 
 # include "./lexer.h"
+# include "./hashtable.h"
 
 // Binary tree
 typedef struct s_node {
@@ -37,9 +38,8 @@ typedef struct s_node {
 
 typedef struct s_world
 {
-	char	*home;
 	char	*prompt;
-	t_list	*env;
+	t_hashtable *env;
 	t_node	*tree;
 }	t_world;
 
@@ -47,12 +47,14 @@ typedef struct s_world
 
 
 // output
-void	handle_signal(int sig);
+
 
 // environement
-void	copy_env(t_list **env, char **envp, t_world *world);
 void	prompt(t_world *world);
+void	handle_signal(int sig);
 t_world	*get_world(void);
+t_hashtable	*ft_create_env_hashtable(char **env);
+void	ft_env_to_hashtable(char **env, t_hashtable *env_hastable, int len_env);
 
 // taken
 char    **tokenization_char(char *prompt);

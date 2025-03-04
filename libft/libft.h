@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 10:20:13 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/04 14:30:38 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:22:06 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdint.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <stdbool.h>
 
 typedef struct s_list	t_list;
 struct					s_list
@@ -30,6 +31,9 @@ struct					s_list
 	t_list				*next;
 };
 
+int		ft_next_prime(int n);
+bool	ft_isprime(int n);
+int		ft_arraylen(char **str);
 int		ft_isdigit(int c);
 int		ft_isalpha(int c);
 int		ft_isalnum(int c);

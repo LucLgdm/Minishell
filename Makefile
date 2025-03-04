@@ -6,7 +6,7 @@
 #    By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/03/04 12:19:25 by lde-merc         ###   ########.fr        #
+#    Updated: 2025/03/04 16:23:33 by lde-merc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ EXEC_DIR = exec/
 INIT_DIR = init/
 FREE_DIR = free/
 LEXER_DIR = lexer/
+HASHTABLE_DIR = hashtable/
 
 # Liste des fichiers source
 SRC_FILES = main.c \

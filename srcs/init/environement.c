@@ -6,39 +6,11 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:17:24 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/02/27 16:39:22 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:25:27 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	copy_env(t_list **list, char **envp, t_world *world)
-{
-	int		i;
-	char	*home_value;
-
-	i = -1;
-	while (envp[++i] != NULL)
-	{
-		ft_lstadd_back(list, ft_lstnew(ft_strdup(envp[i])));
-		if (ft_strncmp(envp[i], "HOME=", 5) == 0)
-		{
-			home_value = envp[i] + 5;
-			world->home = ft_strdup(home_value);
-		}
-	}
-}
-
-void	handle_signal(int sig)
-{
-	if (sig == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-}
 
 void	prompt(t_world *world)
 {
@@ -64,5 +36,66 @@ void	prompt(t_world *world)
 				fill_tree(world);
 		}
 		free(world->prompt);
+	}
+}
+
+void	handle_signal(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+}
+
+t_world	*get_world(void)
+{
+	static t_world	world;
+
+	return (&world);
+}
+
+t_hashtable	*ft_create_env_hashtable(char **env)
+{
+	t_hashtable	*env_hashtable;
+	int			len_env;
+
+	len_env = ft_arraylen(env);
+	if (len_env == 0)
+	{
+		env_hashtable = ft_create_hashtable(4242);
+		return (env_hashtable);
+	}
+	len_env = ft_next_prime(3 * len_env);
+	env_hashtable = ft_create_hashtable(len_env);
+	if (!env_hashtable)
+		return (NULL);
+	ft_env_to_hashtable(env, env_hashtable, len_env);
+	return (env_hashtable);
+}
+
+void	ft_env_to_hashtable(char **env, t_hashtable *env_hastable, int len_env)
+{
+	int		i;
+	char	**split;
+	char	*key;
+	char	*value;
+
+	i = -1;
+	while (env[++i])
+	{
+		split = ft_split(env[i], '=');
+		if (split[0])
+			key = ft_strdup(split[0]);
+		if (split[1])
+			value = ft_strdup(split[1]);
+		else
+			value = ft_strdup("");
+		ft_add_element(env_hastable, key, value);
+		free(key);
+		free(value);
+		ft_free_array(split);
 	}
 }
