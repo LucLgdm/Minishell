@@ -1,36 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strnlen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 16:39:11 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/04 09:44:19 by lde-merc         ###   ########.fr       */
+/*   Created: 2025/03/04 14:40:26 by lde-merc          #+#    #+#             */
+/*   Updated: 2025/03/04 14:40:33 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **envp)
+size_t	ft_strnlen(const char *s, size_t n)
 {
-	t_world	*world;
+	size_t	c;
 
-	world = get_world();
-	(void)argv;
-	if (argc == 1)
-	{
-		world = ft_calloc(1, sizeof(t_world));
-		copy_env(&world->env, envp, world);
-		prompt(world);
-		free_all(world);
-	}
-	return (0);
-}
-
-t_world	*get_world(void)
-{
-	static t_world	*world = NULL;
-
-	return (world);
+	c = 0;
+	while (s[c] && c < n)
+		c++;
+	return (c);
 }

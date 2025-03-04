@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 16:39:11 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/04 09:44:19 by lde-merc         ###   ########.fr       */
+/*   Created: 2025/03/04 14:39:25 by lde-merc          #+#    #+#             */
+/*   Updated: 2025/03/04 14:39:32 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **envp)
+void	ft_strncat(char **dest, const char *src, size_t n)
 {
-	t_world	*world;
+	size_t	dest_len;
+	size_t	src_len;
+	char	*new_str;
 
-	world = get_world();
-	(void)argv;
-	if (argc == 1)
-	{
-		world = ft_calloc(1, sizeof(t_world));
-		copy_env(&world->env, envp, world);
-		prompt(world);
-		free_all(world);
-	}
-	return (0);
-}
-
-t_world	*get_world(void)
-{
-	static t_world	*world = NULL;
-
-	return (world);
+	if (!src || n == 0)
+		return ;
+	dest_len = ft_strlen(*dest);
+	src_len = ft_strnlen(src, n);
+	new_str = malloc(dest_len + src_len + 1);
+	if (!new_str)
+		return ;
+	ft_strcpy(new_str, *dest);
+	ft_strlcat(new_str, src, n);
+	free(*dest);
+	*dest = new_str;
 }

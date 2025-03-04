@@ -6,7 +6,7 @@
 #    By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/03/03 15:56:20 by lde-merc         ###   ########.fr        #
+#    Updated: 2025/03/04 12:19:25 by lde-merc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ SRC_FILES = main.c \
 			$(FREE_DIR)free.c \
 			$(LEXER_DIR)lexer.c \
 			$(LEXER_DIR)fill_token.c \
-			$(LEXER_DIR)fill_token2.c 
+			$(LEXER_DIR)fill_token2.c \
+			$(LEXER_DIR)dollar.c 
 
 # Transforme chaque fichier source en un fichier objet dans $(OBJ_DIR)
 OBJS = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))

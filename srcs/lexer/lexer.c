@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:25:40 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/03 18:28:29 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/04 12:14:00 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 t_token	*tokenization_token(char *prompt)
 {
 	int		len_token;
-	t_token *token_lst;
-	
+	t_token	*token_lst;
+
 	token_lst = NULL;
 	len_token = 0;
 	while (*prompt)

@@ -1,36 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 16:39:11 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/04 09:44:19 by lde-merc         ###   ########.fr       */
+/*   Created: 2025/03/04 14:40:13 by lde-merc          #+#    #+#             */
+/*   Updated: 2025/03/04 14:40:41 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_strcpy(char *dest, const char *src)
 {
-	t_world	*world;
+	int	i;
 
-	world = get_world();
-	(void)argv;
-	if (argc == 1)
+	i = 0;
+	while (src[i])
 	{
-		world = ft_calloc(1, sizeof(t_world));
-		copy_env(&world->env, envp, world);
-		prompt(world);
-		free_all(world);
+		dest[i] = src[i];
+		i++;
 	}
-	return (0);
-}
-
-t_world	*get_world(void)
-{
-	static t_world	*world = NULL;
-
-	return (world);
+	dest[i] = '\0';
+	return (i);
 }

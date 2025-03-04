@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:17:28 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/03 18:24:23 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:29:03 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ enum	e_char_type {
 	CHAR_PIPE = '|',
 	CHAR_GREATER = '>',
 	CHAR_LESSER = '<',
-	CHAR_DOLLER = '$',
+	CHAR_DOLLAR = '$',
 	CHAR_S_QUOTE = 39,
 	CHAR_D_QUOTE = '"',
 };
@@ -54,5 +54,14 @@ t_token	*ft_create_token(int len_token, char *prompt);
 
 //	fill_token2.c
 t_token	*handle_parenthesis(char **prompt, t_token **token_lst);
+
+//	dollar.c
+int		handle_dollar(t_token **token_lst);
+char	*ft_expand(char *word);
+void	ft_single_quote(char **new_word, char *word, int *i);
+void	ft_double_quote(char **new_word, char *word, int *i);
+void	ft_replace(char **new_word, char *word, int *i);
+void	ft_append_char(char **new_word, char c);
+char *get_env_value(char *name, t_list *env_list);
 
 #endif
