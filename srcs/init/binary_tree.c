@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:49:34 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/03 18:29:14 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/04 09:12:08 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,15 @@ void	fill_tree(t_world *world)
 			while (sub_token)
 			{
 				printf("	Value = %s, Type = %i\n", sub_token->value, sub_token->token_type);
+				if (sub_token->sub_token){
+					printf("		Sub_token : \n");
+					t_token *sub_sub_token = sub_token->sub_token;
+					while (sub_sub_token)
+					{
+						printf("		Value = %s, Type = %i\n", sub_sub_token->value, sub_sub_token->token_type);
+						sub_sub_token = sub_sub_token->next;
+					}
+				}
 				sub_token = sub_token->next;
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 15:48:26 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/03 18:26:30 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/04 09:09:37 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_token	*handle_parenthesis(char **prompt, t_token **token_lst)
 	sub_prompt = ft_substr(*prompt, 1, i - 2);
 	(*token_lst) = fill_token(*token_lst, "(", 1);
 	tmp = *token_lst;
-	while(tmp->token_type != TOKEN_PARENTHESES)
+	while(tmp->next)
 		tmp = tmp->next;
 	tmp->sub_token = tokenization_token(sub_prompt);
 	free(sub_prompt);
