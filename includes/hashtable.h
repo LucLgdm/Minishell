@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:24:34 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/04 17:06:19 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/05 10:55:40 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <stddef.h>
+# include "../libft/libft.h"
 
 typedef struct s_element
 {

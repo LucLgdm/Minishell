@@ -6,7 +6,7 @@
 #    By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/03/04 16:23:33 by lde-merc         ###   ########.fr        #
+#    Updated: 2025/03/05 10:54:09 by lde-merc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,9 @@ SRC_FILES = main.c \
 			$(LEXER_DIR)lexer.c \
 			$(LEXER_DIR)fill_token.c \
 			$(LEXER_DIR)fill_token2.c \
-			$(LEXER_DIR)dollar.c 
+			$(LEXER_DIR)dollar.c \
+			$(HASHTABLE_DIR)create.c \
+			$(HASHTABLE_DIR)operation.c
 
 # Transforme chaque fichier source en un fichier objet dans $(OBJ_DIR)
 OBJS = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
@@ -56,6 +58,7 @@ mkdir_obj:
 	@mkdir -p $(OBJ_DIR)$(INIT_DIR)
 	@mkdir -p $(OBJ_DIR)$(FREE_DIR)
 	@mkdir -p $(OBJ_DIR)$(LEXER_DIR)
+	@mkdir -p $(OBJ_DIR)$(HASHTABLE_DIR)
 
 # Compilation finale
 $(NAME): $(OBJS)

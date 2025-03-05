@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:49:34 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/04 15:14:41 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:32:46 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ void	fill_tree(t_world *world)
 	if (!token_lst)
 		return ;
 	printf("Token_lst : \n");
-	print_token(token_lst, 0);
-	handle_dollar(&token_lst);
+	handle_dollar(&token_lst, world->env);
 	print_token(token_lst, 0);
 	// world->tree = parse_token(token, &i);
 	// if (world->tree)

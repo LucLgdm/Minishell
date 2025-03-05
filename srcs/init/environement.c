@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:17:24 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/04 17:25:27 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:11:24 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,18 @@ t_hashtable	*ft_create_env_hashtable(char **env)
 	len_env = ft_arraylen(env);
 	if (len_env == 0)
 	{
-		env_hashtable = ft_create_hashtable(4242);
+		env_hashtable = ft_create_hashtable(250);
 		return (env_hashtable);
 	}
 	len_env = ft_next_prime(3 * len_env);
 	env_hashtable = ft_create_hashtable(len_env);
 	if (!env_hashtable)
 		return (NULL);
-	ft_env_to_hashtable(env, env_hashtable, len_env);
+	ft_env_to_hashtable(env, env_hashtable);
 	return (env_hashtable);
 }
 
-void	ft_env_to_hashtable(char **env, t_hashtable *env_hastable, int len_env)
+void	ft_env_to_hashtable(char **env, t_hashtable *env_hastable)
 {
 	int		i;
 	char	**split;

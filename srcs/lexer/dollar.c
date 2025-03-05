@@ -6,38 +6,36 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 12:14:31 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/04 17:37:19 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:44:02 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	handle_dollar(t_token **token_lst)
+int	handle_dollar(t_token **token_lst, t_hashtable *env_ht)
 {
 	t_token	*tmp;
-	char	*new_word;
 
 	tmp = *token_lst;
+	if (!tmp)
+		return (1);
 	while (tmp)
 	{
 		if (tmp->token_type == TOKEN_PARENTHESES)
-			handle_dollar(&tmp->sub_token);
+			handle_dollar(&tmp->sub_token, env_ht);
 		else if (tmp->token_type == TOKEN_WORD)
-		{
-			new_word = ft_expand(tmp->value);
-			free(tmp->value);
-			tmp->value = new_word;
-			printf("tmp->value = %s\n", tmp->value);
-		}
+			tmp->value = ft_expand(tmp->value, env_ht);
 		tmp = tmp->next;
 	}
 	return (0);
 }
 
-char	*ft_expand(char *word)
+char	*ft_expand(char *word, t_hashtable *env_ht)
 {
 	int		i;
 	char	*new_word;
+	char	*env_value;
+	char	*var_name;
 
 	new_word = ft_strdup("");
 	i = -1;
@@ -46,13 +44,67 @@ char	*ft_expand(char *word)
 		if (word[i] == CHAR_S_QUOTE)
 			ft_single_quote(&new_word, word, &i);
 		else if (word[i] == CHAR_D_QUOTE)
-			ft_double_quote(&new_word, word, &i);
+			ft_double_quote(&new_word, word, &i, env_ht);
 		else if (word[i] == CHAR_DOLLAR)
-			ft_replace(&new_word, word, &i);
+		{
+			var_name = ft_extract_var_name(word, &i);
+			env_value = ft_get_env_value(var_name, env_ht);
+			free(var_name);
+			if (env_value)
+				new_word = ft_strcat(new_word, env_value);
+		}
 		else
-			ft_append_char(&new_word, word[i]);
+			ft_strncat(&new_word, &word[i], 1);
 	}
 	return (new_word);
+}
+void	ft_single_quote(char **new_word, char *word, int *i)
+{
+	ft_strncat(new_word, &word[(*i)], 1);
+	(*i)++;
+	while (word[*i] && word[*i] != CHAR_S_QUOTE)
+	{
+		ft_strncat(new_word, &word[(*i)], 1);
+		(*i)++;
+	}
+	if (word[*i] == CHAR_S_QUOTE)
+		ft_strncat(new_word, &word[(*i)], 1);
+}
+
+void	ft_double_quote(char **new_word, char *word, int *i,
+		t_hashtable *env_ht)
+{
+	int	start;
+
+	start = ++(*i);
+	while (word[*i] && word[*i] != CHAR_D_QUOTE)
+	{
+		printf("word[%i] = %c\n", *i, word[*i]);
+		if (word[*i] == CHAR_DOLLAR)
+			ft_replace(new_word, word, i, env_ht);
+		else
+			ft_append_char(new_word, word[(*i)++]);
+	}
+}
+
+void	ft_replace(char **new_word, char *word, int *i, t_hashtable *env_ht)
+{
+	int		start;
+	char	var_name[256];
+	int		j;
+	char	*value;
+
+	j = 0;
+	value = NULL;
+	start = ++(*i);
+	while (word[*i] && (ft_isalnum(word[*i]) || word[*i] == '_'))
+		var_name[j++] = word[(*i)++];
+	var_name[j] = '\0';
+	value = ft_get_env_value(var_name, env_ht);
+	if (value)
+		ft_strcat(*new_word, value);
+	else
+		ft_strcat(*new_word, "");
 }
 
 void	ft_append_char(char **new_word, char c)
@@ -73,77 +125,26 @@ void	ft_append_char(char **new_word, char c)
 	*new_word = tmp;
 }
 
-void	ft_single_quote(char **new_word, char *word, int *i)
+char	*ft_get_env_value(char *key, t_hashtable *env_ht)
 {
-	int	start;
+	t_element	*elem;
 
-	start = ++(*i);
-	while (word[*i] && word[*i] != CHAR_S_QUOTE)
-		(*i)++;
-	ft_strncat(new_word, &word[start], *i - start + 1);
-}
-
-void	ft_double_quote(char **new_word, char *word, int *i)
-{
-	int	start;
-
-	start = ++(*i);
-	while (word[*i] && word[*i] != CHAR_D_QUOTE)
-	{
-		if (word[*i] == CHAR_DOLLAR){
-			printf("Passe par dollar\n");
-			ft_replace(new_word, word, i);
-		}
-		else{
-			printf("Passe par append\n");
-			ft_append_char(new_word, word[(*i)++]);
-		}
-	}
-}
-
-void	ft_replace(char **new_word, char *word, int *i)
-{
-	int		start;
-	char	var_name[256];
-	int		j;
-	char	*value;
-
-	j = 0;
-	value = NULL;
-	start = ++(*i);
-	while (word[*i] && (ft_isalnum(word[*i]) || word[*i] == '_'))
-		var_name[j++] = word[(*i)++];
-	var_name[j] = '\0';
-	printf("Var_name = %s\n", var_name);
-	value = get_env_value(var_name, get_world()->env);
-	printf("Value = %s\n", value);
-	if (value)
-		ft_strcat(*new_word, value);
-	else
-		ft_strcat(*new_word, "");
-	(*i)--;
-}
-
-char	*get_env_value(char *name, t_list *env_list)
-{
-	t_list	*tmp;
-	char	*env_var;
-	size_t	name_len;
-
-	env_var = NULL;
-	tmp = env_list;
-	name_len = ft_strlen(name);
-	while (tmp)
-	{
-		env_var = (char *)tmp->content;
-		if (!env_var)
-		{
-			tmp = tmp->next;
-			continue ;
-		}
-		if (ft_strncmp(env_var, name, name_len) == 0 && env_var[name_len] == '=')
-			return (env_var + name_len + 1);
-		tmp = tmp->next;
-	}
+	elem = ft_get_element(env_ht, key);
+	if (elem)
+		return (elem->value);
 	return (NULL);
+}
+
+char	*ft_extract_var_name(char *str, int *i)
+{
+	int	start;
+	int	len;
+
+	start = *i + 1;
+	len = 0;
+	while (str[start + len] && (ft_isalnum(str[start + len]) || str[start
+			+ len] == '_'))
+		len++;
+	*i += len;
+	return (ft_substr(str, start, len));
 }
