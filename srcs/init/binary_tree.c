@@ -6,25 +6,11 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:49:34 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/05 12:32:46 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/06 12:16:46 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-static void	print_token(t_token *token_lst, int i)
-{
-	printf("\n");
-	while (token_lst){
-		printf("Niveau : %i, Value = %s, Type = %i\n", i, token_lst->value, token_lst->token_type);
-		if (token_lst->sub_token){
-			t_token *sub_token = token_lst->sub_token;
-			print_token(sub_token, i + 1);
-		}
-		token_lst = token_lst->next;
-	}
-	printf("\n");
-}
 
 
 
@@ -35,12 +21,10 @@ void	fill_tree(t_world *world)
 	token_lst = tokenization_token(world->prompt);
 	if (!token_lst)
 		return ;
-	printf("Token_lst : \n");
 	handle_dollar(&token_lst, world->env);
-	print_token(token_lst, 0);
-	// world->tree = parse_token(token, &i);
-	// if (world->tree)
-	// 	print_tree(world->tree);
+	world->tree = parse_token(token_lst);
+	if (world->tree)
+		print_tree(world->tree);
 	// 	handle_redirection(world->tree, token);
 	// free_token(token);
 }

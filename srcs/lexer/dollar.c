@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 12:14:31 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/05 15:44:02 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/06 11:02:17 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,12 @@ char	*ft_expand(char *word, t_hashtable *env_ht)
 }
 void	ft_single_quote(char **new_word, char *word, int *i)
 {
-	ft_strncat(new_word, &word[(*i)], 1);
 	(*i)++;
 	while (word[*i] && word[*i] != CHAR_S_QUOTE)
 	{
 		ft_strncat(new_word, &word[(*i)], 1);
 		(*i)++;
 	}
-	if (word[*i] == CHAR_S_QUOTE)
-		ft_strncat(new_word, &word[(*i)], 1);
 }
 
 void	ft_double_quote(char **new_word, char *word, int *i,
@@ -79,7 +76,6 @@ void	ft_double_quote(char **new_word, char *word, int *i,
 	start = ++(*i);
 	while (word[*i] && word[*i] != CHAR_D_QUOTE)
 	{
-		printf("word[%i] = %c\n", *i, word[*i]);
 		if (word[*i] == CHAR_DOLLAR)
 			ft_replace(new_word, word, i, env_ht);
 		else

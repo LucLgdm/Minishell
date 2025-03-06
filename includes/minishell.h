@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/05 10:41:30 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/06 12:17:08 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,14 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-# include "./lexer.h"
-
-
-// Binary tree
-typedef struct s_node {
-    char **cmd;          // Command and its arguments
-    struct s_node *left;
-    struct s_node *right;
-    char *token;          // Operator token (|, &&, ||, ;)
-    char *infile;        // Input redirection file (<)
-    char *outfile;       // Output redirection file (> or >>)
-    int append;          // 1 if >> is used, 0 for >
-    int pipe_fd[2];      // Pipe file descriptors (used if node is a pipe)
-} t_node;
-
+# include "./parsing.h"
 
 typedef struct s_world
 {
-	char	*prompt;
+	char	    *prompt;
 	t_hashtable *env;
-	t_node	*tree;
+	t_ast	    *tree;
 }	t_world;
-
-
-
-
-// output
-
 
 // environement
 void	prompt(t_world *world);
@@ -67,20 +47,15 @@ void	process_token(char *prompt, char **tmp_token, int *i, char **token, int *j)
 void	handle_quote(char *prompt, char **tmp_token, int *i, char **token, int *j);
 // void	handle_parenthesis(char *prompt, char **tmp_token, int *i, char **token, int *j);
 
-// parse_token
-t_node	*parse_token(char **token, int *i);
-
 // binary_tree
 void	fill_tree(t_world *world);
-
-// tree_usefull
-t_node  *new_node(void);
 
 // free
 void	free_all(t_world *world);
 
-
-void print_tab(char **tab);
-void	print_tree(t_node *root);
+// print.c
+void	print_tab(char **tab);
+void	print_token(t_token *token_lst, int i);
+void	print_tree(t_ast *root);
 
 #endif

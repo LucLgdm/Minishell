@@ -6,7 +6,7 @@
 #    By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/03/05 10:54:09 by lde-merc         ###   ########.fr        #
+#    Updated: 2025/03/06 12:17:24 by lde-merc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,20 +26,23 @@ INIT_DIR = init/
 FREE_DIR = free/
 LEXER_DIR = lexer/
 HASHTABLE_DIR = hashtable/
+PARSING_DIR = parsing/
 
 # Liste des fichiers source
 SRC_FILES = main.c \
 			$(INIT_DIR)environement.c \
 			$(INIT_DIR)binary_tree.c \
-			$(INIT_DIR)tree_usefull.c \
+			$(INIT_DIR)print.c \
 			$(INIT_DIR)parse_token.c \
 			$(FREE_DIR)free.c \
 			$(LEXER_DIR)lexer.c \
 			$(LEXER_DIR)fill_token.c \
 			$(LEXER_DIR)fill_token2.c \
 			$(LEXER_DIR)dollar.c \
-			$(HASHTABLE_DIR)create.c \
-			$(HASHTABLE_DIR)operation.c
+			$(HASHTABLE_DIR)hashtable_creation.c \
+			$(HASHTABLE_DIR)operation.c \
+			$(PARSING_DIR)parser.c \
+			$(PARSING_DIR)tree_creation.c
 
 # Transforme chaque fichier source en un fichier objet dans $(OBJ_DIR)
 OBJS = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
@@ -59,6 +62,7 @@ mkdir_obj:
 	@mkdir -p $(OBJ_DIR)$(FREE_DIR)
 	@mkdir -p $(OBJ_DIR)$(LEXER_DIR)
 	@mkdir -p $(OBJ_DIR)$(HASHTABLE_DIR)
+	@mkdir -p $(OBJ_DIR)$(PARSING_DIR)
 
 # Compilation finale
 $(NAME): $(OBJS)

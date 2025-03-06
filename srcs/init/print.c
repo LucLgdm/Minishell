@@ -6,44 +6,17 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:59:21 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/03 13:20:40 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/06 12:16:48 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_node	*new_node(void)
-{
-	t_node	*new_node;
-
-	new_node = malloc(sizeof(t_node));
-	if (!new_node)
-		return (NULL);
-	new_node->left = NULL;
-	new_node->right = NULL;
-	new_node->cmd = NULL;
-	new_node->token = 0;
-	new_node->pipe_fd[0] = -1;
-	new_node->pipe_fd[0] = -1;
-	new_node->infile = NULL;
-	new_node->outfile = NULL;
-	return (new_node);
-}
-
-void	print_tree(t_node *root){
+void	print_tree(t_ast *root){
 	if (!root->left && !root->right){
 		printf("Commande unique\n");
 		print_tab(root->cmd);
 		return ;
-	}
-	if (root->left)
-	{
-		printf("%s\n", root->token);
-		print_tree(root->left);
-	}
-	if (root->right){
-		printf("%s\n", root->token);
-		print_tree(root->right);
 	}
 }
 
@@ -52,4 +25,19 @@ void print_tab(char **tab) {
         printf("%s ", tab[i]);
     }
     printf("\n");
+}
+
+
+void	print_token(t_token *token_lst, int i)
+{
+	printf("\n");
+	while (token_lst){
+		printf("Niveau : %i, Value = %s, Type = %i\n", i, token_lst->value, token_lst->token_type);
+		if (token_lst->sub_token){
+			t_token *sub_token = token_lst->sub_token;
+			print_token(sub_token, i + 1);
+		}
+		token_lst = token_lst->next;
+	}
+	printf("\n");
 }
