@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:30:48 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/06 12:03:13 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/06 12:42:11 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,16 @@ typedef struct s_ast
 	struct s_ast	*right;
 }	t_ast;
 
+// Parser.c
 t_ast	*parse_token(t_token *token);
 void	ft_create_tree(t_ast **root, t_token *token);
+
+// Node_cmd.c
 t_ast	*ft_create_cmd_solo(t_token *token);
 t_ast	*ft_new_ast(int node_type, int redir_type);
 t_redir	*ft_new_redir(int redir_type);
+
+// Node.c
+t_ast	*ft_create_token_node(t_token *token);
 
 #endif

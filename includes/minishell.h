@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/06 12:17:08 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:18:01 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ void	free_all(t_world *world);
 // print.c
 void	print_tab(char **tab);
 void	print_token(t_token *token_lst, int i);
-void	print_tree(t_ast *root);
+void	print_tree(t_ast *root, int i);
 
 #endif

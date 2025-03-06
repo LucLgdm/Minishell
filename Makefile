@@ -6,7 +6,7 @@
 #    By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/03/06 12:17:24 by lde-merc         ###   ########.fr        #
+#    Updated: 2025/03/06 12:42:39 by lde-merc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,8 @@ SRC_FILES = main.c \
 			$(HASHTABLE_DIR)hashtable_creation.c \
 			$(HASHTABLE_DIR)operation.c \
 			$(PARSING_DIR)parser.c \
-			$(PARSING_DIR)tree_creation.c
+			$(PARSING_DIR)node.c \
+			$(PARSING_DIR)node_cmd.c
 
 # Transforme chaque fichier source en un fichier objet dans $(OBJ_DIR)
 OBJS = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))

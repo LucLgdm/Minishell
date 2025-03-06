@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tree_usefull.c                                     :+:      :+:    :+:   */
+/*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:59:21 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/06 12:16:48 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:17:31 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	print_tree(t_ast *root){
+void	print_tree(t_ast *root, int niveau){
 	if (!root->left && !root->right){
-		printf("Commande unique\n");
+		printf("Commande unique, profondeur = %i\n", niveau);
 		print_tab(root->cmd);
 		return ;
+	}
+	if (root->left){
+		printf("Left\n");
+		print_tree(root->left, niveau + 1);
+	}
+	if (root->right){
+		printf("Right\n");
+		print_tree(root->right, niveau + 1);
 	}
 }
 

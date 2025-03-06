@@ -1,28 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tree_creation.c                                    :+:      :+:    :+:   */
+/*   node_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:26:16 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/06 12:08:33 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/06 12:41:37 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/parsing.h"
-
-void	ft_create_tree(t_ast **root, t_token *token)
-{
-	t_token	*tmp;
-
-	tmp = token;
-	while (tmp && (tmp->token_type == TOKEN_WORD
-			|| tmp->token_type == TOKEN_PARENTHESES))
-		tmp = tmp->next;
-	if (!tmp)
-		*root = ft_create_cmd_solo(token);
-}
 
 t_ast	*ft_create_cmd_solo(t_token *token)
 {
@@ -35,9 +23,10 @@ t_ast	*ft_create_cmd_solo(t_token *token)
 	if (root)
 	{
 		i = 0;
-		while(tmp && (tmp->token_type == TOKEN_WORD))
+		while (tmp && (tmp->token_type == TOKEN_WORD))
 		{
 			root->cmd[i++] = ft_strdup(tmp->value);
+			tmp->created = 1;
 			tmp = tmp->next;
 		}
 		root->cmd[i] = NULL;
