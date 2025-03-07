@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 10:20:13 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/05 10:59:01 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/07 11:17:22 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@
 # include <stdbool.h>
 
 typedef struct s_list	t_list;
-struct					s_list
+struct	s_list
 {
-	void				*content;
-	t_list				*next;
+	void	*content;
+	t_list	*next;
 };
 
 int		ft_next_prime(int n);
@@ -72,8 +72,10 @@ char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
+// Affichage
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
+void	ft_putstr_array(char **str_array);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 // printf

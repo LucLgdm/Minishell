@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:29:07 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/06 15:08:40 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:50:30 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,40 @@ t_ast	*parse_token(t_token *token)
 void	ft_create_tree(t_ast **root, t_token *token)
 {
 	t_token	*tmp;
+	bool	dp_de;
 
+	dp_de = false;
 	tmp = token;
-	while (tmp && (tmp->token_type == TOKEN_WORD
-			|| tmp->token_type == TOKEN_PARENTHESES || tmp->created))
+	while (tmp->next)
+	{
+		if (tmp->token_type == TOKEN_ANDAND
+			|| tmp->token_type == TOKEN_PIPEPIPE)
+			dp_de = true;
 		tmp = tmp->next;
-	if (!tmp)
-		*root = ft_create_cmd_solo(token);
+	}
+	if (dp_de)
+	{
+		*root = ft_create_node_bonus(tmp);
+		ft_create_tree((*root)->left, tmp->next);
+		ft_create_tree((*root)->right, tmp->prev);
+	}
 	else
-		*root = ft_create_token_node(tmp);
+	{
+		if ()
+		*root = ft_create_node_mandatory(token);
+	}
 }
+
+// void	ft_create_tree(t_ast **root, t_token *token)
+// {
+// 	t_token	*tmp;
+
+// 	tmp = token;
+// 	while (tmp && (tmp->token_type == TOKEN_WORD
+// 			|| tmp->token_type == TOKEN_PARENTHESES || tmp->created))
+// 		tmp = tmp->next;
+// 	if (!tmp)
+// 		*root = ft_create_cmd_solo(token);
+// 	else
+// 		*root = ft_create_token_node(tmp);
+// }

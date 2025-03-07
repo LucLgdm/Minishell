@@ -6,25 +6,30 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:59:21 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/06 15:17:31 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/07 11:45:54 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	print_tree(t_ast *root, int niveau){
-	if (!root->left && !root->right){
-		printf("Commande unique, profondeur = %i\n", niveau);
-		print_tab(root->cmd);
+void	print_tree(t_ast *ast_tree, int i)
+{
+	if (!ast_tree->left)
+	{
+		printf("~~~~~~~~~~~~~~~~~~~~ THE TREE ~~~~~~~~~~~~~~~~~~~~\n");
+		if (ast_tree->cmd)
+		{
+			printf("Profondeur : %i, Left : %p\n", i, (void *)ast_tree->cmd);
+			ft_putstr_array(ast_tree->cmd);
+		}
 		return ;
 	}
-	if (root->left){
-		printf("Left\n");
-		print_tree(root->left, niveau + 1);
-	}
-	if (root->right){
-		printf("Right\n");
-		print_tree(root->right, niveau + 1);
+	if (ast_tree->left)
+		print_tree(ast_tree->left, i + 1);
+	if (ast_tree->right->cmd)
+	{
+		printf("Profondeur : %i, Left : %p\n", i, (void *)ast_tree->cmd);
+			ft_putstr_array(ast_tree->cmd);
 	}
 }
 
