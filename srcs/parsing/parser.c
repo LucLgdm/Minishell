@@ -6,20 +6,20 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:29:07 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/07 16:50:30 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:42:17 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/parsing.h"
 
-t_ast	*parse_token(t_token *token)
-{
-	t_ast	*root;
+// t_ast	*parse_token(t_token *token)
+// {
+// 	t_ast	*root;
 
-	root = NULL;
-	ft_create_tree(&root, token);
-	return (root);
-}
+// 	root = NULL;
+// 	ft_create_tree(&root, token);
+// 	return (root);
+// }
 
 void	ft_create_tree(t_ast **root, t_token *token)
 {

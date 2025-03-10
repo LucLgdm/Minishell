@@ -6,19 +6,19 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:20:30 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/07 16:48:10 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/10 10:25:40 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/parsing.h"
 
-t_ast	*ft_create_node_mandatory(t_token *token)
-{
-	t_ast	*root;
+// t_ast	*ft_create_node_mandatory(t_token *token)
+// {
+// 	t_ast	*root;
 	
 	
-	return (root);
-}
+// 	return (root);
+// }
 
 t_ast	*ft_create_node_bonus(t_token *token)
 {
