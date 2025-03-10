@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/07 11:41:25 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:26:03 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdlib.h>
 
 # include "./parsing.h"
+# include "./hashtable.h"
 
 typedef struct s_world
 {
