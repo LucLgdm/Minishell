@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:02:39 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/10 15:14:29 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/11 17:25:51 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,5 @@ void	ft_echo(t_ast *node)
 	}
 	if (!isn)
 		printf("\n");
-	exit(EXIT_SUCCESS);
+	return (1);
 }

@@ -6,11 +6,42 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:24:49 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/10 11:26:30 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/11 16:22:33 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_check_for_stop(pid_t *pid, int pid_nb)
+{
+	int		i;
+	int		exit_status;
+	int		*tmp;
+	pid_t	endpid;
+
+	i = 0;
+	while (g_stop == 0)
+	{
+		if (endpid = waitpid(-1, tmp, WNOHANG))
+		{
+			if (endpid == pid[pid_nb])
+				exit_status = *tmp;
+			i++;
+			if (i == pid_nb)
+				break ;
+		}
+	}
+	if (i != pid_nb)
+	{
+		i = -1;
+		while (++i < pid_nb)
+			kill(pid[i], SIGTERM);
+		while (endpid = wait(NULL))
+			if (endpid == pid[pid_nb])
+				exit_status = *tmp;
+	}
+	exit(exit_status);
+}
 
 char	**path_tab(t_hashtable hashtable)
 {

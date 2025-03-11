@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 15:51:35 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/11 12:41:55 by andrean          ###   ########.fr       */
+/*   Created: 2025/03/11 15:50:23 by andrean           #+#    #+#             */
+/*   Updated: 2025/03/11 15:51:25 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef EXEC_H
+# define EXEC_H
 
-void	ft_pwd(t_ast *node)
-{
-	char *wd;
+# include <unistd.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
-	wd = ft_calloc(sizeof(char), 250);
-	if (!wd)
-		;//error
-	getcwd(wd, 250);
-	printf("%s\n", wd);
-	free(wd);
-}
+#endif
