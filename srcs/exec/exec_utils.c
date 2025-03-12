@@ -6,11 +6,30 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:24:49 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/11 16:22:33 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/12 14:48:30 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_redirect(t_ast *node)
+{
+	t_redir	*redir;
+
+	redir = node->redir;
+	while (redir)
+	{
+		if (redir->redir_type == REDIR_IN)
+			redirect_input(redir->value, STDIN_FILENO);
+		if (redir->redir_type == REDIR_APPEND_OUT)
+			redirect_output(redir->value, STDOUT_FILENO, 1);
+		if (redir->redir_type == REDIR_OUT)
+			redirect_output(redir->value, STDOUT_FILENO, 0);
+		if (redir->redir_type == REDIR_HEREDOC)
+			ft_here_doc(redir->value, STDIN_FILENO);
+		redir = redir->next;
+	}
+}
 
 void	ft_check_for_stop(pid_t *pid, int pid_nb)
 {
@@ -55,6 +74,8 @@ char	**path_tab(t_hashtable hashtable)
 	if (!path)
 		return (NULL);
 	tab = ft_split(path, ':');
+	if (!tab)
+		;//malloc error
 	while (tab[++i])
 	{
 		tmp = ft_strjoin(tab[i], "/");

@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/11 16:38:38 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/12 15:41:47 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include "./parsing.h"
 # include "./hashtable.h"
 # include "./exec.h"
+# include "./builtins.h"
 
 typedef struct s_world
 {

@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:26:16 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/06 12:41:37 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/12 12:00:37 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_ast	*ft_create_cmd_solo(t_token *token)
 	int		i;
 
 	tmp = token;
-	root = ft_new_ast(NODE_CMD, 0);
+	root = ft_new_ast(NODE_CMD);
 	if (root)
 	{
 		i = 0;
@@ -34,25 +34,14 @@ t_ast	*ft_create_cmd_solo(t_token *token)
 	return (root);
 }
 
-t_ast	*ft_new_ast(int node_type, int redir_type)
+t_ast	*ft_new_ast(int node_type)
 {
 	t_ast	*new;
 
 	new = malloc(sizeof(t_ast));
 	if (!new)
 		return (NULL);
-	new->cmd = malloc(2 * sizeof(char *));
-	if (!new->cmd)
-		return (NULL);
-	new->cmd[0] = malloc(sizeof(char *));
-	new->cmd[1] = malloc(sizeof(char *));
-	if (!new->cmd[0] || !new->cmd[1])
-		return (NULL);
 	new->node_type = node_type;
-	if (!redir_type)
-		new->redir = NULL;
-	else
-		new->redir = ft_new_redir(redir_type);
 	new->left = NULL;
 	new->right = NULL;
 	return (new);

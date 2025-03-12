@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:26:44 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/11 17:28:42 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/12 14:53:29 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ int	exec_one_command(t_ast *node, char **paths)
 	int		*exit_status;
 	pid_t	pid;
 
-	if (!get_builtins(node))
+	ft_redirect(node);
+	if (!get_builtins(node) && paths)
 	{
 		pid = create_process(node, paths);
 		waitpid(pid, exit_status, NULL);
@@ -145,5 +146,6 @@ int	exec_node(t_ast *node, char **paths)
 		if (retval)
 			return (retval);
 	if (node->node_type == TOKEN_WORD)
-		exec_one_command(node, paths);
+		return (exec_one_command(node, paths));
+	return (exec_node(node->right, paths));
 }
