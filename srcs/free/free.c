@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:56:03 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/05 10:44:21 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:04:52 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	free_all(t_world *world)
 	{
 		if (world->env)
 		{
-			while(++i < world->env->length)
+			while (++i < world->env->length)
 			{
 				if (world->env->table[i])
 				{

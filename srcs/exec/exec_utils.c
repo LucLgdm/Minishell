@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:24:49 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/12 14:48:30 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/12 17:24:42 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	ft_check_for_stop(pid_t *pid, int pid_nb)
 	int		exit_status;
 	int		*tmp;
 	pid_t	endpid;
-
+	int		g_stop;
+	
 	i = 0;
 	while (g_stop == 0)
 	{
