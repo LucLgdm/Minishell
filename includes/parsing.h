@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:30:48 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/12 10:53:24 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:26:31 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,11 @@ t_token	*find_last_pipe(t_token *token);
 t_ast	*parse_pipes(t_token *token);
 t_ast	*parse_simple_command(t_token *token);
 t_token	*split_token(t_token *token, t_token *op);
+t_ast	*parse_parentheses(t_token *token);
 
 // Node_cmd.c
 t_ast	*ft_create_cmd_solo(t_token *token);
-t_ast	*ft_new_ast(int node_type, int redir_type);
+t_ast	*ft_new_ast(int node_type);
 t_redir	*ft_new_redir(int redir_type);
 
 // Node.c

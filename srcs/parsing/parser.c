@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:29:07 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/12 11:04:33 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:19:31 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,37 @@
 t_ast	*parse_token(t_token *token)
 {
 	t_token	*op;
+	t_token	*split_t;
 	t_ast	*node;
 
 	op = find_last_logical_operator(token);
 	if (op)
 	{
-		node = malloc(sizeof(t_ast));
-		node->node_type = (op->token_type == TOKEN_PIPEPIPE) ? NODE_OR : NODE_AND;
+		node = ft_new_ast(op->token_type);
 		op->value = NULL;
-		node->left = parse_token(split_token(token, op));
+		split_t = split_token(token, op);
+		node->left = parse_token(split_t);
 		node->right = parse_token(op->next);
 		return (node);
 	}
+	if (token->token_type == TOKEN_PARENTHESES)
+		return (parse_parentheses(token));
 	return (parse_pipes(token));
+}
+
+t_ast	*parse_parentheses(t_token *token)
+{
+	t_ast	*sub_ast;
+
+	if (!token || token->token_type != TOKEN_PARENTHESES)
+		return (NULL);
+	if (token->sub_token)
+	{
+		sub_ast = parse_token(token->sub_token);
+		if (sub_ast)
+			return (sub_ast);
+	}
+	return (NULL);
 }
 
 t_token	*find_last_logical_operator(t_token *token)
@@ -80,28 +98,54 @@ t_ast	*parse_pipes(t_token *token)
 t_ast	*parse_simple_command(t_token *token)
 {
 	t_ast	*node;
-	int		count;
 	t_token	*tmp;
+	t_redir	*redir;
+	int		i;
+	int		count;
 
 	if (!token)
 		return (NULL);
-	node = malloc(sizeof(t_ast));
-	node->node_type = NODE_CMD;
+	node = ft_new_ast(token->token_type);
 	count = 0;
 	tmp = token;
 	while (tmp && tmp->token_type != TOKEN_PIPE
 		&& tmp->token_type != TOKEN_ANDAND && tmp->token_type != TOKEN_PIPEPIPE)
 	{
-		count++;
+		if (tmp->token_type != TOKEN_GREATER
+			&& tmp->token_type != TOKEN_GREATGREATER
+			&& tmp->token_type != TOKEN_LESSLESSER
+			&& tmp->token_type != TOKEN_LESSER)
+			count++;
 		tmp = tmp->next;
 	}
 	node->cmd = malloc(sizeof(char *) * (count + 1));
-	for (int i = 0; i < count; i++)
+	i = 0;
+	while (token && token->token_type != TOKEN_PIPE
+		&& token->token_type != TOKEN_ANDAND
+		&& token->token_type != TOKEN_PIPEPIPE)
 	{
-		node->cmd[i] = ft_strdup(token->value);
+		if (token->token_type == TOKEN_GREATER
+			|| token->token_type == TOKEN_GREATGREATER
+			|| token->token_type == TOKEN_LESSER
+			|| token->token_type == TOKEN_LESSLESSER)
+		{
+			redir = malloc(sizeof(t_redir));
+			redir->redir_type = token->token_type;
+			token = token->next;
+			if (!token)
+			{
+				fprintf(stderr, "Erreur : redirection sans fichier\n");
+				free(node);
+				return (NULL);
+			}
+			redir->value = ft_strdup(token->value);
+			redir->next = node->redir;
+			node->redir = redir;
+		}
+		else
+			node->cmd[i++] = ft_strdup(token->value);
 		token = token->next;
 	}
-	node->cmd[count] = NULL;
 	return (node);
 }
 
@@ -121,6 +165,8 @@ t_token	*split_token(t_token *token, t_token *op)
 		new_token->value = ft_strdup(token->value);
 		new_token->token_type = token->token_type;
 		new_token->next = NULL;
+		if (token->token_type == TOKEN_PARENTHESES)
+			new_token->sub_token = token->sub_token;
 		if (!head)
 		{
 			head = new_token;
@@ -135,47 +181,3 @@ t_token	*split_token(t_token *token, t_token *op)
 	}
 	return (head);
 }
-
-// void	ft_create_tree(t_ast **root, t_token *token)
-// {
-// 	t_token	*tmp;
-// 	bool	dp_de;
-
-// 	dp_de = false;
-// 	tmp = token;
-// 	while (tmp->next)
-// 	{
-// 		if (tmp->token_type == TOKEN_ANDAND
-// 			|| tmp->token_type == TOKEN_PIPEPIPE)
-// 		{
-// 			dp_de = true;
-// 			break ;
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// 	if (dp_de)
-// 	{
-// 		*root = ft_create_node_bonus(tmp);
-// 		ft_create_tree((*root)->left, tmp->next);
-// 		ft_create_tree((*root)->right, token);
-// 	}
-// 	else
-// 	{
-// 		if ()
-// 		*root = ft_create_node_mandatory(token);
-// 	}
-// }
-
-// void	ft_create_tree(t_ast **root, t_token *token)
-// {
-// 	t_token	*tmp;
-
-// 	tmp = token;
-// 	while (tmp && (tmp->token_type == TOKEN_WORD
-// 			|| tmp->token_type == TOKEN_PARENTHESES || tmp->created))
-// 		tmp = tmp->next;
-// 	if (!tmp)
-// 		*root = ft_create_cmd_solo(token);
-// 	else
-// 		*root = ft_create_token_node(tmp);
-// }

@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:20:30 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/10 10:25:40 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/12 12:00:48 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ t_ast	*ft_create_node_bonus(t_token *token)
 			if (light >= 0)
 				light = 1;
 			else
-				root = ft_new_ast(TOKEN_PIPEPIPE, 0);
+				root = ft_new_ast(TOKEN_PIPEPIPE);
 		}
 		else if (token->token_type == TOKEN_PIPEPIPE)
 		{
 			if (light <= 0)
 				light = -1;
 			else
-				root = ft_new_ast(TOKEN_ANDAND, 0);
+				root = ft_new_ast(TOKEN_ANDAND);
 		}
 	}
 	return (root);
