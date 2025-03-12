@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:29:07 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/12 15:19:31 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:11:07 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ t_ast	*parse_simple_command(t_token *token)
 			node->cmd[i++] = ft_strdup(token->value);
 		token = token->next;
 	}
+	node->cmd[count] = NULL;
 	return (node);
 }
 

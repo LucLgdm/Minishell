@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:26:16 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/12 12:00:37 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:13:08 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ t_ast	*ft_new_ast(int node_type)
 	if (!new)
 		return (NULL);
 	new->node_type = node_type;
+	new->cmd = NULL;
 	new->left = NULL;
 	new->right = NULL;
+	new->redir = NULL;
 	return (new);
 }
 

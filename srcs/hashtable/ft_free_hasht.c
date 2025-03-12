@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_array.c                                    :+:      :+:    :+:   */
+/*   ft_free_hasht.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/05 10:35:40 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/12 17:06:33 by lde-merc         ###   ########.fr       */
+/*   Created: 2025/03/12 16:33:57 by lde-merc          #+#    #+#             */
+/*   Updated: 2025/03/12 16:36:10 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../../includes/hashtable.h"
 
-void	ft_free_array(char **split)
+void	ft_free_hasht(t_hashtable *hasht)
 {
 	int	i;
 
-	if (!split)
-		return ;
 	i = -1;
-	while (split[++i])
-		free(split[i]);
-	free(split);
+	if (hasht->table)
+	{
+		while (++i < hasht->length){
+			ft_free_element(hasht->table[i]);
+		}
+		free(hasht->table);
+	}
+	if (hasht)
+		free(hasht);
 }

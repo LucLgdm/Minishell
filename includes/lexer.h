@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:17:28 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/12 10:53:37 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:00:44 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int		token_len(char *input);
 
 //	fill_token.c
 t_token	*fill_token(t_token *token_lst, char *prompt, int len_token);
-void	ft_free_token(t_token *token_lst);
 t_token	*ft_create_token(int len_token, char *prompt);
 
 //	fill_token2.c
@@ -70,5 +69,7 @@ char	*ft_get_env_value(char *key, t_hashtable *env_ht);
 char	*ft_extract_var_name(char *str, int *i);
 void	ft_append_char(char **new_word, char c);
 void	ft_replace(char **new_word, char *word, int *i, t_hashtable *env_ht);
+
+void	ft_free_token(t_token *token);
 
 #endif

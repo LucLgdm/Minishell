@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:24:34 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/12 15:45:55 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:56:25 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ t_hashtable	*ft_modify_value(t_hashtable *ht, char *key, char *value, int add);
 t_hashtable	*ft_remove_element(t_hashtable *htable, char *key);
 
 void	ft_free_element(t_element *element);
+void	ft_free_hasht(t_hashtable *hasht);
 
 #endif

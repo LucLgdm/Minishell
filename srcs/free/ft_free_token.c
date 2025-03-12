@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_array.c                                    :+:      :+:    :+:   */
+/*   ft_free_token.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/05 10:35:40 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/12 17:06:33 by lde-merc         ###   ########.fr       */
+/*   Created: 2025/03/12 16:45:13 by lde-merc          #+#    #+#             */
+/*   Updated: 2025/03/12 16:55:49 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../../includes/lexer.h"
 
-void	ft_free_array(char **split)
+void	ft_free_token(t_token *token)
 {
-	int	i;
-
-	if (!split)
+	if (!token)
 		return ;
-	i = -1;
-	while (split[++i])
-		free(split[i]);
-	free(split);
+	ft_free_token(token->sub_token);
+	ft_free_token(token->next);
+	free(token->value);
+	free(token);
 }

@@ -6,7 +6,7 @@
 #    By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/03/06 12:42:39 by lde-merc         ###   ########.fr        #
+#    Updated: 2025/03/12 16:58:17 by lde-merc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,12 +35,15 @@ SRC_FILES = main.c \
 			$(INIT_DIR)print.c \
 			$(INIT_DIR)parse_token.c \
 			$(FREE_DIR)free.c \
+			$(FREE_DIR)ft_free_ast.c \
+			$(FREE_DIR)ft_free_token.c \
 			$(LEXER_DIR)lexer.c \
 			$(LEXER_DIR)fill_token.c \
 			$(LEXER_DIR)fill_token2.c \
 			$(LEXER_DIR)dollar.c \
 			$(HASHTABLE_DIR)hashtable_creation.c \
 			$(HASHTABLE_DIR)operation.c \
+			$(HASHTABLE_DIR)ft_free_hasht.c \
 			$(PARSING_DIR)parser.c \
 			$(PARSING_DIR)node.c \
 			$(PARSING_DIR)node_cmd.c
