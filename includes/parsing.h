@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:30:48 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/07 15:48:06 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:53:24 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,12 @@ typedef struct s_ast
 
 // Parser.c
 t_ast	*parse_token(t_token *token);
-void	ft_create_tree(t_ast **root, t_token *token);
+// void	ft_create_tree(t_ast **root, t_token *token);
+t_token	*find_last_logical_operator(t_token *token);
+t_token	*find_last_pipe(t_token *token);
+t_ast	*parse_pipes(t_token *token);
+t_ast	*parse_simple_command(t_token *token);
+t_token	*split_token(t_token *token, t_token *op);
 
 // Node_cmd.c
 t_ast	*ft_create_cmd_solo(t_token *token);

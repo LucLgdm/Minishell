@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:59:21 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/07 11:45:54 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:14:27 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,27 @@
 
 void	print_tree(t_ast *ast_tree, int i)
 {
-	if (!ast_tree->left)
-	{
-		printf("~~~~~~~~~~~~~~~~~~~~ THE TREE ~~~~~~~~~~~~~~~~~~~~\n");
-		if (ast_tree->cmd)
+	char *operator[4] = {"", "|", "&&", "||"};
+	if (!ast_tree->left && !ast_tree->right){
+		if (ast_tree->cmd[0])
 		{
-			printf("Profondeur : %i, Left : %p\n", i, (void *)ast_tree->cmd);
+			ft_printf("Profondeur : %i, Commande : ", i);
 			ft_putstr_array(ast_tree->cmd);
+			printf("\n");
 		}
-		return ;
 	}
-	if (ast_tree->left)
+	if(ast_tree->left){
+		printf("Left\n");
 		print_tree(ast_tree->left, i + 1);
-	if (ast_tree->right->cmd)
-	{
-		printf("Profondeur : %i, Left : %p\n", i, (void *)ast_tree->cmd);
-			ft_putstr_array(ast_tree->cmd);
+	}
+	if (ast_tree->right){
+		printf("Right\n");
+		print_tree(ast_tree->right, i + 1);
+	}
+	if (ast_tree->node_type != NODE_CMD){
+		
+		printf("Profondeur : %i, Token : %s\n", i, operator[ast_tree->node_type]);
+		printf("\n");
 	}
 }
 
