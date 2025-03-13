@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 16:35:04 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/11 17:09:58 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/13 16:43:09 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ void	ft_here_doc(char *limit, int fdin)
 {
 	int		herefd;
 	char	*line;
+	
 	herefd = open(".heredoc", O_CREAT | O_WRONLY, 0644);
-	if(herefd == -1)
+	if (herefd == -1)
 		;//error
 	line = readline("heredoc>");
 	while (!ft_strcmp(line, limit) && line)
@@ -58,5 +59,5 @@ void	ft_here_doc(char *limit, int fdin)
 	else
 		free(line);
 	close(herefd);
-	redirect_input(".heredoc", STDIN_FILENO);
+	redirect_input(".heredoc", fdin);
 }

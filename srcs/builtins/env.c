@@ -1,47 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 15:02:39 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/13 16:44:03 by andrean          ###   ########.fr       */
+/*   Created: 2025/03/13 15:18:07 by andrean           #+#    #+#             */
+/*   Updated: 2025/03/13 17:40:01 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_n_flag(char *str)
+int	ft_env(t_ast *node)
 {
-	int	i;
+	(void)node;
+	int			i;
+	t_hashtable	*env;
 
-	i = 0;
-	if (str[i] != '-')
-		return (0);
-	while (str[++i])
-		if (str[i] != 'n')
-			return (0);
-	return (1);
-}
-
-int	ft_echo(t_ast *node)
-{
-	int	isn;
-	int	i;
-
-	isn = 0;
-	i = 0;
-	while (is_n_flag(node->cmd[++i]))
-		isn = 1;
-	while (node->cmd[i])
+	i = -1;
+	env = (*get_world())->env;
+	if (!env)
+		env = (*get_world())->new_env;
+	while (++i < env->length)
 	{
-		printf("%s", node->cmd[i]);
-		if (node->cmd[i + 1])
-			printf(" ");
-		i++;
+		if (env->table[i])
+			printf("%s=%s\n", env->table[i]->key, env->table[i]->value);
 	}
-	if (!isn)
-		printf("\n");
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   binary_tree.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:49:34 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/12 15:16:01 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:45:15 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	fill_tree(t_world *world)
 	// print_token(token_lst, 0);
 	world->tree = parse_token(token_lst);
 	// printf("Parsing OK !\n");
-	if (world->tree)
-		print_tree(world->tree, 0);
+	// if (world->tree)
+	// 	print_tree(world->tree, 0);
 }
 
 // void	fill_tree(t_world *world)

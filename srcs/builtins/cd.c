@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:34:49 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/12 16:55:27 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/13 15:59:41 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_cd(t_ast *node)
 	{
 		if (ft_get_element(env, "HOME"))
 		{
-			if (chdir(ft_get_element(env, "HOME")) == 0)
+			if (chdir(ft_get_element(env, "HOME")->value) == 0)
 				;//change pwd && oldpwd
 			else
 				;//error

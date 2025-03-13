@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:26:44 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/12 14:53:29 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/13 18:01:26 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,19 @@ int	get_builtins(t_ast *node)
 
 void	ft_execcommand(t_ast *node, char **paths)
 {
+	char	**cmd;
 	char	*path;
 	int		i;
 
+	cmd = node->cmd;
 	i = -1;
-	if (!paths)
-		get_builtins(node);
 	while(paths[++i])
 	{
-		path = ft_strjoin(paths, node->cmd[0]);
+		path = ft_strjoin(paths[i], cmd[0]);
 		if (!path)
 			;//malloc error
 		else
-			execve(path, node->cmd, getenvp());
+			execve(path, cmd, ft_create_envp());
 		free(path);
 	}
 	//error + exit;
@@ -73,8 +73,7 @@ pid_t	create_process(t_ast *node, char **paths)
 int	ft_do_the_pipe(t_ast *node, char **paths)
 {
 	int	fd[2];
-	int	*exit_status;
-	pid_t pid[3];
+	pid_t pid[2];
 
 	if (pipe(fd) == -1)
 		;//pipe failure
@@ -86,7 +85,8 @@ int	ft_do_the_pipe(t_ast *node, char **paths)
 		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
-		exit(exec_node(node->left, paths));
+		exit(exec_node((*get_world()), node->left, paths));
+		printf("wth?\n");
 	}
 	close(fd[1]);
 	pid[1] = fork();
@@ -96,34 +96,29 @@ int	ft_do_the_pipe(t_ast *node, char **paths)
 	{
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
-		exit(exec_node(node->right, paths));
+		exit(exec_node((*get_world()), node->right, paths));
+		printf("wtf\n");
 	}
 	close (fd[0]);
-	pid[2] = fork();
-	if (pid[2] == -1)
-		;//fork error
-	if (pid[2] == 0)
-		ft_check_for_stop(pid, 2);
-	waitpid(pid[2], exit_status, NULL);
-	exit(exit_status);
+	return(ft_check_for_stop(pid, 2));
 }
 
 int	exec_one_command(t_ast *node, char **paths)
 {
-	int		*exit_status;
+	int		exit_status;
 	pid_t	pid;
 
 	ft_redirect(node);
 	if (!get_builtins(node) && paths)
 	{
 		pid = create_process(node, paths);
-		waitpid(pid, exit_status, NULL);
-		if (_WIFEXITED(exit_status))
-			;
+		waitpid(pid, &exit_status, 0);
+		return (exit_status);
 	}
+	return (0);
 }
 
-int	exec_node(t_ast *node, char **paths)
+int	exec_node(t_world *world, t_ast *node, char **paths)
 {
 	int	retval;
 	int	original_stdin;
@@ -136,16 +131,36 @@ int	exec_node(t_ast *node, char **paths)
 		return (ft_do_the_pipe(node, paths));
 	original_stdin = dup(STDIN_FILENO);
 	original_stdout = dup(STDOUT_FILENO);
-	retval = exec_node(node->left, paths);
+	retval = exec_tree(world, node->left);
 	dup2(original_stdin, STDIN_FILENO);
 	dup2(original_stdout, STDOUT_FILENO);
 	if (node->node_type == TOKEN_ANDAND)
-		if (!retval)
+		if (retval)
 			return (0);
 	if (node->node_type == TOKEN_PIPEPIPE)
-		if (retval)
+		if (!retval)
 			return (retval);
 	if (node->node_type == TOKEN_WORD)
 		return (exec_one_command(node, paths));
-	return (exec_node(node->right, paths));
+	return (exec_tree(world, node->right));
+}
+
+int	exec_tree(t_world *world, t_ast *node)
+{
+	int		retval;
+	int		original_stdin;
+	int		original_stdout;
+	char	**paths;
+
+	if (!node)
+		return (-1);
+	paths = path_tab(world->env);
+	// ici expand les dollars!
+	original_stdin = dup(STDIN_FILENO);
+	original_stdout = dup(STDOUT_FILENO);
+	retval = exec_node(world, node, paths);
+	dup2(original_stdin, STDIN_FILENO);
+	dup2(original_stdout, STDOUT_FILENO);
+	ft_modify_value(world->hidden_vars, "?", ft_itoa(retval), 0);
+	return (retval);
 }

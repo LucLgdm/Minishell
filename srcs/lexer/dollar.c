@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 12:14:31 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/06 11:02:17 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/13 12:29:44 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,19 @@ char	*ft_expand(char *word, t_hashtable *env_ht)
 		else if (word[i] == CHAR_DOLLAR)
 		{
 			var_name = ft_extract_var_name(word, &i);
+			if (strcmp(var_name, "") == 0)
+				ft_strncat(&new_word, "$", 1);
 			env_value = ft_get_env_value(var_name, env_ht);
 			free(var_name);
 			if (env_value)
-				new_word = ft_strcat(new_word, env_value);
+				ft_strncat(&new_word, env_value, ft_strlen(env_value));
 		}
 		else
 			ft_strncat(&new_word, &word[i], 1);
 	}
 	return (new_word);
 }
+
 void	ft_single_quote(char **new_word, char *word, int *i)
 {
 	(*i)++;
@@ -138,9 +141,13 @@ char	*ft_extract_var_name(char *str, int *i)
 
 	start = *i + 1;
 	len = 0;
-	while (str[start + len] && (ft_isalnum(str[start + len]) || str[start
-			+ len] == '_'))
+	while ((str[start + len] && (ft_isalnum(str[start + len]) || str[start
+				+ len] == '_')) && !(ft_isdigit(str[start])))
 		len++;
+	if (ft_isdigit(str[start]))
+		while (str[start + len] && ft_isdigit(str[start + len]))
+			len++;
 	*i += len;
+	printf("%d", len);
 	return (ft_substr(str, start, len));
 }

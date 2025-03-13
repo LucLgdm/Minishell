@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:26:53 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/12 17:16:43 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/13 16:03:18 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_unset(t_ast *node)
 	env = get_world()->env;
 	arg_nb = get_arg_nb(node);
 	count = 0;
-	while (++count < get_arg_nb)
+	while (++count < arg_nb)
 		ft_remove_element(env, node->cmd[count]);
 	return (0);
 }

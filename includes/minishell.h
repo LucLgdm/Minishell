@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/12 17:23:36 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/13 17:38:13 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,26 @@
 # include "./exec.h"
 # include "./builtins.h"
 
+extern int	g_stop;
+
 typedef struct s_world
 {
 	char	    *prompt;
 	t_hashtable *env;
+	t_hashtable *new_env;
+	t_hashtable *hidden_vars;
 	t_ast	    *tree;
 }	t_world;
 
 // environement
-void	prompt(t_world *world);
-void	handle_signal(int sig);
-t_world	*get_world(void);
+void		prompt(t_world *world);
+void		handle_signal(int sig);
+int			ft_stop(void);
+t_world		**get_world(void);
 t_hashtable	*ft_create_env_hashtable(char **env);
-void	ft_env_to_hashtable(char **env, t_hashtable *env_hastable);
+t_hashtable	*ft_create_hidden(void);
+t_hashtable	*ft_create_new_env(void);
+void		ft_env_to_hashtable(char **env, t_hashtable *env_hastable);
 
 // taken
 char    **tokenization_char(char *prompt);
@@ -61,5 +68,9 @@ void	free_all(t_world *world);
 void	print_tab(char **tab);
 void	print_token(t_token *token_lst, int i);
 void	print_tree(t_ast *root, int i);
+
+// exec
+int		exec_tree(t_world *world, t_ast *node);
+int		exec_node(t_world *world, t_ast *node, char **paths);
 
 #endif

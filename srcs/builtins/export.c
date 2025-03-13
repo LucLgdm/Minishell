@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:29:58 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/12 17:16:38 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/13 16:02:14 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_export(t_ast *node)
 
 	arg_nb = get_arg_nb(node);
 	count = 0;
-	while (++count < get_arg_nb)
+	while (++count < arg_nb)
 		export_one(node->cmd[count]);
 	return (0);
 }
