@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:30:48 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/12 14:26:31 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:52:44 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,9 @@ t_redir	*ft_new_redir(int redir_type);
 // Node.c
 t_ast	*ft_create_node_mandatory(t_token *token);
 t_ast	*ft_create_node_bonus(t_token *token);
+
+// free_ast
+void	ft_free_ast(t_ast *root);
+void	ft_free_redir(t_redir *redir);
 
 #endif

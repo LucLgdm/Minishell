@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_array.c                                    :+:      :+:    :+:   */
+/*   ft_free_ast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/05 10:35:40 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/12 17:06:33 by lde-merc         ###   ########.fr       */
+/*   Created: 2025/03/12 16:37:23 by lde-merc          #+#    #+#             */
+/*   Updated: 2025/03/12 17:05:11 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "../../includes/parsing.h"
 
-void	ft_free_array(char **split)
+void	ft_free_ast(t_ast *root)
 {
-	int	i;
-
-	if (!split)
+	if (!root)
 		return ;
-	i = -1;
-	while (split[++i])
-		free(split[i]);
-	free(split);
+	ft_free_ast(root->left);
+	ft_free_ast(root->right);
+	if (root->cmd)
+		ft_free_array(root->cmd);
+	if (root->redir)
+		ft_free_redir(root->redir);
+	free(root);
+}
+
+void	ft_free_redir(t_redir *redir)
+{
+	t_redir	*tmp;
+
+	tmp = redir->next;
+	free(redir->value);
+	free(redir);
+	redir = tmp;
 }

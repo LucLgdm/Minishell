@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_free_hasht.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 16:56:03 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/14 15:26:16 by andrean          ###   ########.fr       */
+/*   Created: 2025/03/12 16:33:57 by lde-merc          #+#    #+#             */
+/*   Updated: 2025/03/12 16:36:10 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/hashtable.h"
 
-void	free_all(t_world *world)
+void	ft_free_hasht(t_hashtable *hasht)
 {
 	int	i;
 
 	i = -1;
-	if (world)
+	if (hasht->table)
 	{
-		if (world->env)
-			ft_free_hasht(world->env);
-		if (world->prompt)
-			free(world->prompt);
-		if (world->tree)
-			ft_free_ast(world->tree);
-		free(world);
+		while (++i < hasht->length){
+			ft_free_element(hasht->table[i]);
+		}
+		free(hasht->table);
 	}
+	if (hasht)
+		free(hasht);
 }

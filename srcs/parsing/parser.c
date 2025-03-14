@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:29:07 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/14 14:12:10 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/14 15:28:02 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ t_ast	*parse_simple_command(t_token *token)
 			node->cmd[i++] = ft_strdup(token->value);
 		token = token->next;
 	}
+	node->cmd[count] = NULL;
 	return (node);
 }
 

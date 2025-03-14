@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:59:16 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/03 18:20:51 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:00:55 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,20 +80,4 @@ t_token	*fill_token(t_token *token_lst, char *prompt, int len_token){
 		new_token->prev = tmp;
 	}
 	return (token_lst);
-}
-
-
-void	ft_free_token(t_token *token_lst){
-	t_token	*tmp;
-
-	if (!token_lst)
-		return ;
-	while (token_lst)
-	{
-		tmp = token_lst->next;
-		free(token_lst->value);
-		free(token_lst);
-		token_lst = tmp;
-	}
-	return ;
 }

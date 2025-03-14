@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:24:34 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/14 13:33:36 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/14 15:27:10 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void		ft_print_hashtable(t_hashtable *hashtable, char *delimeter);
 t_hashtable	*ft_modify_value(t_hashtable *ht, char *key, char *value, int add);
 t_hashtable	*ft_remove_element(t_hashtable *htable, char *key);
 
-void		ft_free_element(t_element **element);
+void	ft_free_element(t_element *element);
+void	ft_free_hasht(t_hashtable *hasht);
 
 #endif
