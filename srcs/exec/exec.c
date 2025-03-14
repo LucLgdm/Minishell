@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:26:44 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/14 14:56:39 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/14 16:46:44 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,23 @@
 int	get_builtins(t_ast *node)
 {
 	if (!strcmp(node->cmd[0], "echo"))
-		ft_echo(node);
+		return (ft_echo(node));
 	else if (!strcmp(node->cmd[0], "cd"))
-		ft_cd(node);
+		return (ft_cd(node));
 	else if (!strcmp(node->cmd[0], "pwd"))
-		ft_pwd(node);
+		return (ft_pwd(node));
 	else if (!strcmp(node->cmd[0], "export"))
-		ft_export(node);
+		return (ft_export(node));
 	else if (!strcmp(node->cmd[0], "unset"))
-		ft_unset(node);
+		return (ft_unset(node));
 	else if (!strcmp(node->cmd[0], "env"))
-		ft_env(node);
+		return (ft_env(node));
 	else if (!strcmp(node->cmd[0], "exit"))
 		ft_exit(node);
+	else if (ft_strchr(node->cmd[0], '/'))
+		return (ft_minishellception(node));
 	else
-		return (0);
+		return (-1);
 	return (1);
 }
 
@@ -112,13 +114,13 @@ int	exec_one_command(t_ast *node, char **paths)
 	pid_t	pid;
 
 	ft_redirect(node);
-	if (!get_builtins(node))
+	exit_status = get_builtins(node);
+	if (exit_status == -1)
 	{
 		pid = create_process(node, paths);
 		waitpid(pid, &exit_status, 0);
-		return (exit_status);
 	}
-	return (0);
+	return (exit_status);
 }
 
 int	exec_node(t_world *world, t_ast *node, char **paths)

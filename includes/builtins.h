@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:41:04 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/13 16:00:00 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/14 16:31:54 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ int		ft_export(t_ast *node);
 int		ft_pwd(t_ast *node);
 int		ft_unset(t_ast *node);
 int		ft_env(t_ast *node);
+int		ft_minishellception(t_ast *node);
 
 #endif

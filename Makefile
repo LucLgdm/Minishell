@@ -6,7 +6,7 @@
 #    By: andrean <andrean@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/03/14 15:26:52 by andrean          ###   ########.fr        #
+#    Updated: 2025/03/14 16:32:42 by andrean          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,8 @@ SRC_FILES = main.c \
 			$(BUILTIN_DIR)export.c\
 			$(BUILTIN_DIR)pwd.c\
 			$(BUILTIN_DIR)unset.c\
-			$(BUILTIN_DIR)env.c
+			$(BUILTIN_DIR)env.c\
+			$(BUILTIN_DIR)minishellception.c
 
 
 # Transforme chaque fichier source en un fichier objet dans $(OBJ_DIR)
