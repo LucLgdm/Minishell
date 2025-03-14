@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:26:44 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/13 18:01:26 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/14 14:56:39 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,32 +41,37 @@ void	ft_execcommand(t_ast *node, char **paths)
 
 	cmd = node->cmd;
 	i = -1;
-	while(paths[++i])
+	if (paths)
 	{
-		path = ft_strjoin(paths[i], cmd[0]);
-		if (!path)
-			;//malloc error
-		else
-			execve(path, cmd, ft_create_envp());
-		free(path);
+		while(paths[++i])
+		{
+			path = ft_strjoin(paths[i], cmd[0]);
+			if (!path)
+				;//malloc error
+			else
+				execve(path, cmd, ft_create_envp());
+			free(path);
+		}
 	}
-	//error + exit;
+	if (ft_strchr(cmd[0], '/') || !paths)
+		ft_putstr_fd("no such file or directory: ", 2);
+	else
+		ft_putstr_fd("command not found: ", 2);
+	ft_putstr_fd(cmd[0], 2);
+	ft_putstr_fd("\n", 2);
+	exit(127);
 }
 
 pid_t	create_process(t_ast *node, char **paths)
 {
-	pid_t pid[2];
+	pid_t pid[1];
 
 	pid[0] = fork();
 	if (pid[0] == -1)
 		;//fork error
 	if (pid[0] == 0)
 		ft_execcommand(node, paths);
-	pid[1] = fork();
-	if (pid[1] == -1)
-		;//fork error
-	if (pid[1] == 0)
-		ft_check_for_stop(pid, 1);
+	ft_check_for_stop(pid, 1);
 	return (pid[0]);
 }
 
@@ -86,7 +91,6 @@ int	ft_do_the_pipe(t_ast *node, char **paths)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 		exit(exec_node((*get_world()), node->left, paths));
-		printf("wth?\n");
 	}
 	close(fd[1]);
 	pid[1] = fork();
@@ -97,7 +101,6 @@ int	ft_do_the_pipe(t_ast *node, char **paths)
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
 		exit(exec_node((*get_world()), node->right, paths));
-		printf("wtf\n");
 	}
 	close (fd[0]);
 	return(ft_check_for_stop(pid, 2));
@@ -109,7 +112,7 @@ int	exec_one_command(t_ast *node, char **paths)
 	pid_t	pid;
 
 	ft_redirect(node);
-	if (!get_builtins(node) && paths)
+	if (!get_builtins(node))
 	{
 		pid = create_process(node, paths);
 		waitpid(pid, &exit_status, 0);
@@ -155,7 +158,10 @@ int	exec_tree(t_world *world, t_ast *node)
 	if (!node)
 		return (-1);
 	paths = path_tab(world->env);
-	// ici expand les dollars!
+	if (world->env)
+		handle_dollar(&(world->tokenlist), world->env);
+	else
+		handle_dollar(&(world->tokenlist), world->new_env);
 	original_stdin = dup(STDIN_FILENO);
 	original_stdout = dup(STDOUT_FILENO);
 	retval = exec_node(world, node, paths);

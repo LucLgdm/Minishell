@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operation.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:40:21 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/12 15:45:43 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/14 14:18:27 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,13 @@ t_hashtable	*ft_add_element(t_hashtable *htable, char *key, char *value)
 		htable->table[hash] = new_element;
 	else
 	{
-		current = htable->table[hash];
-		while (current->next)
-			current = current->next;
+		while (htable->table[hash])
+		{
+			current = htable->table[hash];
+			hash = (hash + 1) % htable->length;
+		}
 		current->next = new_element;
+		htable->table[hash] = new_element;
 	}
 	return (htable);
 }
@@ -71,32 +74,35 @@ t_hashtable	*ft_modify_value(t_hashtable *ht, char *key, char *value, int add)
 
 t_hashtable	*ft_remove_element(t_hashtable *htable, char *key)
 {
-	int			hash;
 	t_element	**tmp_table;
-	
-	hash = ft_hash(key, htable->length);
+	int			index;
+
 	tmp_table = htable->table;
-	while(tmp_table[hash])
+	index = ft_hash(key, htable->length);
+	while (tmp_table[index])
 	{
-		if (ft_strcmp(tmp_table[hash]->key, key))
+		if (ft_strcmp(tmp_table[index]->key, key) == 0)
 		{
-			ft_free_element(tmp_table[hash]);
-			tmp_table[hash] = NULL;
+			ft_free_element(&tmp_table[index]);
+			if (tmp_table[index -1])
+				tmp_table[index - 1]->next = NULL;
+			break;
 		}
-		hash = (hash + 1) % htable->length;
+		index = (index + 1) % htable->length;
 	}
 	return (htable);
 }
 
-void	ft_free_element(t_element *element)
+void	ft_free_element(t_element **element)
 {
-	if (element)
+	if (*element)
 	{
-		if (element->key)
-			free(element->key);
-		if (element->value)
-			free(element->value);
-		free(element);
+		if ((*element)->key)
+			free((*element)->key);
+		if ((*element)->value)
+			free((*element)->value);
+		free(*element);
+		*element = NULL;
 	}
 	return ;
 }

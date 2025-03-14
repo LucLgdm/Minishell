@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:29:58 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/13 16:02:14 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/14 11:58:48 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	export_one(char *str)
 	char		*key;
 	char		*value;
 
-	env = get_world()->env;
+	env = (*get_world())->env;
 	equalsign = ft_strchr(str, '=');
 	if (!equalsign)
 		return ;

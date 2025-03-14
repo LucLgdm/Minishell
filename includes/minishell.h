@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/13 17:38:13 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/14 14:36:58 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_world
 	t_hashtable *new_env;
 	t_hashtable *hidden_vars;
 	t_ast	    *tree;
+	t_token		*tokenlist;
 }	t_world;
 
 // environement

@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:24:49 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/13 18:02:24 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/14 14:43:35 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,19 @@ char	**path_tab(t_hashtable *hashtable)
 	int		i;
 
 	i = -1;
+	path = NULL;
 	if (!hashtable)
-		path = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin";
+	{
+		if (!ft_get_element((*get_world())->new_env, "PATH"))
+			path = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin";
+		else
+			path = ft_get_element((*get_world())->new_env, "PATH")->value;
+	}
 	else
-		path = ft_get_element(hashtable, "PATH")->value;
+		if (ft_get_element(hashtable, "PATH"))
+			path = ft_get_element(hashtable, "PATH")->value;
 	if (!path)
-		;//malloc error
+		return (NULL);
 	tab = ft_split(path, ':');
 	if (!tab)
 		;//malloc error

@@ -1,9 +1,16 @@
 {
     "files.associations": {
-        "*.h": "c",
-        "sstream": "c",
-        "parse_token": "cpp"
-    },
+		"*.h": "c",
+		"sstream": "c",
+		"parse_token": "cpp",
+		"vector": "c",
+		"memory": "c",
+		"optional": "c",
+		"string_view": "c",
+		"string": "c",
+		"system_error": "c",
+		"thread": "c"
+	},
     "C_Cpp.default.compilerPath": "/usr/bin/gcc", 
     "C_Cpp.default.intelliSenseMode": "gcc-x64",
     "C_Cpp.default.includePath": [

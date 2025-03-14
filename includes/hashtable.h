@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:24:34 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/12 15:45:55 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/14 13:33:36 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ t_hashtable	*ft_add_element(t_hashtable *ht, char *key, char *value);
 t_element	*ft_get_element(t_hashtable *htable, char *key);
 t_hashtable	*ft_delete_element(t_hashtable *ht, char *key);
 void		ft_print_hashtable(t_hashtable *hashtable, char *delimeter);
-	/*si add > 0, la fonction concatene la valeur existente avec la nouvelle sinon elle remplace*/
+/*si add > 0, la fonction concatene la valeur existente avec la nouvelle sinon elle remplace*/
 t_hashtable	*ft_modify_value(t_hashtable *ht, char *key, char *value, int add);
 t_hashtable	*ft_remove_element(t_hashtable *htable, char *key);
 
-void	ft_free_element(t_element *element);
+void		ft_free_element(t_element **element);
 
 #endif

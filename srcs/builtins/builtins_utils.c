@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:35:41 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/10 15:36:42 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/14 14:07:48 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ int	get_arg_nb(t_ast *node)
 	int	i;
 
 	i = 0;
-	while (node->cmd[i])
-		i++;
+	if (node->cmd)
+	{
+		while (node->cmd[i])
+			i++;
+	}
 	return (i);
 }

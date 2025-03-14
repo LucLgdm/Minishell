@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 12:14:31 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/13 12:29:44 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/14 14:53:16 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,12 @@ char	*ft_get_env_value(char *key, t_hashtable *env_ht)
 	elem = ft_get_element(env_ht, key);
 	if (elem)
 		return (elem->value);
+	elem = ft_get_element((*get_world())->new_env, key);
+	if (elem)
+		return (elem->value);
+	elem = ft_get_element((*get_world())->hidden_vars, key);
+	if (elem)
+		return (elem->value);
 	return (NULL);
 }
 
@@ -142,12 +148,11 @@ char	*ft_extract_var_name(char *str, int *i)
 	start = *i + 1;
 	len = 0;
 	while ((str[start + len] && (ft_isalnum(str[start + len]) || str[start
-				+ len] == '_')) && !(ft_isdigit(str[start])))
+					+ len] == '_')) && !(ft_isdigit(str[start])))
 		len++;
 	if (ft_isdigit(str[start]))
 		while (str[start + len] && ft_isdigit(str[start + len]))
 			len++;
 	*i += len;
-	printf("%d", len);
 	return (ft_substr(str, start, len));
 }

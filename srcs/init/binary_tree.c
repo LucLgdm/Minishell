@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:49:34 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/13 16:45:15 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/14 14:57:58 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	fill_tree(t_world *world)
 	token_lst = tokenization_token(world->prompt);
 	if (!token_lst)
 		return ;
-	handle_dollar(&token_lst, world->env);
+	world->tokenlist = token_lst;
 	// print_token(token_lst, 0);
 	world->tree = parse_token(token_lst);
 	// printf("Parsing OK !\n");
