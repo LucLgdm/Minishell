@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 13:16:41 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/17 17:09:34 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/17 17:59:14 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**ft_catchartab(char **tab1, char **tab2, int pos)
 
 	n = ft_arraylen(tab1);
 	m = ft_arraylen(tab2);
-	output = malloc((n + m + 1) * sizeof(char *));
+	output = ft_calloc((n + m + 1), sizeof(char *));
 	if (!output)
 		return (NULL);
 	i = -1;

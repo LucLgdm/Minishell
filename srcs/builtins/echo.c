@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:02:39 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/13 16:44:03 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/17 18:19:40 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	is_n_flag(char *str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (0);
 	if (str[i] != '-')
 		return (0);
 	while (str[++i])
