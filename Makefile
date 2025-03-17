@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: andrean <andrean@student.42.fr>            +#+  +:+       +#+         #
+#    By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/03/14 16:32:42 by andrean          ###   ########.fr        #
+#    Updated: 2025/03/17 11:15:58 by lde-merc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ vpath %.c srcs
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -I $(INCLUDES)
+CFLAGS = -Wall -Werror -Wextra -g -I $(INCLUDES)
 FLAGS = -lreadline $(LIBFT)
 
 LIBFT = libft/libft.a
@@ -50,7 +50,8 @@ SRC_FILES = main.c \
 			$(PARSING_DIR)node_cmd.c\
 			$(EXEC_DIR)exec_utils.c\
 			$(EXEC_DIR)exec.c\
-			$(EXEC_DIR)redirect.c\
+			$(EXEC_DIR)redirect.c \
+			$(EXEC_DIR)new_dollar.c \
 			$(BUILTIN_DIR)builtins_utils.c\
 			$(BUILTIN_DIR)cd.c\
 			$(BUILTIN_DIR)echo.c\

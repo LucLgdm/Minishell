@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environement.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:17:24 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/14 15:40:04 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/17 15:38:15 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	ft_env_to_hashtable(char **env, t_hashtable *env_hastable)
 			value = ft_strdup(split[1]);
 		else
 			value = ft_strdup("");
-		ft_add_element(env_hastable, key, value);
+		ft_add_element(&env_hastable, key, value);
 		free(key);
 		free(value);
 		ft_free_array(split);
@@ -124,10 +124,10 @@ t_hashtable	*ft_create_new_env(void)
 	if (!hashtable)
 		;//error
 	wd = getcwd(NULL, 255);
-	ft_add_element(hashtable, "PWD", wd);
+	ft_add_element(&hashtable, "PWD", wd);
 	free(wd);
-	ft_add_element(hashtable, "SHLVL", "1");
-	ft_add_element(hashtable, "_", "env");
+	ft_add_element(&hashtable, "SHLVL", "1");
+	ft_add_element(&hashtable, "_", "env");
 	return (hashtable);
 }
 
@@ -138,7 +138,7 @@ t_hashtable	*ft_create_hidden(void)
 	hashtable = ft_create_hashtable(10);
 	if (!hashtable)
 		;//error
-	ft_add_element(hashtable, "PATH", "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin");
-	ft_add_element(hashtable, "?", "0");
+	ft_add_element(&hashtable, "PATH", "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin");
+	ft_add_element(&hashtable, "?", "0");
 	return (hashtable);
 }

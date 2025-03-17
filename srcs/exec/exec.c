@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:26:44 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/14 16:46:44 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/17 14:33:53 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,11 @@ int	exec_one_command(t_ast *node, char **paths)
 	int		exit_status;
 	pid_t	pid;
 
+	// printf("cmd = %s\n", node->cmd[0]);
+	if ((*get_world())->env)
+		new_handle_dollar(&node, (*get_world())->env);
+	else
+		new_handle_dollar(&node, (*get_world())->new_env);
 	ft_redirect(node);
 	exit_status = get_builtins(node);
 	if (exit_status == -1)
@@ -160,10 +165,6 @@ int	exec_tree(t_world *world, t_ast *node)
 	if (!node)
 		return (-1);
 	paths = path_tab(world->env);
-	if (world->env)
-		handle_dollar(&(world->tokenlist), world->env);
-	else
-		handle_dollar(&(world->tokenlist), world->new_env);
 	original_stdin = dup(STDIN_FILENO);
 	original_stdout = dup(STDOUT_FILENO);
 	retval = exec_node(world, node, paths);
