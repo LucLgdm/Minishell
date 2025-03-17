@@ -6,28 +6,30 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:30:48 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/12 16:52:44 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/17 14:40:03 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
-#include "./lexer.h"
+# include "./lexer.h"
 
 // Binary tree
-enum	e_redir_type {
+enum	e_redir_type
+{
 	REDIR_OUT = 1,
 	REDIR_APPEND_OUT,
 	REDIR_IN,
 	REDIR_HEREDOC,
 };
 
-enum e_node_type {
-    NODE_CMD = 0,
-    NODE_PIPE,
-    NODE_AND,
-    NODE_OR
+enum	e_node_type
+{
+	NODE_CMD = 0,
+	NODE_PIPE,
+	NODE_AND,
+	NODE_OR
 };
 
 typedef struct s_redir {

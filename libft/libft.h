@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 10:20:13 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/07 11:17:22 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/17 14:25:26 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int		ft_next_prime(int n);
 bool	ft_isprime(int n);
 int		ft_arraylen(char **str);
 void	ft_free_array(char **split);
+char	**ft_catchartab(char **tab1, char **tab2, int pos);
+void	ft_print_tab(char **tab);
 int		ft_isdigit(int c);
 int		ft_isalpha(int c);
 int		ft_isalnum(int c);

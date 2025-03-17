@@ -6,7 +6,7 @@
 #    By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/03/12 16:58:17 by lde-merc         ###   ########.fr        #
+#    Updated: 2025/03/17 11:15:58 by lde-merc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ vpath %.c srcs
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -I $(INCLUDES)
+CFLAGS = -Wall -Werror -Wextra -g -I $(INCLUDES)
 FLAGS = -lreadline $(LIBFT)
 
 LIBFT = libft/libft.a
@@ -27,6 +27,7 @@ FREE_DIR = free/
 LEXER_DIR = lexer/
 HASHTABLE_DIR = hashtable/
 PARSING_DIR = parsing/
+BUILTIN_DIR = builtins/
 
 # Liste des fichiers source
 SRC_FILES = main.c \
@@ -46,7 +47,21 @@ SRC_FILES = main.c \
 			$(HASHTABLE_DIR)ft_free_hasht.c \
 			$(PARSING_DIR)parser.c \
 			$(PARSING_DIR)node.c \
-			$(PARSING_DIR)node_cmd.c
+			$(PARSING_DIR)node_cmd.c\
+			$(EXEC_DIR)exec_utils.c\
+			$(EXEC_DIR)exec.c\
+			$(EXEC_DIR)redirect.c \
+			$(EXEC_DIR)new_dollar.c \
+			$(BUILTIN_DIR)builtins_utils.c\
+			$(BUILTIN_DIR)cd.c\
+			$(BUILTIN_DIR)echo.c\
+			$(BUILTIN_DIR)exit.c\
+			$(BUILTIN_DIR)export.c\
+			$(BUILTIN_DIR)pwd.c\
+			$(BUILTIN_DIR)unset.c\
+			$(BUILTIN_DIR)env.c\
+			$(BUILTIN_DIR)minishellception.c
+
 
 # Transforme chaque fichier source en un fichier objet dans $(OBJ_DIR)
 OBJS = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
@@ -67,6 +82,7 @@ mkdir_obj:
 	@mkdir -p $(OBJ_DIR)$(LEXER_DIR)
 	@mkdir -p $(OBJ_DIR)$(HASHTABLE_DIR)
 	@mkdir -p $(OBJ_DIR)$(PARSING_DIR)
+	@mkdir -p $(OBJ_DIR)$(BUILTIN_DIR)
 
 # Compilation finale
 $(NAME): $(OBJS)

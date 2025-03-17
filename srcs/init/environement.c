@@ -6,11 +6,20 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:17:24 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/05 11:11:24 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:38:15 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	g_stop = 0;
+
+int		ft_stop(void)
+{
+	if (g_stop)
+		return (1);
+	return (0);
+}
 
 void	prompt(t_world *world)
 {
@@ -33,7 +42,10 @@ void	prompt(t_world *world)
 				printf("\033[0;32mHistory cleaned\033[0m\n");
 			}
 			else
+			{
 				fill_tree(world);
+				exec_tree(world, world->tree);
+			}
 		}
 		free(world->prompt);
 	}
@@ -43,6 +55,7 @@ void	handle_signal(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_stop = 1;
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -50,9 +63,9 @@ void	handle_signal(int sig)
 	}
 }
 
-t_world	*get_world(void)
+t_world	**get_world(void)
 {
-	static t_world	world;
+	static t_world	*world;
 
 	return (&world);
 }
@@ -64,15 +77,17 @@ t_hashtable	*ft_create_env_hashtable(char **env)
 
 	len_env = ft_arraylen(env);
 	if (len_env == 0)
-	{
-		env_hashtable = ft_create_hashtable(250);
-		return (env_hashtable);
-	}
+		return (NULL);
 	len_env = ft_next_prime(3 * len_env);
 	env_hashtable = ft_create_hashtable(len_env);
 	if (!env_hashtable)
 		return (NULL);
 	ft_env_to_hashtable(env, env_hashtable);
+	if (env_hashtable)
+	{
+		ft_modify_value(env_hashtable, "SHLVL",
+			ft_itoa(ft_atoi(ft_get_element(env_hashtable, "SHLVL")->value) + 1), 0);
+	}
 	return (env_hashtable);
 }
 
@@ -93,9 +108,37 @@ void	ft_env_to_hashtable(char **env, t_hashtable *env_hastable)
 			value = ft_strdup(split[1]);
 		else
 			value = ft_strdup("");
-		ft_add_element(env_hastable, key, value);
+		ft_add_element(&env_hastable, key, value);
 		free(key);
 		free(value);
 		ft_free_array(split);
 	}
+}
+
+t_hashtable	*ft_create_new_env(void)
+{
+	t_hashtable	*hashtable;
+	char		*wd;
+
+	hashtable = ft_create_hashtable(250);
+	if (!hashtable)
+		;//error
+	wd = getcwd(NULL, 255);
+	ft_add_element(&hashtable, "PWD", wd);
+	free(wd);
+	ft_add_element(&hashtable, "SHLVL", "1");
+	ft_add_element(&hashtable, "_", "env");
+	return (hashtable);
+}
+
+t_hashtable	*ft_create_hidden(void)
+{
+	t_hashtable	*hashtable;
+
+	hashtable = ft_create_hashtable(10);
+	if (!hashtable)
+		;//error
+	ft_add_element(&hashtable, "PATH", "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin");
+	ft_add_element(&hashtable, "?", "0");
+	return (hashtable);
 }

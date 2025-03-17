@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 16:56:03 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/14 15:30:28 by andrean          ###   ########.fr       */
+/*   Created: 2025/03/12 17:05:07 by andrean           #+#    #+#             */
+/*   Updated: 2025/03/13 17:27:12 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_all(t_world *world)
+void	ft_exit(t_ast *node)
 {
-	int	i;
+	int			exit_value;
+	t_hashtable	*env;
 
-	i = -1;
-	if (world)
-	{
-		if (world->env)
-			ft_free_hasht(world->env);
-		if (world->new_env)
-			ft_free_hasht(world->new_env);
-		if (world->hidden_vars)
-			ft_free_hasht(world->hidden_vars);
-		if (world->prompt)
-			free(world->prompt);
-		if (world->tree)
-			ft_free_ast(world->tree);
-		free(world);
-	}
+	env = (*get_world())->hidden_vars;
+	exit_value = ft_atoi(ft_get_element(env, "?")->value);
+	if (get_arg_nb(node) > 1)
+		exit_value = ft_atoi(node->cmd[1]);
+	free_all(*get_world());
+	printf("\033[0;32mFrom Minishell with Love !\033[0m\n");
+	exit(exit_value);
 }
