@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/17 15:57:22 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/17 17:23:48 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,8 @@ void		print_tree(t_ast *root, int i);
 // exec
 int			exec_tree(t_world *world, t_ast *node);
 int			exec_node(t_world *world, t_ast *node, char **paths);
+
+//wildcards
+char	**manage_wildcards(char **args, char *str, int index);
 
 #endif

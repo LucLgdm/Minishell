@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+         #
+#    By: andrean <andrean@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/03/17 11:15:58 by lde-merc         ###   ########.fr        #
+#    Updated: 2025/03/17 17:24:22 by andrean          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRC_FILES = main.c \
 			$(LEXER_DIR)fill_token.c \
 			$(LEXER_DIR)fill_token2.c \
 			$(LEXER_DIR)dollar.c \
+			$(LEXER_DIR)wildcards.c\
 			$(HASHTABLE_DIR)hashtable_creation.c \
 			$(HASHTABLE_DIR)operation.c \
 			$(HASHTABLE_DIR)ft_free_hasht.c \
