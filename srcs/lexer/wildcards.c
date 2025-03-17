@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 13:02:04 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/17 17:43:17 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/17 18:22:09 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ char	**onelinetab(char *str)
 		return (NULL);
 	tab = ft_calloc(sizeof(char *), 2);
 	tab[0] = ft_strdup(str);
+	if (!tab[0])
+	{
+		free(tab);
+		return (NULL);
+	}
 	return (tab);
 }
 
@@ -44,6 +49,8 @@ char	**get_trnclst(char *str)
 	char	**trunclst;
 	char	*wild;
 
+	if (!str)
+		return (NULL);
 	trunclst = ft_calloc(sizeof(char *), 1);
 	wild = ft_strchr(str, '*');
 	if (!wild)
@@ -86,6 +93,9 @@ int	checkifwildcarded(char **trunclst, char *name)
 	int		i;
 	i = -1;
 	
+	if (ft_strchr(name, '.') == name)
+		if (ft_strncmp(trunclst[0], ".", 1))
+			return (0);
 	if (ft_strcmp(trunclst[0], "*"))
 		if (ft_strncmp(name, trunclst[0], ft_strlen(trunclst[0])))
 			return(0);
@@ -119,13 +129,10 @@ char	**expand_lst(char **trunclst)
 	while (entry)
 	{
 		if (checkifwildcarded(trunclst, entry->d_name))
-		{
-			ft_print_tab(trunclst);
-			printf("entry: %s\n", entry->d_name);
 			lst = ft_catchartab(lst, onelinetab(entry->d_name), ft_arraylen(lst));
-		}
 		entry = readdir(dir);
 	}
+	if (!lst[0])
 	closedir(dir);
 	return (lst);
 }
@@ -139,7 +146,8 @@ char	**manage_wildcards(char **args, char *str, int	index)
 	if (!trunclst)
 		return (args);
 	new_args = expand_lst(trunclst);
-	ft_print_tab(new_args);
+	if (!new_args || !*new_args)
+		return (args);
 	new_args = ft_catchartab(args, new_args, index);
 	ft_free_array(args);
 	return (new_args);

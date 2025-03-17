@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 12:14:31 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/17 16:12:26 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/17 18:14:08 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,9 +133,12 @@ char	*ft_get_env_value(char *key, t_hashtable *env_ht)
 	elem = ft_get_element(env_ht, key);
 	if (elem)
 		return (elem->value);
-	elem = ft_get_element((*get_world())->new_env, key);
-	if (elem)
-		return (elem->value);
+	if (!env_ht)
+	{
+		elem = ft_get_element((*get_world())->new_env, key);
+		if (elem)
+			return (elem->value);
+	}
 	elem = ft_get_element((*get_world())->hidden_vars, key);
 	if (elem)
 		return (elem->value);

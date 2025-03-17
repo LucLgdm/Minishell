@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:00:21 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/17 17:32:27 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/17 18:01:01 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,4 @@ void	new_handle_dollar(t_ast **node, t_hashtable *env)
 		}
 		(*node)->cmd = manage_wildcards((*node)->cmd, (*node)->cmd[i], i);
 	}
-	ft_print_tab((*node)->cmd);
 }
