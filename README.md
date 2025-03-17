@@ -40,20 +40,3 @@ git checkout Luc
 git pull origin main
 # Fusionner main dans ta branche Luc
 git merge main
-
-
-# Étapes à implémenter
-
-1️⃣ Lecture de l'entrée → readline() pour récupérer la commande
-2️⃣ Lexing → Transformer la commande en tokens
-3️⃣ Parsing → Détecter pipes, redirections, arguments, etc.
-4️⃣ Exécution → Vérifier si c’est un builtin ou un programme externe
-5️⃣ Gestion des signaux → SIGINT, SIGQUIT, SIGTERM
-6️⃣ Redirections et pipes → dup2(), pipe(), open(), close()
-
-# Plan d'action
-
-🔹 D'abord : Lire une commande et l'afficher (readline)
-🔹 Ensuite : Découper en tokens (lexer)
-🔹 Puis : Interpréter (parser) et exécuter (execve)
-🔹 Enfin : Ajouter les redirections, pipes, signaux, etc.

@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:29:07 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/12 17:11:07 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:13:40 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ t_ast	*parse_token(t_token *token)
 		op->value = NULL;
 		split_t = split_token(token, op);
 		node->left = parse_token(split_t);
-		node->right = parse_token(op->next);
+		if (op->next)
+			node->right = parse_token(op->next);
+		else
+			printf("Error, manque une commande\n");
 		return (node);
 	}
 	if (token->token_type == TOKEN_PARENTHESES)
