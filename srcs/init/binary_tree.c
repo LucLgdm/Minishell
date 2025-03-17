@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:49:34 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/17 12:49:24 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/17 16:18:10 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void	fill_tree(t_world *world)
 	if (!token_lst)
 		return ;
 	world->tokenlist = token_lst;
-	print_token(token_lst, 0);
+	// print_token(token_lst, 0);
 	world->tree = parse_token(token_lst);
 	// printf("Parsing OK !\n");
-	if (world->tree)
-		print_tree(world->tree, 0);
+	// if (world->tree)
+	// 	print_tree(world->tree, 0);
 }
 
 // void	fill_tree(t_world *world)

@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:40:21 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/17 15:51:31 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/17 16:10:48 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,11 @@ t_element	*ft_get_element(t_hashtable *htable, char *key)
 
 	index = ft_hash(key, htable->length);
 	current = htable->table[index];
-	int i = 0;
 	while (current)
 	{
-		printf("i = %i\n", i);
-		i++;
-		printf("current key = %s, current value = %s\n", current->key, current->value);
 		if (ft_strcmp(current->key, key) == 0)
 			return (current);
 		current = current->next;
-		printf("current->next adresse %p\n", current);
 	}
 	return (NULL);
 }
