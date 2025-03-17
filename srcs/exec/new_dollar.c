@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_dollar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:00:21 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/17 16:48:17 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:32:27 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,7 @@ void	new_handle_dollar(t_ast **node, t_hashtable *env)
 			else
 				(*node)->cmd[i] = ft_strdup("");
 		}
+		(*node)->cmd = manage_wildcards((*node)->cmd, (*node)->cmd[i], i);
 	}
+	ft_print_tab((*node)->cmd);
 }

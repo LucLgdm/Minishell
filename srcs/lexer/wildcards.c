@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 13:02:04 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/17 17:06:05 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/17 17:43:17 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,18 @@ char	**get_trnclst(char *str)
 	return (trunclst);
 }
 
+int	foundlast(char *name, char *trunc)
+{
+	int	i;
+
+	i = ft_strlen(name) - ft_strlen(trunc);
+	if (i < 0)
+		return (0);
+	if (ft_strcmp(name + i, trunc))
+		return (0);
+	return (1);
+}
+
 int	checkifwildcarded(char **trunclst, char *name)
 {
 	int		i;
@@ -87,7 +99,7 @@ int	checkifwildcarded(char **trunclst, char *name)
 			name += ft_strlen(trunclst[i]);
 		}
 	}
-	if (ft_strcmp(trunclst[i - 1], "*") && ft_strlen(name))
+	if (ft_strcmp(trunclst[i - 1], "*") && (ft_strlen(name) && !foundlast(name, trunclst[i - 1])))
 		return (0);
 	return (1);
 }
@@ -107,7 +119,11 @@ char	**expand_lst(char **trunclst)
 	while (entry)
 	{
 		if (checkifwildcarded(trunclst, entry->d_name))
+		{
+			ft_print_tab(trunclst);
+			printf("entry: %s\n", entry->d_name);
 			lst = ft_catchartab(lst, onelinetab(entry->d_name), ft_arraylen(lst));
+		}
 		entry = readdir(dir);
 	}
 	closedir(dir);
@@ -123,7 +139,9 @@ char	**manage_wildcards(char **args, char *str, int	index)
 	if (!trunclst)
 		return (args);
 	new_args = expand_lst(trunclst);
+	ft_print_tab(new_args);
 	new_args = ft_catchartab(args, new_args, index);
+	ft_free_array(args);
 	return (new_args);
 }
 
