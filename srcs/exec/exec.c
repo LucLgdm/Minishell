@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:26:44 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/17 14:33:53 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:56:10 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ int	exec_one_command(t_ast *node, char **paths)
 	int		exit_status;
 	pid_t	pid;
 
-	// printf("cmd = %s\n", node->cmd[0]);
 	if ((*get_world())->env)
 		new_handle_dollar(&node, (*get_world())->env);
 	else

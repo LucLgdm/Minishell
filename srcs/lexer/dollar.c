@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 12:14:31 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/17 14:55:07 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/17 16:12:26 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ char	*ft_expand(char *word, t_hashtable *env_ht)
 		else
 			ft_strncat(&new_word, &word[i], 1);
 	}
-	printf("new word = %s\n", new_word);
 	return (new_word);
 }
 
@@ -131,7 +130,6 @@ char	*ft_get_env_value(char *key, t_hashtable *env_ht)
 {
 	t_element	*elem;
 
-	printf("Key = %s\n", key);
 	elem = ft_get_element(env_ht, key);
 	if (elem)
 		return (elem->value);
