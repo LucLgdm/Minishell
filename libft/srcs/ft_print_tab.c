@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_hasht.c                                    :+:      :+:    :+:   */
+/*   ft_print_tab.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 16:33:57 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/14 15:31:45 by andrean          ###   ########.fr       */
+/*   Created: 2025/03/17 14:22:10 by lde-merc          #+#    #+#             */
+/*   Updated: 2025/03/17 14:22:35 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/hashtable.h"
+#include "../libft.h"
 
-void	ft_free_hasht(t_hashtable *hasht)
+void	ft_print_tab(char **tab)
 {
 	int	i;
 
 	i = -1;
-	if (hasht->table)
-	{
-		while (++i < hasht->length)
-		{
-			ft_free_element(&(hasht->table[i]));
-		}
-		free(hasht->table);
-	}
-	if (hasht)
-		free(hasht);
+	while (tab[++i])
+		ft_printf("%s ", tab[i]);
+	ft_printf("\n");
 }

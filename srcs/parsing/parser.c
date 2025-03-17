@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:29:07 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/14 15:13:40 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/17 13:13:08 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ t_ast	*parse_simple_command(t_token *token)
 			count++;
 		tmp = tmp->next;
 	}
-	node->cmd = malloc(sizeof(char *) * (count + 1));
+	node->cmd = ft_calloc(sizeof(char *), (count + 1));
 	i = 0;
 	while (token && token->token_type != TOKEN_PIPE
 		&& token->token_type != TOKEN_ANDAND
@@ -132,7 +132,7 @@ t_ast	*parse_simple_command(t_token *token)
 			|| token->token_type == TOKEN_LESSER
 			|| token->token_type == TOKEN_LESSLESSER)
 		{
-			redir = malloc(sizeof(t_redir));
+			redir = ft_calloc(sizeof(t_redir), 1);
 			redir->redir_type = token->token_type;
 			token = token->next;
 			if (!token)

@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 16:56:03 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/14 15:30:28 by andrean          ###   ########.fr       */
+/*   Created: 2025/03/12 16:26:53 by andrean           #+#    #+#             */
+/*   Updated: 2025/03/14 14:18:22 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_all(t_world *world)
+int	ft_unset(t_ast *node)
 {
-	int	i;
+	t_hashtable	*env;
+	int			arg_nb;
+	int			count;
 
-	i = -1;
-	if (world)
-	{
-		if (world->env)
-			ft_free_hasht(world->env);
-		if (world->new_env)
-			ft_free_hasht(world->new_env);
-		if (world->hidden_vars)
-			ft_free_hasht(world->hidden_vars);
-		if (world->prompt)
-			free(world->prompt);
-		if (world->tree)
-			ft_free_ast(world->tree);
-		free(world);
-	}
+	env = (*get_world())->env;
+	if (!env)
+		env = (*get_world())->new_env;
+	arg_nb = get_arg_nb(node);
+	count = 0;
+	while (++count < arg_nb)
+		ft_remove_element(env, node->cmd[count]);
+	return (0);
 }

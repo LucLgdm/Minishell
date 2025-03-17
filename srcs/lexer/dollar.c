@@ -6,29 +6,29 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 12:14:31 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/06 11:02:17 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/17 14:55:07 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	handle_dollar(t_token **token_lst, t_hashtable *env_ht)
-{
-	t_token	*tmp;
+// int	handle_dollar(t_token **token_lst, t_hashtable *env_ht)
+// {
+// 	t_token	*tmp;
 
-	tmp = *token_lst;
-	if (!tmp)
-		return (1);
-	while (tmp)
-	{
-		if (tmp->token_type == TOKEN_PARENTHESES)
-			handle_dollar(&tmp->sub_token, env_ht);
-		else if (tmp->token_type == TOKEN_WORD)
-			tmp->value = ft_expand(tmp->value, env_ht);
-		tmp = tmp->next;
-	}
-	return (0);
-}
+// 	tmp = *token_lst;
+// 	if (!tmp)
+// 		return (1);
+// 	while (tmp)
+// 	{
+// 		if (tmp->token_type == TOKEN_PARENTHESES)
+// 			handle_dollar(&tmp->sub_token, env_ht);
+// 		else if (tmp->token_type == TOKEN_WORD)
+// 			tmp->value = ft_expand(tmp->value, env_ht);
+// 		tmp = tmp->next;
+// 	}
+// 	return (0);
+// }
 
 char	*ft_expand(char *word, t_hashtable *env_ht)
 {
@@ -48,16 +48,22 @@ char	*ft_expand(char *word, t_hashtable *env_ht)
 		else if (word[i] == CHAR_DOLLAR)
 		{
 			var_name = ft_extract_var_name(word, &i);
+			// printf("Var name extracted : %s\n", var_name);
+			if (strcmp(var_name, "") == 0)
+				ft_strncat(&new_word, "$", 1);
 			env_value = ft_get_env_value(var_name, env_ht);
+			// printf("Env value getted : %s\n", env_value);
 			free(var_name);
 			if (env_value)
-				new_word = ft_strcat(new_word, env_value);
+				ft_strncat(&new_word, env_value, ft_strlen(env_value));
 		}
 		else
 			ft_strncat(&new_word, &word[i], 1);
 	}
+	printf("new word = %s\n", new_word);
 	return (new_word);
 }
+
 void	ft_single_quote(char **new_word, char *word, int *i)
 {
 	(*i)++;
@@ -125,7 +131,14 @@ char	*ft_get_env_value(char *key, t_hashtable *env_ht)
 {
 	t_element	*elem;
 
+	printf("Key = %s\n", key);
 	elem = ft_get_element(env_ht, key);
+	if (elem)
+		return (elem->value);
+	elem = ft_get_element((*get_world())->new_env, key);
+	if (elem)
+		return (elem->value);
+	elem = ft_get_element((*get_world())->hidden_vars, key);
 	if (elem)
 		return (elem->value);
 	return (NULL);
@@ -138,9 +151,12 @@ char	*ft_extract_var_name(char *str, int *i)
 
 	start = *i + 1;
 	len = 0;
-	while (str[start + len] && (ft_isalnum(str[start + len]) || str[start
-			+ len] == '_'))
+	while ((str[start + len] && (ft_isalnum(str[start + len]) || str[start
+					+ len] == '_')) && !(ft_isdigit(str[start])))
 		len++;
+	if (ft_isdigit(str[start]))
+		while (str[start + len] && ft_isdigit(str[start + len]))
+			len++;
 	*i += len;
 	return (ft_substr(str, start, len));
 }
