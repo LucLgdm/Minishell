@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:34:49 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/14 11:58:28 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/17 15:38:29 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ void	change_wd(t_hashtable *env, char *pwd)
 		if (ft_get_element(env, "OLDPWD"))
 			ft_modify_value(env, "OLDPWD", pwd, 0);
 		else
-			ft_add_element(env, "OLDPWD", pwd);
+			ft_add_element(&env, "OLDPWD", pwd);
 		if (ft_get_element(env, "PWD"))
 			ft_modify_value(env, "PWD", newpwd, 0);
 		else
-			ft_add_element(env, "PWD", newpwd);
+			ft_add_element(&env, "PWD", newpwd);
 	}
 }
 

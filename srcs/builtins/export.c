@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:29:58 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/14 16:51:41 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/17 15:37:16 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	export_one(char *str)
 	char		*equalsign;
 	char		*key;
 	char		*value;
+	int			n;
 
 	env = (*get_world())->env;
 	if (!env)
@@ -52,13 +53,22 @@ int	export_one(char *str)
 		key = ft_substr(str, 0, equalsign - str);
 		value = ft_substr(equalsign, 1, ft_strlen(equalsign + 1));
 		if (!key || !value)
-			;//malloc error
+			; // malloc error
 	}
 	if (!check_key(key))
 		return (export_error(key));
 	if (ft_get_element(env, key))
 		ft_remove_element(env, key);
-	ft_add_element(env, key, value);
+	if (value[0] == '"')
+	{
+		n = ft_strlen(value);
+		for (int i = 1; i < n; i++)
+		{
+			value[i - 1] = value[i];
+		}
+		value[n - 2] = '\0';
+	}
+	env = ft_add_element(&env, key, value);
 	return (0);
 }
 
@@ -70,10 +80,34 @@ int	ft_export(t_ast *node)
 
 	retval = 0;
 	arg_nb = get_arg_nb(node);
+	if (arg_nb == 1)
+	{
+		ft_print_env((*get_world())->env);
+		return (0);
+	}
 	count = 0;
 	while (++count < arg_nb)
 		retval += export_one(node->cmd[count]);
 	if (retval)
 		return (1);
 	return (0);
+}
+
+void	ft_print_env(t_hashtable *env)
+{
+	int			i;
+	t_element	*tmp;
+
+	if (!env || !env->table)
+		return ;
+	i = -1;
+	while (++i < env->length)
+	{
+		tmp = env->table[i];
+		while (tmp)
+		{
+			ft_printf("%s=%s\n", tmp->key, tmp->value);
+			tmp = tmp->next;
+		}
+	}
 }
