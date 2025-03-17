@@ -6,11 +6,11 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 13:02:04 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/17 15:50:28 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/17 17:05:11 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 char	**onewildtab(void)
 {
@@ -20,7 +20,7 @@ char	**onewildtab(void)
 	if (!tab)
 		return (NULL);
 	tab[0] = ft_strdup("*");
-	if (tab[0])
+	if (!tab[0])
 	{
 		free(tab);
 		return (NULL);
@@ -35,7 +35,7 @@ char	**onelinetab(char *str)
 	if (!str)
 		return (NULL);
 	tab = ft_calloc(sizeof(char *), 2);
-	tab[0] = str;
+	tab[0] = ft_strdup(str);
 	return (tab);
 }
 
@@ -81,7 +81,8 @@ int	checkifwildcarded(char **trunclst, char *name)
 	{
 		if(ft_strcmp(trunclst[i], "*"))
 		{
-			if (!ft_strnstr(name, trunclst[i], 256))
+			name = ft_strnstr(name, trunclst[i], 256);
+			if (!name)
 				return(0);
 			name += ft_strlen(trunclst[i]);
 		}
@@ -109,6 +110,7 @@ char	**expand_lst(char **trunclst)
 			lst = ft_catchartab(lst, onelinetab(entry->d_name), ft_arraylen(lst));
 		entry = readdir(dir);
 	}
+	return (lst);
 }
 
 char	**manage_wildcards(char **args, char *str, int	index)
@@ -124,17 +126,20 @@ char	**manage_wildcards(char **args, char *str, int	index)
 	return (new_args);
 }
 
-int	main(int ac, char **av)
-{
-	char	**words;
-	int		i;
+// int	main(int ac, char **av)
+// {
+// 	char	**words;
+// 	int		i;
 
-	i = -1;
-	words = ft_calloc(sizeof(char *), 1);
-	while (++i < ac)
-		words = ft_catchartab(words, av[i], ft_arraylen(words));
-	i = -1;
-	while (++i < ac)
-		printf("%s\n", words[i]);
-	return (0);
-}
+// 	i = -1;
+// 	words = ft_calloc(sizeof(char *), 1);
+// 	while (++i < ac)
+// 		words = ft_catchartab(words, onelinetab(av[i]), ft_arraylen(words));
+// 	i = -1;
+// 	while (++i < ac)
+// 		words = manage_wildcards(words, words[i], i);
+// 	i = -1;
+// 	while (words[++i])
+// 		printf("%s\n", words[i]);
+// 	return (0);
+// }
