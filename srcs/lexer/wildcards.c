@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 13:02:04 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/17 17:05:11 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/17 17:06:05 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ char	**expand_lst(char **trunclst)
 			lst = ft_catchartab(lst, onelinetab(entry->d_name), ft_arraylen(lst));
 		entry = readdir(dir);
 	}
+	closedir(dir);
 	return (lst);
 }
 
