@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 12:14:31 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/18 12:29:34 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/18 18:09:22 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,9 +136,12 @@ char	*ft_get_env_value(char *key, t_hashtable *env_ht)
 {
 	t_element	*elem;
 
-	elem = ft_get_element(env_ht, key);
-	if (elem)
-		return (elem->value);
+	if (env_ht)
+	{
+		elem = ft_get_element(env_ht, key);
+		if (elem)
+			return (elem->value);
+	}
 	if (!env_ht)
 	{
 		elem = ft_get_element((*get_world())->new_env, key);

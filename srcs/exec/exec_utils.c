@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:24:49 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/14 14:43:35 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/18 17:51:00 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ void	ft_redirect(t_ast *node)
 	while (redir)
 	{
 		if (redir->redir_type == TOKEN_LESSER)
-			redirect_input(redir->value, STDIN_FILENO);
+			redirect_input(redir->value[0], STDIN_FILENO);
 		if (redir->redir_type == TOKEN_GREATGREATER)
-			redirect_output(redir->value, STDOUT_FILENO, 1);
+			redirect_output(redir->value[0], STDOUT_FILENO, 1);
 		if (redir->redir_type == TOKEN_GREATER)
-			redirect_output(redir->value, STDOUT_FILENO, 0);
+			redirect_output(redir->value[0], STDOUT_FILENO, 0);
 		if (redir->redir_type == TOKEN_LESSLESSER)
-			ft_here_doc(redir->value, STDIN_FILENO);
+			ft_here_doc(redir->value[0], STDIN_FILENO);
 		redir = redir->next;
 	}
 }

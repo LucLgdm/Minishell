@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:26:44 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/17 18:17:58 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/18 18:01:43 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,9 @@ int	exec_one_command(t_ast *node, char **paths)
 	pid_t	pid;
 
 	if ((*get_world())->env)
-		new_handle_dollar(&node, (*get_world())->env);
+		new_handle_dollar(&node->cmd, (*get_world())->env);
 	else
-		new_handle_dollar(&node, (*get_world())->new_env);
+		new_handle_dollar(&node->cmd, (*get_world())->new_env);
 	if (!node->cmd || !node->cmd[0])
 		return (0);
 	ft_redirect(node);

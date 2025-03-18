@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 13:02:04 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/17 18:22:09 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/18 15:53:54 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,38 +44,6 @@ char	**onelinetab(char *str)
 	return (tab);
 }
 
-char	**get_trnclst(char *str)
-{
-	char	**trunclst;
-	char	*wild;
-
-	if (!str)
-		return (NULL);
-	trunclst = ft_calloc(sizeof(char *), 1);
-	wild = ft_strchr(str, '*');
-	if (!wild)
-		return (NULL);
-	while (wild)
-	{
-		if (wild != str)
-		{
-			trunclst = ft_catchartab(trunclst, onelinetab(
-						ft_substr(str, 0, wild - str)), ft_arraylen(trunclst));
-			trunclst = ft_catchartab(trunclst,
-					onewildtab(), ft_arraylen(trunclst));
-		}
-		else
-			trunclst = ft_catchartab(trunclst,
-					onewildtab(), ft_arraylen(trunclst));
-		str = wild + 1;
-		wild = ft_strchr(str, '*');
-	}
-	if (*str)
-		trunclst = ft_catchartab(trunclst, onelinetab(
-					ft_strdup(str)), ft_arraylen(trunclst));
-	return (trunclst);
-}
-
 int	foundlast(char *name, char *trunc)
 {
 	int	i;
@@ -93,7 +61,7 @@ int	checkifwildcarded(char **trunclst, char *name)
 	int		i;
 	i = -1;
 	
-	if (ft_strchr(name, '.') == name)
+	if (name && name[0] == '.')
 		if (ft_strncmp(trunclst[0], ".", 1))
 			return (0);
 	if (ft_strcmp(trunclst[0], "*"))
@@ -137,12 +105,10 @@ char	**expand_lst(char **trunclst)
 	return (lst);
 }
 
-char	**manage_wildcards(char **args, char *str, int	index)
+char	**manage_wildcards(char **args, int	index, char **trunclst)
 {
 	char	**new_args;
-	char	**trunclst;
 
-	trunclst = get_trnclst(str);
 	if (!trunclst)
 		return (args);
 	new_args = expand_lst(trunclst);

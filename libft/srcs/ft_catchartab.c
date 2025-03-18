@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 13:16:41 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/17 17:59:14 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/18 16:50:47 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ char	**ft_catchartab(char **tab1, char **tab2, int pos)
 	i = pos + 1;
 	while (i < n)
 	{
-		output[i + m] = ft_strdup(tab1[i]);
+		output[i + m - 1] = ft_strdup(tab1[i]);
 		i++;
 	}
-	output[n + m] = NULL;
 	return (output);
 }
