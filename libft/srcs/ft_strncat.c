@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:39:25 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/05 13:58:21 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/18 12:30:49 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_strncat(char **dest, const char *src, size_t n)
 	else
 		dest_len = 0;
 	src_len = ft_strnlen(src, n);
-	new_str = malloc(dest_len + src_len + 1);
+	new_str = ft_calloc(dest_len + src_len + 1, 1);
 	if (!new_str)
 		return ;
 	if (*dest)
