@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 12:14:31 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/17 18:14:08 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/18 12:29:34 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,20 +65,22 @@ char	*ft_expand(char *word, t_hashtable *env_ht)
 
 void	ft_single_quote(char **new_word, char *word, int *i)
 {
-	(*i)++;
+	ft_strncat(new_word, &word[(*i)++], 1);
 	while (word[*i] && word[*i] != CHAR_S_QUOTE)
 	{
 		ft_strncat(new_word, &word[(*i)], 1);
 		(*i)++;
 	}
+	if (!word[*i])
+		;//unclosed quotes;
+	else
+		ft_strncat(new_word, &word[(*i)], 1);
 }
 
 void	ft_double_quote(char **new_word, char *word, int *i,
 		t_hashtable *env_ht)
 {
-	int	start;
-
-	start = ++(*i);
+	ft_strncat(new_word, &word[(*i)++], 1);
 	while (word[*i] && word[*i] != CHAR_D_QUOTE)
 	{
 		if (word[*i] == CHAR_DOLLAR)
@@ -86,6 +88,10 @@ void	ft_double_quote(char **new_word, char *word, int *i,
 		else
 			ft_append_char(new_word, word[(*i)++]);
 	}
+	if (!word[*i])
+		;//unclosed quotes;
+	else
+		ft_strncat(new_word, &word[(*i)], 1);
 }
 
 void	ft_replace(char **new_word, char *word, int *i, t_hashtable *env_ht)
