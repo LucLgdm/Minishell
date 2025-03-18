@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:29:07 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/17 13:13:08 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/18 18:09:37 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parsing.h"
+#include "minishell.h"
 
 t_ast	*parse_token(t_token *token)
 {
@@ -141,7 +141,8 @@ t_ast	*parse_simple_command(t_token *token)
 				free(node);
 				return (NULL);
 			}
-			redir->value = ft_strdup(token->value);
+			redir->value = onelinetab(token->value);
+			new_handle_dollar(&redir->value, (*get_world())->env);
 			redir->next = node->redir;
 			node->redir = redir;
 		}

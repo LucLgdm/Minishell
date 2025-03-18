@@ -6,7 +6,7 @@
 #    By: andrean <andrean@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/03/17 17:24:22 by andrean          ###   ########.fr        #
+#    Updated: 2025/03/18 15:40:44 by andrean          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,15 +42,16 @@ SRC_FILES = main.c \
 			$(LEXER_DIR)fill_token.c \
 			$(LEXER_DIR)fill_token2.c \
 			$(LEXER_DIR)dollar.c \
-			$(LEXER_DIR)wildcards.c\
 			$(HASHTABLE_DIR)hashtable_creation.c \
 			$(HASHTABLE_DIR)operation.c \
 			$(HASHTABLE_DIR)ft_free_hasht.c \
 			$(PARSING_DIR)parser.c \
 			$(PARSING_DIR)node.c \
 			$(PARSING_DIR)node_cmd.c\
+			$(EXEC_DIR)quotes.c\
 			$(EXEC_DIR)exec_utils.c\
 			$(EXEC_DIR)exec.c\
+			$(EXEC_DIR)wildcards.c\
 			$(EXEC_DIR)redirect.c \
 			$(EXEC_DIR)new_dollar.c \
 			$(BUILTIN_DIR)builtins_utils.c\
