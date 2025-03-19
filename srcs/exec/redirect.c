@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 16:35:04 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/13 16:43:09 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/19 15:37:06 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,10 @@ void	ft_here_doc(char *limit, int fdin)
 	if (herefd == -1)
 		;//error
 	line = readline("heredoc>");
-	while (!ft_strcmp(line, limit) && line)
+	while (ft_strcmp(line, limit) && line)
 	{
 		ft_putstr_fd(line, herefd);
+		ft_putstr_fd("\n", herefd);
 		free(line);
 		line = readline("heredoc>");
 	}

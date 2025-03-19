@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:17:24 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/19 14:59:40 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/19 15:47:55 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	prompt(t_world *world)
 			{
 				fill_tree(world);
 				exec_tree(world, world->tree);
-			
+				unlink(".heredoc");
 			}
 		}
 		free(world->prompt);

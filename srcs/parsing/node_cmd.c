@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:26:16 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/14 15:27:51 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/19 15:34:45 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ t_ast	*ft_new_ast(int node_type)
 	if (!new)
 		return (NULL);
 	new->node_type = node_type;
+	if (node_type >= 5)
+		new->node_type = 0;
 	new->cmd = NULL;
 	new->left = NULL;
 	new->right = NULL;

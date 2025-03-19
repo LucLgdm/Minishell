@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:26:44 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/19 15:00:48 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/19 15:46:54 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,9 @@ int	exec_one_command(t_ast *node, char **paths)
 		new_handle_dollar(&node->cmd, (*get_world())->env);
 	else
 		new_handle_dollar(&node->cmd, (*get_world())->new_env);
+	ft_redirect(node);
 	if (!node->cmd || !node->cmd[0])
 		return (0);
-	ft_redirect(node);
 	exit_status = get_builtins(node);
 	if (exit_status == -1)
 		exit_status = create_process(node, paths);
