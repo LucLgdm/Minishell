@@ -3,22 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   environement.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:17:24 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/17 15:38:15 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/19 14:59:40 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	g_stop = 0;
+volatile int		g_stop = 0;
 
 int		ft_stop(void)
 {
 	if (g_stop)
 		return (1);
 	return (0);
+}
+
+void	handle_signal_afterprompt(int sig)
+{
+	if (sig == SIGINT)
+	{
+		g_stop = 1;
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+	}
 }
 
 void	prompt(t_world *world)
@@ -28,6 +39,8 @@ void	prompt(t_world *world)
 		signal(SIGINT, handle_signal);
 		signal(SIGQUIT, SIG_IGN);
 		world->prompt = readline("\001\033[3;33m\002Minishell > \001\033[0m\002 ");
+		g_stop = 0;
+		signal(SIGINT, handle_signal_afterprompt);
 		if (!world->prompt || (strcmp(world->prompt, "exit") == 0))
 		{
 			printf("\033[0;32mFrom Minishell with Love !\033[0m\n");
@@ -45,6 +58,7 @@ void	prompt(t_world *world)
 			{
 				fill_tree(world);
 				exec_tree(world, world->tree);
+			
 			}
 		}
 		free(world->prompt);
@@ -83,10 +97,11 @@ t_hashtable	*ft_create_env_hashtable(char **env)
 	if (!env_hashtable)
 		return (NULL);
 	ft_env_to_hashtable(env, env_hashtable);
+	
 	if (env_hashtable)
 	{
-		ft_modify_value(env_hashtable, "SHLVL",
-			ft_itoa(ft_atoi(ft_get_element(env_hashtable, "SHLVL")->value) + 1), 0);
+		env_hashtable = ft_modify_value(env_hashtable, "SHLVL",
+				ft_itoa(ft_atoi(ft_get_element(env_hashtable, "SHLVL")->value) + 1), 0);
 	}
 	return (env_hashtable);
 }

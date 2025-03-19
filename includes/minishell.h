@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/18 16:12:16 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/19 12:54:24 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@
 # include <fcntl.h>
 # include <dirent.h>
 
-extern int		g_stop;
-
 typedef struct s_world
 {
 	char		*prompt;
@@ -43,7 +41,7 @@ typedef struct s_world
 // environement
 void		prompt(t_world *world);
 void		handle_signal(int sig);
-int			ft_stop(void);
+void		handle_signal_afterprompt(int sig);
 t_world		**get_world(void);
 t_hashtable	*ft_create_env_hashtable(char **env);
 t_hashtable	*ft_create_hidden(void);
