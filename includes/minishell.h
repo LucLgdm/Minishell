@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/19 12:54:24 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/19 17:17:18 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <dirent.h>
+# include <errno.h>
 
 typedef struct s_world
 {

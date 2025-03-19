@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:41:04 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/17 14:45:53 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:29:19 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,7 @@ int		ft_env(t_ast *node);
 int		ft_minishellception(t_ast *node);
 
 void	ft_print_env(t_hashtable *env);
+
+int		file_exists(char *path_name);
 
 #endif

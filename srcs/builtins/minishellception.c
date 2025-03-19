@@ -6,11 +6,31 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:55:59 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/19 15:00:06 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/19 17:21:51 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	file_error(int file_type, char *path)
+{
+	ft_putstr_fd(path, 2);
+	if (file_type == 0)
+	{
+		ft_putstr_fd(": No such file or directory\n", 2);
+		exit(127);
+	}
+	if (file_type == 4)
+	{
+		ft_putstr_fd(": Is a directory\n", 2);
+		exit(126);
+	}
+	if (file_type == 8)
+	{
+		ft_putstr_fd(": Permission denied\n", 2);
+		exit(126);
+	}
+}
 
 int	ft_exec_file(char *path, char **args)
 {
@@ -23,16 +43,14 @@ int	ft_exec_file(char *path, char **args)
 	if (pid == 0)
 	{
 		execve(path, args, ft_create_envp());
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		exit(127);
+		file_error(file_exists(path), path);
 	}
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &retval, 0);
 	signal(SIGINT, handle_signal_afterprompt);
 	return (retval % 255);
 }
-	
+
 char	*extract_filename(t_ast *node)
 {
 	char	*str;

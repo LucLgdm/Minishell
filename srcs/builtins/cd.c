@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:34:49 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/17 15:38:29 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/19 17:06:43 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,21 @@
 
 int	cd_error(int error, char *directory)
 {
+	int	type;
+
 	ft_putstr_fd("cd: ", 2);
 	if (error == 0)
 		ft_putstr_fd("too many arguments\n", 2);
 	if (error == 1)
 	{
+		type = file_exists(directory);
 		ft_putstr_fd(directory, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		if (type == 0)
+			ft_putstr_fd(": No such file or directory\n", 2);
+		if (type == 4)
+			ft_putstr_fd(": Permission denied\n", 2);
+		if (type == 8)
+			ft_putstr_fd(": Not a directory\n", 2);
 	}
 	if (error == 2)
 	{

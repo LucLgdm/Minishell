@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:35:06 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/18 17:56:49 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/19 17:24:45 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ char	**manage_quotes(char **prev_words, char *str, int index)
 	char	**trunclst;
 
 	i = -1;
+	if (!str)
+		return (prev_words);
 	word = ft_strdup("");
 	new_words = ft_calloc(sizeof(char *), 1);
 	trunclst = get_trnclst(str);

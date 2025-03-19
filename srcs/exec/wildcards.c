@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 13:02:04 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/18 15:53:54 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/19 16:11:15 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,21 @@ int	foundlast(char *name, char *trunc)
 int	checkifwildcarded(char **trunclst, char *name)
 {
 	int		i;
+
 	i = -1;
-	
 	if (name && name[0] == '.')
 		if (ft_strncmp(trunclst[0], ".", 1))
 			return (0);
 	if (ft_strcmp(trunclst[0], "*"))
 		if (ft_strncmp(name, trunclst[0], ft_strlen(trunclst[0])))
-			return(0);
+			return (0);
 	while (trunclst[++i])
 	{
-		if(ft_strcmp(trunclst[i], "*"))
+		if (ft_strcmp(trunclst[i], "*"))
 		{
 			name = ft_strnstr(name, trunclst[i], 256);
 			if (!name)
-				return(0);
+				return (0);
 			name += ft_strlen(trunclst[i]);
 		}
 	}
