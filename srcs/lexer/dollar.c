@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 12:14:31 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/18 18:09:22 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/19 11:52:42 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,11 @@ char	*ft_extract_var_name(char *str, int *i)
 
 	start = *i + 1;
 	len = 0;
+	if (str[start] == '?')
+	{
+		(*i)++;
+		return (ft_strdup("?"));
+	}
 	while ((str[start + len] && (ft_isalnum(str[start + len]) || str[start
 					+ len] == '_')) && !(ft_isdigit(str[start])))
 		len++;

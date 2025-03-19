@@ -6,11 +6,13 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:26:44 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/18 18:01:43 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/19 15:00:48 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int g_stop;
 
 int	get_builtins(t_ast *node)
 {
@@ -35,7 +37,7 @@ int	get_builtins(t_ast *node)
 	return (1);
 }
 
-void	ft_execcommand(t_ast *node, char **paths)
+void	 ft_execcommand(t_ast *node, char **paths)
 {
 	char	**cmd;
 	char	*path;
@@ -72,9 +74,11 @@ pid_t	create_process(t_ast *node, char **paths)
 	if (pid[0] == -1)
 		;//fork error
 	if (pid[0] == 0)
+	{
+		signal(SIGINT, SIG_IGN);
 		ft_execcommand(node, paths);
-	ft_check_for_stop(pid, 1);
-	return (pid[0]);
+	}
+	return (ft_check_for_stop(pid, 1));
 }
 
 int	ft_do_the_pipe(t_ast *node, char **paths)
@@ -89,6 +93,7 @@ int	ft_do_the_pipe(t_ast *node, char **paths)
 		; //fork error
 	if (pid[0] == 0)
 	{
+		signal(SIGINT, SIG_IGN);
 		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
@@ -100,6 +105,7 @@ int	ft_do_the_pipe(t_ast *node, char **paths)
 		;//fork error
 	if (pid[1] == 0)
 	{
+		signal(SIGINT, SIG_IGN);
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
 		exit(exec_node((*get_world()), node->right, paths));
@@ -111,7 +117,6 @@ int	ft_do_the_pipe(t_ast *node, char **paths)
 int	exec_one_command(t_ast *node, char **paths)
 {
 	int		exit_status;
-	pid_t	pid;
 
 	if ((*get_world())->env)
 		new_handle_dollar(&node->cmd, (*get_world())->env);
@@ -122,10 +127,7 @@ int	exec_one_command(t_ast *node, char **paths)
 	ft_redirect(node);
 	exit_status = get_builtins(node);
 	if (exit_status == -1)
-	{
-		pid = create_process(node, paths);
-		waitpid(pid, &exit_status, 0);
-	}
+		exit_status = create_process(node, paths);
 	return (exit_status);
 }
 
@@ -165,12 +167,17 @@ int	exec_tree(t_world *world, t_ast *node)
 
 	if (!node)
 		return (-1);
-	paths = path_tab(world->env);
-	original_stdin = dup(STDIN_FILENO);
-	original_stdout = dup(STDOUT_FILENO);
-	retval = exec_node(world, node, paths);
-	dup2(original_stdin, STDIN_FILENO);
-	dup2(original_stdout, STDOUT_FILENO);
-	ft_modify_value(world->hidden_vars, "?", ft_itoa(retval), 0);
+	if (!g_stop)
+	{
+		paths = path_tab(world->env);
+		original_stdin = dup(STDIN_FILENO);
+		original_stdout = dup(STDOUT_FILENO);
+		retval = exec_node(world, node, paths);
+		dup2(original_stdin, STDIN_FILENO);
+		dup2(original_stdout, STDOUT_FILENO);
+		ft_modify_value(world->hidden_vars, "?", ft_itoa(retval), 0);
+	}
+	if (g_stop)
+		retval = 130;
 	return (retval);
 }

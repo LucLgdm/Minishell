@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:55:59 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/14 16:56:36 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/19 15:00:06 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	ft_exec_file(char *path, char **args)
 	}
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &retval, 0);
-	signal(SIGINT, handle_signal);
-	return (retval);
+	signal(SIGINT, handle_signal_afterprompt);
+	return (retval % 255);
 }
 	
 char	*extract_filename(t_ast *node)

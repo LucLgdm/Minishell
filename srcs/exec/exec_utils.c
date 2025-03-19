@@ -6,11 +6,13 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:24:49 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/18 17:51:00 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/19 14:58:17 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int g_stop;
 
 void	ft_redirect(t_ast *node)
 {
@@ -35,17 +37,18 @@ int	ft_check_for_stop(pid_t *pid, int pid_nb)
 {
 	int		i;
 	int		exit_status;
-	int		tmp;
+	int	*tmp;
 	pid_t	endpid;
 	
+	tmp = ft_calloc(sizeof(int), 1);
 	i = 0;
 	while (g_stop == 0)
 	{
-		endpid = waitpid(-1, &tmp, WNOHANG);
+		endpid = waitpid(-1, tmp, WNOHANG);
 		if (endpid)
 		{
-			if (endpid == pid[pid_nb])
-				exit_status = tmp;
+			if (endpid == pid[pid_nb - 1])
+				exit_status = *tmp % 255;
 			i++;
 			if (i == pid_nb)
 				break ;
@@ -55,13 +58,15 @@ int	ft_check_for_stop(pid_t *pid, int pid_nb)
 	{
 		i = -1;
 		while (++i < pid_nb)
+		{
 			kill(pid[i], SIGTERM);
+		}
 		while (1)
 		{
-			endpid = waitpid(-1, &tmp, 0);
-			if (endpid == pid[pid_nb])
-				exit_status = tmp;
-			if (endpid == 0)
+			endpid = waitpid(-1, tmp, 0);
+			if (endpid == pid[pid_nb - 1])
+				exit_status = *tmp;
+			if (endpid == -1)
 				break ;
 		}
 	}
