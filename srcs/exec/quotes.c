@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:35:06 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/20 11:52:47 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/20 12:48:22 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	quotes(char *str, int *i, char **word, char quote_type)
+{
+	++(*i);
+	while (str[*i] && str[*i] != quote_type)
+	{
+		if (word)
+			ft_strncat(word, str + (*i), 1);
+		(*i)++;
+	}
+}
 
 char	*ft_strchr_outofquotes(char *str, char c)
 {
@@ -21,6 +32,8 @@ char	*ft_strchr_outofquotes(char *str, char c)
 		return (str);
 	while (str[i])
 	{
+		if (str[i] == '\'' || str[i] == '"')
+			quotes(str, &i, NULL, str[i]);
 		if (str[i] == c)
 			return (str + i);
 		i++;
@@ -28,15 +41,6 @@ char	*ft_strchr_outofquotes(char *str, char c)
 	return (NULL);
 }
 
-void	quotes(char *str, int *i, char **word, char quote_type)
-{
-	++(*i);
-	while (str[*i] && str[*i] != quote_type)
-	{
-		ft_strncat(word, str + (*i), 1);
-		(*i)++;
-	}
-}
 
 void	end_word(char **word, char ***new_words, char ***trunclst)
 {

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+         #
+#    By: andrean <andrean@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/03/20 09:08:39 by lde-merc         ###   ########.fr        #
+#    Updated: 2025/03/20 12:52:44 by andrean          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRC_FILES = main.c \
 			$(LEXER_DIR)fill_token.c \
 			$(LEXER_DIR)fill_token2.c \
 			$(LEXER_DIR)dollar.c \
+			$(LEXER_DIR)dollar2.c\
 			$(HASHTABLE_DIR)hashtable_creation.c \
 			$(HASHTABLE_DIR)hashtable_env.c \
 			$(HASHTABLE_DIR)operation.c \
@@ -49,6 +50,8 @@ SRC_FILES = main.c \
 			$(PARSING_DIR)parser.c \
 			$(PARSING_DIR)node.c \
 			$(PARSING_DIR)node_cmd.c\
+			$(PARSING_DIR)parse_simple_cmd.c\
+			$(PARSING_DIR)token.c\
 			$(EXEC_DIR)quotes.c\
 			$(EXEC_DIR)exec_utils.c\
 			$(EXEC_DIR)exec_utils_2.c\
