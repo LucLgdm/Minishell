@@ -3,32 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 12:14:31 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/19 11:52:42 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/20 12:08:36 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// int	handle_dollar(t_token **token_lst, t_hashtable *env_ht)
-// {
-// 	t_token	*tmp;
-
-// 	tmp = *token_lst;
-// 	if (!tmp)
-// 		return (1);
-// 	while (tmp)
-// 	{
-// 		if (tmp->token_type == TOKEN_PARENTHESES)
-// 			handle_dollar(&tmp->sub_token, env_ht);
-// 		else if (tmp->token_type == TOKEN_WORD)
-// 			tmp->value = ft_expand(tmp->value, env_ht);
-// 		tmp = tmp->next;
-// 	}
-// 	return (0);
-// }
+static void	ft_good_quote(char *word, char *new_word, int i,
+		t_hashtable *env_ht)
+{
+	if (word[i] == CHAR_S_QUOTE)
+		ft_single_quote(&new_word, word, &i);
+	if (word[i] == CHAR_D_QUOTE)
+		ft_double_quote(&new_word, word, &i, env_ht);
+}
 
 char	*ft_expand(char *word, t_hashtable *env_ht)
 {
@@ -41,18 +32,14 @@ char	*ft_expand(char *word, t_hashtable *env_ht)
 	i = -1;
 	while (word[++i])
 	{
-		if (word[i] == CHAR_S_QUOTE)
-			ft_single_quote(&new_word, word, &i);
-		else if (word[i] == CHAR_D_QUOTE)
-			ft_double_quote(&new_word, word, &i, env_ht);
+		if (word[i] == CHAR_D_QUOTE || word[i] == CHAR_S_QUOTE)
+			ft_good_quote(word, new_word, i, env_ht);
 		else if (word[i] == CHAR_DOLLAR)
 		{
 			var_name = ft_extract_var_name(word, &i);
-			// printf("Var name extracted : %s\n", var_name);
 			if (strcmp(var_name, "") == 0)
 				ft_strncat(&new_word, "$", 1);
 			env_value = ft_get_env_value(var_name, env_ht);
-			// printf("Env value getted : %s\n", env_value);
 			free(var_name);
 			if (env_value)
 				ft_strncat(&new_word, env_value, ft_strlen(env_value));
@@ -72,7 +59,7 @@ void	ft_single_quote(char **new_word, char *word, int *i)
 		(*i)++;
 	}
 	if (!word[*i])
-		;//unclosed quotes;
+		perror("Missing quote");
 	else
 		ft_strncat(new_word, &word[(*i)], 1);
 }
@@ -89,7 +76,7 @@ void	ft_double_quote(char **new_word, char *word, int *i,
 			ft_append_char(new_word, word[(*i)++]);
 	}
 	if (!word[*i])
-		;//unclosed quotes;
+		perror("Missing quote");
 	else
 		ft_strncat(new_word, &word[(*i)], 1);
 }
@@ -112,66 +99,4 @@ void	ft_replace(char **new_word, char *word, int *i, t_hashtable *env_ht)
 		ft_strcat(*new_word, value);
 	else
 		ft_strcat(*new_word, "");
-}
-
-void	ft_append_char(char **new_word, char c)
-{
-	char	*tmp;
-	int		len;
-
-	if (!new_word || !*new_word)
-		return ;
-	len = ft_strlen(*new_word);
-	tmp = malloc(len + 2);
-	if (!tmp)
-		return ;
-	ft_strcpy(tmp, *new_word);
-	tmp[len] = c;
-	tmp[len + 1] = '\0';
-	free(*new_word);
-	*new_word = tmp;
-}
-
-char	*ft_get_env_value(char *key, t_hashtable *env_ht)
-{
-	t_element	*elem;
-
-	if (env_ht)
-	{
-		elem = ft_get_element(env_ht, key);
-		if (elem)
-			return (elem->value);
-	}
-	if (!env_ht)
-	{
-		elem = ft_get_element((*get_world())->new_env, key);
-		if (elem)
-			return (elem->value);
-	}
-	elem = ft_get_element((*get_world())->hidden_vars, key);
-	if (elem)
-		return (elem->value);
-	return (NULL);
-}
-
-char	*ft_extract_var_name(char *str, int *i)
-{
-	int	start;
-	int	len;
-
-	start = *i + 1;
-	len = 0;
-	if (str[start] == '?')
-	{
-		(*i)++;
-		return (ft_strdup("?"));
-	}
-	while ((str[start + len] && (ft_isalnum(str[start + len]) || str[start
-					+ len] == '_')) && !(ft_isdigit(str[start])))
-		len++;
-	if (ft_isdigit(str[start]))
-		while (str[start + len] && ft_isdigit(str[start + len]))
-			len++;
-	*i += len;
-	return (ft_substr(str, start, len));
 }

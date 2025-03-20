@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:29:58 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/17 16:10:17 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/20 11:42:10 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,30 @@ int	check_key(char *key)
 	return (1);
 }
 
+static void	delete_quotes(char *value)
+{
+	int	i;
+	int	n;
+
+	if (value[0] == '"')
+	{
+		n = ft_strlen(value);
+		i = 1;
+		while (i < n)
+		{
+			value[i - 1] = value[i];
+			i++;
+		}
+		value[n - 2] = '\0';
+	}
+}
+
 int	export_one(char *str)
 {
 	t_hashtable	*env;
 	char		*equalsign;
 	char		*key;
 	char		*value;
-	int			n;
 
 	env = (*get_world())->env;
 	if (!env)
@@ -53,21 +70,13 @@ int	export_one(char *str)
 		key = ft_substr(str, 0, equalsign - str);
 		value = ft_substr(equalsign, 1, ft_strlen(equalsign + 1));
 		if (!key || !value)
-			; // malloc error
+			return (1);
 	}
 	if (!check_key(key))
 		return (export_error(key));
 	if (ft_get_element(env, key))
 		ft_remove_element(env, key);
-	if (value[0] == '"')
-	{
-		n = ft_strlen(value);
-		for (int i = 1; i < n; i++)
-		{
-			value[i - 1] = value[i];
-		}
-		value[n - 2] = '\0';
-	}
+	delete_quotes(value);
 	env = ft_add_element(&env, key, value);
 	return (0);
 }
@@ -91,23 +100,4 @@ int	ft_export(t_ast *node)
 	if (retval)
 		return (1);
 	return (0);
-}
-
-void	ft_print_env(t_hashtable *env)
-{
-	int			i;
-	t_element	*tmp;
-
-	if (!env || !env->table)
-		return ;
-	i = -1;
-	while (++i < env->length)
-	{
-		tmp = env->table[i];
-		while (tmp)
-		{
-			ft_printf("%s=%s\n", tmp->key, tmp->value);
-			tmp = tmp->next;
-		}
-	}
 }

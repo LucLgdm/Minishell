@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:35:06 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/19 17:24:45 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/20 11:52:47 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 char	*ft_strchr_outofquotes(char *str, char c)
 {
@@ -47,7 +47,6 @@ void	end_word(char **word, char ***new_words, char ***trunclst)
 	{
 		tab = onelinetab(*word);
 		tmp = ft_catchartab(*new_words, tab, ft_arraylen(*new_words));
-		ft_free_array(*new_words);
 		if (trunclst)
 		{
 			*new_words = manage_wildcards(tmp, 0, *trunclst);
@@ -80,8 +79,8 @@ char	**get_trnclst(char *str)
 		if (str + i == wild)
 		{
 			end_word(&word, &trunclst, NULL);
-			trunclst = ft_catchartab(trunclst,
-					onewildtab(), ft_arraylen(trunclst));
+			trunclst = ft_catchartab(trunclst, onewildtab(),
+					ft_arraylen(trunclst));
 			wild = ft_strchr_outofquotes(str + i + 1, '*');
 		}
 		else if (str[i] == '"' || str[i] == '\'')
@@ -94,9 +93,6 @@ char	**get_trnclst(char *str)
 	free(word);
 	return (trunclst);
 }
-
-
-
 
 char	**manage_quotes(char **prev_words, char *str, int index)
 {
@@ -124,6 +120,5 @@ char	**manage_quotes(char **prev_words, char *str, int index)
 	if (!prev_words)
 		prev_words = ft_calloc(sizeof(char *), 1);
 	trunclst = ft_catchartab(prev_words, new_words, index);
-	ft_free_array(prev_words);
 	return (trunclst);
 }

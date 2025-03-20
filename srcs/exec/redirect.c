@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 16:35:04 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/19 15:37:06 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/20 12:37:25 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	redirect_output(char *file, int fd, int append)
 	else
 		newfd = open(file, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (newfd == -1)
-		;//error
+		return (perror(""));
 	if (dup2(newfd, fd) == -1)
-		;//error
+		return (perror(""));
 	close(newfd);
 }
 
@@ -33,9 +33,9 @@ void	redirect_input(char *file, int fd)
 
 	newfd = open(file, O_RDONLY, 0644);
 	if (newfd == -1)
-		;//error
+		return (perror(""));
 	if (dup2(newfd, fd) == -1)
-		;//error
+		return (perror(""));
 	close(newfd);
 }
 
@@ -43,10 +43,10 @@ void	ft_here_doc(char *limit, int fdin)
 {
 	int		herefd;
 	char	*line;
-	
+
 	herefd = open(".heredoc", O_CREAT | O_WRONLY, 0644);
 	if (herefd == -1)
-		;//error
+		return (perror(""));
 	line = readline("heredoc>");
 	while (ft_strcmp(line, limit) && line)
 	{
@@ -56,7 +56,7 @@ void	ft_here_doc(char *limit, int fdin)
 		line = readline("heredoc>");
 	}
 	if (!line)
-		;//error
+		return (perror(""));
 	else
 		free(line);
 	close(herefd);

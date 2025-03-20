@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishellception.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:55:59 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/19 17:21:51 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/20 12:35:34 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_exec_file(char *path, char **args)
 
 	pid = fork();
 	if (pid == -1)
-		;//fork error
+		perror("");
 	if (pid == 0)
 	{
 		execve(path, args, ft_create_envp());
@@ -79,10 +79,10 @@ int	ft_minishellception(t_ast *node)
 	i = 0;
 	args = ft_calloc(sizeof(char *), get_arg_nb(node) + 1);
 	if (!args)
-		;//malloc error
+		return (perror(""), 1);
 	args[0] = extract_filename(node);
 	if (!args[0])
-		;//malloc error
+		return (perror(""), 1);
 	while (node->cmd[++i])
 		args[i] = node->cmd[i];
 	return (ft_exec_file(node->cmd[0], args));

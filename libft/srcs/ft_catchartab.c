@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_catchartab.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 13:16:41 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/18 16:50:47 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/20 11:50:37 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,7 @@ char	**ft_catchartab(char **tab1, char **tab2, int pos)
 		output[i + m - 1] = ft_strdup(tab1[i]);
 		i++;
 	}
+	ft_free_array(tab1);
+	ft_free_array(tab2);
 	return (output);
 }

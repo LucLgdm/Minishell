@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:34:49 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/19 17:06:43 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/20 11:44:32 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //  /!\  ne pas creer de process avant d'appeler cette fonction, sinon inutile. 
 
-int	cd_error(int error, char *directory)
+static int	cd_error(int error, char *directory)
 {
 	int	type;
 
@@ -39,7 +39,7 @@ int	cd_error(int error, char *directory)
 	return (1);
 }
 
-void	change_wd(t_hashtable *env, char *pwd)
+static void	change_wd(t_hashtable *env, char *pwd)
 {
 	char	newpwd[255];
 

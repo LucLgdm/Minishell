@@ -3,32 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   environement.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:17:24 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/19 15:47:55 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/20 09:09:18 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-volatile int		g_stop = 0;
+extern int	g_stop;
 
-int		ft_stop(void)
+static void	handle_prompt(t_world *world)
 {
-	if (g_stop)
-		return (1);
-	return (0);
-}
-
-void	handle_signal_afterprompt(int sig)
-{
-	if (sig == SIGINT)
+	add_history(world->prompt);
+	if (strcmp(world->prompt, "clean") == 0)
 	{
-		g_stop = 1;
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
+		rl_clear_history();
+		printf("\033[0;32mHistory cleaned\033[0m\n");
+	}
+	else
+	{
+		fill_tree(world);
+		exec_tree(world, world->tree);
+		unlink(".heredoc");
 	}
 }
 
@@ -47,33 +45,8 @@ void	prompt(t_world *world)
 			break ;
 		}
 		if (ft_strlen(world->prompt) > 0)
-		{
-			add_history(world->prompt);
-			if (strcmp(world->prompt, "clean") == 0)
-			{
-				rl_clear_history();
-				printf("\033[0;32mHistory cleaned\033[0m\n");
-			}
-			else
-			{
-				fill_tree(world);
-				exec_tree(world, world->tree);
-				unlink(".heredoc");
-			}
-		}
+			handle_prompt(world);
 		free(world->prompt);
-	}
-}
-
-void	handle_signal(int sig)
-{
-	if (sig == SIGINT)
-	{
-		g_stop = 1;
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
 	}
 }
 
@@ -97,63 +70,37 @@ t_hashtable	*ft_create_env_hashtable(char **env)
 	if (!env_hashtable)
 		return (NULL);
 	ft_env_to_hashtable(env, env_hashtable);
-	
 	if (env_hashtable)
 	{
 		env_hashtable = ft_modify_value(env_hashtable, "SHLVL",
-				ft_itoa(ft_atoi(ft_get_element(env_hashtable, "SHLVL")->value) + 1), 0);
+				ft_itoa(ft_atoi(ft_get_element(env_hashtable, "SHLVL")->value)
+					+ 1), 0);
 	}
 	return (env_hashtable);
 }
 
-void	ft_env_to_hashtable(char **env, t_hashtable *env_hastable)
+char	**ft_create_envp(void)
 {
-	int		i;
-	char	**split;
-	char	*key;
-	char	*value;
+	t_hashtable	*env;
+	char		**envp;
+	int			i;
+	int			j;
 
-	i = -1;
-	while (env[++i])
+	env = (*get_world())->env;
+	if (!env)
+		env = (*get_world())->new_env;
+	i = 0;
+	j = 0;
+	envp = ft_calloc(sizeof(char *), env->length);
+	while ((i) + j < env->length)
 	{
-		split = ft_split(env[i], '=');
-		if (split[0])
-			key = ft_strdup(split[0]);
-		if (split[1])
-			value = ft_strdup(split[1]);
+		if (env->table[i + j])
+		{
+			envp[i] = htab_element_to_str(env->table[i + j]);
+			i++;
+		}
 		else
-			value = ft_strdup("");
-		ft_add_element(&env_hastable, key, value);
-		free(key);
-		free(value);
-		ft_free_array(split);
+			j++;
 	}
-}
-
-t_hashtable	*ft_create_new_env(void)
-{
-	t_hashtable	*hashtable;
-	char		*wd;
-
-	hashtable = ft_create_hashtable(250);
-	if (!hashtable)
-		;//error
-	wd = getcwd(NULL, 255);
-	ft_add_element(&hashtable, "PWD", wd);
-	free(wd);
-	ft_add_element(&hashtable, "SHLVL", "1");
-	ft_add_element(&hashtable, "_", "env");
-	return (hashtable);
-}
-
-t_hashtable	*ft_create_hidden(void)
-{
-	t_hashtable	*hashtable;
-
-	hashtable = ft_create_hashtable(10);
-	if (!hashtable)
-		;//error
-	ft_add_element(&hashtable, "PATH", "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin");
-	ft_add_element(&hashtable, "?", "0");
-	return (hashtable);
+	return (envp);
 }

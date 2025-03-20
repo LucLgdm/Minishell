@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:50:23 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/18 18:01:24 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/20 09:24:30 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,13 @@ void	ft_here_doc(char *limit, int fdin);
 char	**ft_create_envp(void);
 void	ft_redirect(t_ast *node);
 int		ft_check_for_stop(pid_t *pid, int pid_nb);
+pid_t	create_process(t_ast *node, char **paths);
+int		ft_do_the_pipe(t_ast *node, char **paths);
 
 void	new_handle_dollar(char ***cmd, t_hashtable *env);
+
+int		foundlast(char *name, char *trunc);
+char	**onelinetab(char *str);
+char	**onewildtab(void);
 
 #endif

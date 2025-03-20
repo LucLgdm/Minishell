@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: andrean <andrean@student.42.fr>            +#+  +:+       +#+         #
+#    By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/03/18 15:40:44 by andrean          ###   ########.fr        #
+#    Updated: 2025/03/20 09:08:39 by lde-merc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ SRC_FILES = main.c \
 			$(INIT_DIR)environement.c \
 			$(INIT_DIR)binary_tree.c \
 			$(INIT_DIR)print.c \
-			$(INIT_DIR)parse_token.c \
+			$(INIT_DIR)signal.c \
 			$(FREE_DIR)free.c \
 			$(FREE_DIR)ft_free_ast.c \
 			$(FREE_DIR)ft_free_token.c \
@@ -43,6 +43,7 @@ SRC_FILES = main.c \
 			$(LEXER_DIR)fill_token2.c \
 			$(LEXER_DIR)dollar.c \
 			$(HASHTABLE_DIR)hashtable_creation.c \
+			$(HASHTABLE_DIR)hashtable_env.c \
 			$(HASHTABLE_DIR)operation.c \
 			$(HASHTABLE_DIR)ft_free_hasht.c \
 			$(PARSING_DIR)parser.c \
@@ -50,8 +51,10 @@ SRC_FILES = main.c \
 			$(PARSING_DIR)node_cmd.c\
 			$(EXEC_DIR)quotes.c\
 			$(EXEC_DIR)exec_utils.c\
+			$(EXEC_DIR)exec_utils_2.c\
 			$(EXEC_DIR)exec.c\
 			$(EXEC_DIR)wildcards.c\
+			$(EXEC_DIR)wildcards_use.c\
 			$(EXEC_DIR)redirect.c \
 			$(EXEC_DIR)new_dollar.c \
 			$(BUILTIN_DIR)builtins_utils.c\

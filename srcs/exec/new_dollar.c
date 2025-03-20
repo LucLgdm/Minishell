@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_dollar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:00:21 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/19 17:25:06 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/20 11:51:30 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,8 @@ void	new_handle_dollar(char ***cmd, t_hashtable *env)
 			{
 				splitted = ft_split(expanded, ' ');
 				new_cmd = ft_catchartab(*cmd, splitted, i);
-				ft_free_array(splitted);
-				ft_free_array(*cmd);
-				*cmd = new_cmd;
 				free(expanded);
+				*cmd = new_cmd;
 			}
 			else
 				(*cmd)[i] = ft_strdup("");
