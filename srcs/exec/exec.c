@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:26:44 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/20 12:36:31 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/20 15:11:31 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,11 @@ int	ft_do_the_pipe(t_ast *node, char **paths)
 	if (pid[1] == -1)
 		perror("");
 	if (pid[1] == 0)
-		handle_process(fd[1], fd[0], node, paths);
+	{
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+		exit(exec_node((*get_world()), node->right, paths));
+	}
 	close(fd[0]);
 	return (ft_check_for_stop(pid, 2));
 }

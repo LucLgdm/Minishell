@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:35:06 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/20 12:48:22 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/20 16:31:27 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ char	*ft_strchr_outofquotes(char *str, char c)
 	}
 	return (NULL);
 }
-
 
 void	end_word(char **word, char ***new_words, char ***trunclst)
 {
@@ -76,7 +75,7 @@ char	**get_trnclst(char *str)
 	wild = ft_strchr_outofquotes(str, '*');
 	if (!wild)
 		return (NULL);
-	trunclst = ft_calloc(sizeof(char *), 1);
+	trunclst = ft_calloc_stop(sizeof(char *), 1);
 	word = ft_strdup("");
 	while (str[++i])
 	{
@@ -109,7 +108,7 @@ char	**manage_quotes(char **prev_words, char *str, int index)
 	if (!str)
 		return (prev_words);
 	word = ft_strdup("");
-	new_words = ft_calloc(sizeof(char *), 1);
+	new_words = ft_calloc_stop(sizeof(char *), 1);
 	trunclst = get_trnclst(str);
 	while (str[++i])
 	{
@@ -122,7 +121,7 @@ char	**manage_quotes(char **prev_words, char *str, int index)
 	}
 	end_word(&word, &new_words, &trunclst);
 	if (!prev_words)
-		prev_words = ft_calloc(sizeof(char *), 1);
+		prev_words = ft_calloc_stop(sizeof(char *), 1);
 	trunclst = ft_catchartab(prev_words, new_words, index);
 	return (trunclst);
 }

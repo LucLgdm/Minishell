@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:30:48 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/18 17:50:24 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/20 15:13:29 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_token	*find_last_logical_operator(t_token *token);
 t_token	*find_last_pipe(t_token *token);
 t_ast	*parse_pipes(t_token *token);
 t_ast	*parse_simple_command(t_token *token);
-t_token	*split_token(t_token *token, t_token *op);
+t_token	*split_token(t_token *token, t_token *op, t_token *head, t_token *tail);
 t_ast	*parse_parentheses(t_token *token);
 
 // Node_cmd.c

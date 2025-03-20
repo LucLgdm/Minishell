@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:24:49 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/20 09:11:51 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:22:30 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,42 +33,42 @@ void	ft_redirect(t_ast *node)
 	}
 }
 
+static void	kill_to_stop(pid_t *pid, int pid_nb, int *intab, pid_t endpid)
+{
+	intab[0] = -1;
+	while (++(intab[0]) < pid_nb)
+		kill(pid[intab[0]], SIGTERM);
+	while (1)
+	{
+		endpid = waitpid(-1, &intab[2], 0);
+		if (endpid == pid[pid_nb - 1])
+			intab[1] = intab[2];
+		if (endpid == -1)
+			break ;
+	}
+}
+
 int	ft_check_for_stop(pid_t *pid, int pid_nb)
 {
-	int		i;
-	int		exit_status;
-	int		*tmp;
+	int		intab[3];
 	pid_t	endpid;
 
-	tmp = ft_calloc(sizeof(int), 1);
-	i = 0;
+	intab[0] = 0;
 	while (g_stop == 0)
 	{
-		endpid = waitpid(-1, tmp, WNOHANG);
+		endpid = waitpid(-1, &intab[2], WNOHANG);
 		if (endpid)
 		{
 			if (endpid == pid[pid_nb - 1])
-				exit_status = *tmp % 255;
-			i++;
-			if (i == pid_nb)
+				intab[1] = intab[2] % 255;
+			intab[0] += 1;
+			if (intab[0] == pid_nb)
 				break ;
 		}
 	}
-	if (i != pid_nb)
-	{
-		i = -1;
-		while (++i < pid_nb)
-			kill(pid[i], SIGTERM);
-		while (1)
-		{
-			endpid = waitpid(-1, tmp, 0);
-			if (endpid == pid[pid_nb - 1])
-				exit_status = *tmp;
-			if (endpid == -1)
-				break ;
-		}
-	}
-	return (exit_status);
+	if (intab[0] != pid_nb)
+		kill_to_stop(pid, pid_nb, intab, endpid);
+	return (intab[1]);
 }
 
 static void	join_tab(char *tmp, char **tab)

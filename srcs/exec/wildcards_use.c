@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 08:37:57 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 08:47:03 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:31:45 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	**onewildtab(void)
 {
 	char	**tab;
 
-	tab = ft_calloc(sizeof(char *), 2);
+	tab = ft_calloc_stop(sizeof(char *), 2);
 	if (!tab)
 		return (NULL);
 	tab[0] = ft_strdup("*");
@@ -34,7 +34,7 @@ char	**onelinetab(char *str)
 
 	if (!str)
 		return (NULL);
-	tab = ft_calloc(sizeof(char *), 2);
+	tab = ft_calloc_stop(sizeof(char *), 2);
 	tab[0] = ft_strdup(str);
 	if (!tab[0])
 	{

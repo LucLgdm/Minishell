@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:40:21 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 08:36:01 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:45:36 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,26 @@ t_hashtable	*ft_modify_value(t_hashtable *ht, char *key, char *value, int add)
 t_hashtable	*ft_remove_element(t_hashtable *htable, char *key)
 {
 	t_element	**tmp_table;
+	t_element	*tmp;
+	t_element	*prev;
 	int			index;
 
 	tmp_table = htable->table;
 	index = ft_hash(key, htable->length);
 	while (tmp_table[index])
 	{
-		if (ft_strcmp(tmp_table[index]->key, key) == 0)
+		tmp = tmp_table[index];
+		while (tmp)
 		{
-			ft_free_element(&tmp_table[index]);
-			if (tmp_table[index - 1])
-				tmp_table[index - 1]->next = NULL;
-			break ;
+			if (ft_strcmp(tmp->key, key) == 0)
+			{
+				ft_free_element(&tmp);
+				if (tmp_table[index] != tmp)
+					prev->next = NULL;
+				break ;
+			}
+			prev = tmp;
+			tmp = tmp->next;
 		}
 		index = (index + 1) % htable->length;
 	}

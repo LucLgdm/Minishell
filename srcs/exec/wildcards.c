@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 13:02:04 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/20 12:37:51 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:31:44 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	**expand_lst(char **trunclst)
 	struct dirent	*entry;
 	char			**lst;
 
-	lst = ft_calloc(sizeof(char *), 1);
+	lst = ft_calloc_stop(sizeof(char *), 1);
 	dir = opendir(getcwd(wd, 250));
 	if (!dir)
 		perror("");

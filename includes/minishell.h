@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 12:38:37 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:27:15 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,7 @@ char	**manage_wildcards(char **args, int index, char **trunclst);
 char	**onewildtab(void);
 char	**manage_quotes(char **prev_words, char *str, int index);
 char	**onelinetab(char *str);
+
+void	*ft_calloc_stop(size_t nmemb, size_t size);
 
 #endif

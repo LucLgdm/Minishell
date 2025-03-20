@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_simple_cmd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:13:39 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 12:55:52 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/20 16:31:41 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static bool	ft_is_token(int type)
 
 static void	ft_handle_redir(t_redir **redir, t_token *token, t_ast *node)
 {
-	*redir = ft_calloc(sizeof(t_redir), 1);
+	*redir = ft_calloc_stop(sizeof(t_redir), 1);
 	(*redir)->redir_type = token->token_type;
 	token = token->next;
 	if (!token)
@@ -37,11 +37,11 @@ static void	ft_handle_redir(t_redir **redir, t_token *token, t_ast *node)
 	node->redir = *redir;
 }
 
-static void	ft_do_something(t_token *tmp, int *count)
+static void	ft_do_something(t_token **tmp, int *count)
 {
-	if (!ft_isoperator(tmp->token_type))
+	if (!ft_isoperator((*tmp)->token_type))
 		(*count)++;
-	tmp = tmp->next;
+	(*tmp) = (*tmp)->next;
 }
 
 t_ast	*parse_simple_command(t_token *token)
@@ -59,17 +59,16 @@ t_ast	*parse_simple_command(t_token *token)
 	count = 0;
 	tmp = token;
 	while (tmp && !ft_is_token(tmp->token_type))
-		ft_do_something(tmp, &count);
+		ft_do_something(&tmp, &count);
 	i = 0;
-	node->cmd = ft_calloc(sizeof(char *), (count + 1));
-	while (token && !ft_is_token(tmp->token_type))
+	node->cmd = ft_calloc_stop(sizeof(char *), (count + 1));
+	while (token && !ft_is_token(token->token_type))
 	{
-		if (ft_isoperator(tmp->token_type))
+		if (ft_isoperator(token->token_type))
 			ft_handle_redir(&redir, token, node);
 		else
 			node->cmd[i++] = ft_strdup(token->value);
 		token = token->next;
 	}
-	node->cmd[count] = NULL;
 	return (node);
 }

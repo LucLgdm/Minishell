@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:18:07 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/20 09:22:58 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:55:06 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int	ft_env(t_ast *node)
 {
 	int			i;
 	t_hashtable	*env;
+	t_element	*tmp;
 
+	usleep(5000000);
 	(void)node;
 	i = -1;
 	env = (*get_world())->env;
@@ -24,8 +26,12 @@ int	ft_env(t_ast *node)
 		env = (*get_world())->new_env;
 	while (++i < env->length)
 	{
-		if (env->table[i])
-			printf("%s=%s\n", env->table[i]->key, env->table[i]->value);
+		tmp = env->table[i];
+		while (tmp)
+		{
+			ft_printf("%s=%s\n", tmp->key, tmp->value);
+			tmp = tmp->next;
+		}
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:29:07 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 12:33:17 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:39:00 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_ast	*parse_pipes(t_token *token)
 		node = malloc(sizeof(t_ast));
 		node->node_type = NODE_PIPE;
 		op->value = NULL;
-		node->left = parse_pipes(split_token(token, op));
+		node->left = parse_pipes(split_token(token, op, NULL, NULL));
 		node->right = parse_pipes(op->next);
 		return (node);
 	}

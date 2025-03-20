@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:17:24 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 09:09:18 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/20 17:06:12 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,14 @@ void	prompt(t_world *world)
 		if (!world->prompt || (strcmp(world->prompt, "exit") == 0))
 		{
 			printf("\033[0;32mFrom Minishell with Love !\033[0m\n");
-			break ;
+			free_all(world);
+			exit(EXIT_SUCCESS);
 		}
 		if (ft_strlen(world->prompt) > 0)
 			handle_prompt(world);
 		free(world->prompt);
+		ft_free_ast(world->tree);
+		ft_free_token(world->tokenlist);
 	}
 }
 
@@ -91,7 +94,7 @@ char	**ft_create_envp(void)
 		env = (*get_world())->new_env;
 	i = 0;
 	j = 0;
-	envp = ft_calloc(sizeof(char *), env->length);
+	envp = ft_calloc_stop(sizeof(char *), env->length);
 	while ((i) + j < env->length)
 	{
 		if (env->table[i + j])

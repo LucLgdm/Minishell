@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:35:41 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/20 12:49:23 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/20 16:31:35 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	get_arg_nb(t_ast *node)
 
 static void	ft_fill_dir(char *dir)
 {
-	dir = ft_calloc(255, 1);
+	dir = ft_calloc_stop(255, 1);
 	dir = getcwd(dir, 255);
 }
 
