@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:30:48 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 15:13:29 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/20 17:28:37 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_ast	*ft_create_node_mandatory(t_token *token);
 t_ast	*ft_create_node_bonus(t_token *token);
 
 // free_ast
-void	ft_free_ast(t_ast *root);
+void	ft_free_ast(t_ast **root);
 void	ft_free_redir(t_redir *redir);
 
 #endif

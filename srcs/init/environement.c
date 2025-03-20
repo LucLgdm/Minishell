@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environement.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:17:24 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 17:06:12 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/20 18:01:56 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	prompt(t_world *world)
 		if (ft_strlen(world->prompt) > 0)
 			handle_prompt(world);
 		free(world->prompt);
-		ft_free_ast(world->tree);
-		ft_free_token(world->tokenlist);
+		ft_free_ast(&world->tree);
+		ft_free_token(&world->tokenlist);
 	}
 }
 

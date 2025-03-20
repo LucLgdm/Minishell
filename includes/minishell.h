@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 16:27:15 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/20 17:19:27 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_world
 void	prompt(t_world *world);
 void	handle_signal(int sig);
 void	handle_signal_afterprompt(int sig);
+void	handle_signal_for_stop(int sig);
 t_world	**get_world(void);
 
 // binary_tree

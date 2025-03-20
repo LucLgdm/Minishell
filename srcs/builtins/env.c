@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:18:07 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/20 16:55:06 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/20 18:02:27 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	ft_env(t_ast *node)
 	t_hashtable	*env;
 	t_element	*tmp;
 
-	usleep(5000000);
 	(void)node;
 	i = -1;
 	env = (*get_world())->env;

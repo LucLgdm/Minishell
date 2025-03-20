@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:59:16 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 08:34:12 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/20 18:02:52 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_token	*fill_token(t_token *token_lst, char *prompt, int len_token)
 	if (!new_token)
 	{
 		if (token_lst)
-			ft_free_token(token_lst);
+			ft_free_token(&token_lst);
 		return (NULL);
 	}
 	if (!token_lst)
