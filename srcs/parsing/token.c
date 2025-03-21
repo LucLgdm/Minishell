@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:12:49 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 15:12:28 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/21 19:14:58 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_ast	*parse_token(t_token *token)
 	if (op)
 	{
 		node = ft_new_ast(op->token_type);
+		free(op->value);
 		op->value = NULL;
 		split_t = split_token(token, op, NULL, NULL);
 		node->left = parse_token(split_t);
@@ -38,8 +39,8 @@ t_ast	*parse_token(t_token *token)
 
 static void	ft_fill_new_token(t_token **new_token, t_token *token)
 {
-	(*new_token) = malloc(sizeof(t_token));
-	(*new_token)->value = ft_strdup(token->value);
+	(*new_token) = ft_calloc_stop(sizeof(t_token), 1);
+	(*new_token)->value = ft_strdup_stop(token->value);
 	(*new_token)->token_type = token->token_type;
 	(*new_token)->next = NULL;
 }
@@ -70,5 +71,6 @@ t_token	*split_token(t_token *token, t_token *op, t_token *head, t_token *tail)
 		}
 		token = token->next;
 	}
+	token->sub_token = head;
 	return (head);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 08:30:52 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 11:55:54 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:12:09 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	ft_env_to_hashtable(char **env, t_hashtable *env_hastable)
 	i = -1;
 	while (env[++i])
 	{
-		split = ft_split(env[i], '=');
+		split = ft_split_stop(env[i], '=');
 		if (split[0])
-			key = ft_strdup(split[0]);
+			key = ft_strdup_stop(split[0]);
 		if (split[1])
-			value = ft_strdup(split[1]);
+			value = ft_strdup_stop(split[1]);
 		else
-			value = ft_strdup("");
+			value = ft_strdup_stop("");
 		ft_add_element(&env_hastable, key, value);
 		free(key);
 		free(value);
@@ -70,16 +70,16 @@ char	*htab_element_to_str(t_element *element)
 	char	*tmp;
 	char	*str;
 
-	str = ft_strjoin("", element->key);
+	str = ft_strjoin_stop("", element->key);
 	if (!str)
 		return (NULL);
 	tmp = str;
-	str = ft_strjoin(str, "=");
+	str = ft_strjoin_stop(str, "=");
 	free(tmp);
 	if (!str)
 		return (NULL);
 	tmp = str;
-	str = ft_strjoin(str, element->value);
+	str = ft_strjoin_stop(str, element->value);
 	free(tmp);
 	if (!str)
 		return (NULL);

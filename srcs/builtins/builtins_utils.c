@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:35:41 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/20 16:31:35 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:09:38 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	file_exists(char *path_name)
 	dir = NULL;
 	if (ft_strrchr(path_name, '/'))
 	{
-		dir = ft_substr(path_name, 0, ft_strrchr(path_name, '/') - path_name);
+		dir = ft_substr_stop(path_name, 0, ft_strrchr(path_name, '/') - path_name);
 		path_name = ft_strrchr(path_name, '/') + 1;
 	}
 	else

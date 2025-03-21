@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_dollar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:00:21 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 11:51:30 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:17:40 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ void	new_handle_dollar(char ***cmd, t_hashtable *env)
 			expanded = ft_expand((*cmd)[i], env);
 			if (expanded)
 			{
-				splitted = ft_split(expanded, ' ');
-				new_cmd = ft_catchartab(*cmd, splitted, i);
+				splitted = ft_split_stop(expanded, ' ');
+				new_cmd = ft_catchartab_stop(*cmd, splitted, i);
 				free(expanded);
 				*cmd = new_cmd;
 			}
 			else
-				(*cmd)[i] = ft_strdup("");
+				(*cmd)[i] = ft_strdup_stop("");
 		}
 		(*cmd) = manage_quotes(*cmd, (*cmd)[i], i);
 	}

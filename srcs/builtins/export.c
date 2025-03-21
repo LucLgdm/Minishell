@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:29:58 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/20 16:13:45 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:09:40 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int	export_one(char *str)
 		key = str;
 	else
 	{
-		key = ft_substr(str, 0, equalsign - str);
-		value = ft_substr(equalsign, 1, ft_strlen(equalsign + 1));
+		key = ft_substr_stop(str, 0, equalsign - str);
+		value = ft_substr_stop(equalsign, 1, ft_strlen(equalsign + 1));
 		if (!key || !value)
 			return (1);
 	}
@@ -78,7 +78,7 @@ int	export_one(char *str)
 		ft_remove_element(env, key);
 	delete_quotes(value);
 	env = ft_add_element(&env, key, value);
-	return (0);
+	return (free(key), free(value), 0);
 }
 
 int	ft_export(t_ast *node)

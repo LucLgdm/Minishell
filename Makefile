@@ -6,7 +6,7 @@
 #    By: andrean <andrean@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/03/21 12:26:45 by andrean          ###   ########.fr        #
+#    Updated: 2025/03/21 17:34:45 by andrean          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ LEXER_DIR = lexer/
 HASHTABLE_DIR = hashtable/
 PARSING_DIR = parsing/
 BUILTIN_DIR = builtins/
+LIBFT_STOP_DIR = libft_stop/
 
 # Liste des fichiers source
 SRC_FILES = main.c \
@@ -61,6 +62,7 @@ SRC_FILES = main.c \
 			$(EXEC_DIR)wildcards_use.c\
 			$(EXEC_DIR)redirect.c \
 			$(EXEC_DIR)new_dollar.c \
+			$(EXEC_DIR)is_in_process.c\
 			$(BUILTIN_DIR)builtins_utils.c\
 			$(BUILTIN_DIR)cd.c\
 			$(BUILTIN_DIR)echo.c\
@@ -69,7 +71,10 @@ SRC_FILES = main.c \
 			$(BUILTIN_DIR)pwd.c\
 			$(BUILTIN_DIR)unset.c\
 			$(BUILTIN_DIR)env.c\
-			$(BUILTIN_DIR)minishellception.c
+			$(BUILTIN_DIR)minishellception.c\
+			$(LIBFT_STOP_DIR)libft_stop.c\
+			$(LIBFT_STOP_DIR)ft_split_stop.c\
+			$(LIBFT_STOP_DIR)itoa_stop.c
 
 
 # Transforme chaque fichier source en un fichier objet dans $(OBJ_DIR)
@@ -92,6 +97,7 @@ mkdir_obj:
 	@mkdir -p $(OBJ_DIR)$(HASHTABLE_DIR)
 	@mkdir -p $(OBJ_DIR)$(PARSING_DIR)
 	@mkdir -p $(OBJ_DIR)$(BUILTIN_DIR)
+	@mkdir -p $(OBJ_DIR)$(LIBFT_STOP_DIR)
 
 # Compilation finale
 $(NAME): makelibft $(OBJS)

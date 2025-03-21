@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_token.c                                    :+:      :+:    :+:   */
+/*   is_in_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 16:45:13 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 19:02:45 by andrean          ###   ########.fr       */
+/*   Created: 2025/03/21 17:27:38 by andrean           #+#    #+#             */
+/*   Updated: 2025/03/21 17:39:10 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/lexer.h"
+#include "minishell.h"
 
-void	ft_free_token(t_token **token)
+int	*is_in_process(void)
 {
-	if (!token || !*token)
-		return ;
-	ft_free_token(&(*token)->sub_token);
-	ft_free_token(&(*token)->next);
-	free((*token)->value);
-	free(*token);
-	*token = NULL;
+	static int	in_process;
+
+	return (&in_process);
 }

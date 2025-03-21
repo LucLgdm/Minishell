@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:50:23 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/20 09:24:30 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:32:05 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 
 char	**path_tab(t_hashtable *hashtable);
 void	redirect_output(char *file, int fd, int append);
-void	redirect_input(char *file, int fd);
-void	ft_here_doc(char *limit, int fdin);
+void	redirect_input(char *file, int *fd);
+void	ft_here_doc(char *limit, int *fdin);
 char	**ft_create_envp(void);
 void	ft_redirect(t_ast *node);
 int		ft_check_for_stop(pid_t *pid, int pid_nb);
@@ -31,7 +31,10 @@ int		ft_do_the_pipe(t_ast *node, char **paths);
 void	new_handle_dollar(char ***cmd, t_hashtable *env);
 
 int		foundlast(char *name, char *trunc);
-char	**onelinetab(char *str);
 char	**onewildtab(void);
+char	*ft_strchr_outofquotes(char *str, char c);
+void	quotes(char *str, int *i, char **word, char quote_type);
+
+int		*is_in_process(void);
 
 #endif

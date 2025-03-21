@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:05:36 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 12:07:54 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/21 18:27:11 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_append_char(char **new_word, char c)
 	if (!new_word || !*new_word)
 		return ;
 	len = ft_strlen(*new_word);
-	tmp = malloc(len + 2);
+	tmp = ft_calloc_stop(len + 2, 1);
 	if (!tmp)
 		return ;
 	ft_strcpy(tmp, *new_word);
@@ -62,7 +62,7 @@ char	*ft_extract_var_name(char *str, int *i)
 	if (str[start] == '?')
 	{
 		(*i)++;
-		return (ft_strdup("?"));
+		return (ft_strdup_stop("?"));
 	}
 	while ((str[start + len] && (ft_isalnum(str[start + len]) || \
 	str[start + len] == '_')) && !(ft_isdigit(str[start])))
@@ -71,5 +71,5 @@ char	*ft_extract_var_name(char *str, int *i)
 		while (str[start + len] && ft_isdigit(str[start + len]))
 			len++;
 	*i += len;
-	return (ft_substr(str, start, len));
+	return (ft_substr_stop(str, start, len));
 }

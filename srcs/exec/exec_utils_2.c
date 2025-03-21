@@ -6,13 +6,31 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 09:01:52 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 12:35:32 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/21 18:45:25 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_stop;
+
+char	*ft_strchr_outofquotes(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	if (!c || !str)
+		return (str);
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '"')
+			quotes(str, &i, NULL, str[i]);
+		if (str[i] == c)
+			return (str + i);
+		i++;
+	}
+	return (NULL);
+}
 
 int	get_builtins(t_ast *node)
 {
@@ -97,7 +115,7 @@ int	exec_tree(t_world *world, t_ast *node)
 		retval = exec_node(world, node, paths);
 		dup2(original_stdin, STDIN_FILENO);
 		dup2(original_stdout, STDOUT_FILENO);
-		ft_modify_value(world->hidden_vars, "?", ft_itoa(retval), 0);
+		ft_modify_value(world->hidden_vars, "?", ft_itoa_stop(retval), 0);
 		ft_free_array(paths);
 	}
 	if (g_stop)

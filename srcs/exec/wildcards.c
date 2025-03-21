@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 13:02:04 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/20 16:31:44 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:17:55 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,16 @@ char	**expand_lst(char **trunclst)
 	while (entry)
 	{
 		if (checkifwildcarded(trunclst, entry->d_name))
-			lst = ft_catchartab(lst, onelinetab(entry->d_name),
+			lst = ft_catchartab_stop(lst, onelinetab(entry->d_name),
 					ft_arraylen(lst));
 		entry = readdir(dir);
 	}
 	if (!lst[0])
-		closedir(dir);
+	{
+		ft_free_array(lst);
+		lst = NULL;
+	}
+	closedir(dir);
 	return (lst);
 }
 
@@ -70,8 +74,8 @@ char	**manage_wildcards(char **args, int index, char **trunclst)
 	if (!trunclst)
 		return (args);
 	new_args = expand_lst(trunclst);
-	if (!new_args || !*new_args)
+	if (!new_args || !(*new_args))
 		return (args);
-	new_args = ft_catchartab(args, new_args, index);
+	new_args = ft_catchartab_stop(args, new_args, index);
 	return (new_args);
 }

@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:24:49 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/20 17:58:12 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/21 17:25:11 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,26 @@ extern int	g_stop;
 
 void	ft_redirect(t_ast *node)
 {
+	int		final_fdin;
 	t_redir	*redir;
 
+	final_fdin = 0;
 	redir = node->redir;
 	while (redir)
 	{
 		if (redir->redir_type == TOKEN_LESSER)
-			redirect_input(redir->value[0], STDIN_FILENO);
+			redirect_input(redir->value[0], &final_fdin);
 		if (redir->redir_type == TOKEN_GREATGREATER)
 			redirect_output(redir->value[0], STDOUT_FILENO, 1);
 		if (redir->redir_type == TOKEN_GREATER)
 			redirect_output(redir->value[0], STDOUT_FILENO, 0);
 		if (redir->redir_type == TOKEN_LESSLESSER)
-			ft_here_doc(redir->value[0], STDIN_FILENO);
+			ft_here_doc(redir->value[0], &final_fdin);
 		redir = redir->next;
 	}
+	if (final_fdin)
+		if (dup2(final_fdin, STDIN_FILENO) == -1)
+			return (perror(""));
 }
 
 static void	kill_to_stop(pid_t *pid, int pid_nb, int *intab, pid_t endpid)
@@ -71,14 +76,16 @@ int	ft_check_for_stop(pid_t *pid, int pid_nb)
 	return (intab[1]);
 }
 
-static void	join_tab(char *tmp, char **tab)
+static void	join_tab(char **tab)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 
 	i = -1;
+	tmp = NULL;
 	while (tab[++i])
 	{
-		tmp = ft_strjoin(tab[i], "/");
+		tmp = ft_strjoin_stop(tab[i], "/");
 		free(tab[i]);
 		tab[i] = tmp;
 	}
@@ -87,17 +94,15 @@ static void	join_tab(char *tmp, char **tab)
 char	**path_tab(t_hashtable *hashtable)
 {
 	char	*path;
-	char	*tmp;
 	char	**tab;
 
-	tmp = NULL;
 	path = NULL;
 	if (!hashtable)
 	{
 		if (!ft_get_element((*get_world())->new_env, "PATH"))
 		{
 			path = "/usr/local/sbin:/usr/local/bin";
-			path = ft_strjoin(path, ":/usr/sbin:/usr/bin:/sbin:/bin");
+			path = ft_strjoin_stop(path, ":/usr/sbin:/usr/bin:/sbin:/bin");
 		}
 		else
 			path = ft_get_element((*get_world())->new_env, "PATH")->value;
@@ -106,9 +111,11 @@ char	**path_tab(t_hashtable *hashtable)
 		path = ft_get_element(hashtable, "PATH")->value;
 	if (!path)
 		return (NULL);
-	tab = ft_split(path, ':');
+	tab = ft_split_stop(path, ':');
 	if (!tab)
 		return (NULL);
-	join_tab(tmp, tab);
+	if (!hashtable && !ft_get_element((*get_world())->new_env, "PATH"))
+		free(path);
+	join_tab(tab);
 	return (tab);
 }

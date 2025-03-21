@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:37:23 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 17:29:21 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/21 16:07:57 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,11 @@ void	ft_free_redir(t_redir *redir)
 {
 	t_redir	*tmp;
 
-	tmp = redir->next;
-	ft_free_array(redir->value);
-	free(redir);
-	redir = tmp;
+	while (redir)
+	{
+		tmp = redir->next;
+		ft_free_array(redir->value);
+		free(redir);
+		redir = tmp;
+	}
 }

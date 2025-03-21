@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:24:34 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 11:46:11 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:20:59 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../libft/libft.h"
 # include <stddef.h>
 # include <stdlib.h>
+# include "libft_stop.h"
 
 typedef struct s_element
 {

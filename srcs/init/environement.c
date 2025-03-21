@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:17:24 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 12:41:28 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/21 18:45:09 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 extern int	g_stop;
 
-static void	handle_prompt(t_world *world)
+static void	handle_prompt(t_world **world)
 {
-	add_history(world->prompt);
-	if (strcmp(world->prompt, "clean") == 0)
+	add_history((*world)->prompt);
+	if (strcmp((*world)->prompt, "clean") == 0)
 	{
 		rl_clear_history();
 		printf("\033[0;32mHistory cleaned\033[0m\n");
@@ -25,15 +25,19 @@ static void	handle_prompt(t_world *world)
 	else
 	{
 		fill_tree(world);
-		exec_tree(world, world->tree);
+		exec_tree(*world, (*world)->tree);
 		unlink(".heredoc");
 	}
 }
 
 void	prompt(t_world *world)
 {
+	int	*is_process;
+
+	is_process = is_in_process();
 	while (42)
 	{
+		*is_process = 1;
 		signal(SIGINT, handle_signal);
 		signal(SIGQUIT, SIG_IGN);
 		world->prompt = readline("\001\033[3;33m\002Minishell > \001\033[0m\002 ");
@@ -46,7 +50,7 @@ void	prompt(t_world *world)
 			exit(EXIT_SUCCESS);
 		}
 		if (ft_strlen(world->prompt) > 0)
-			handle_prompt(world);
+			handle_prompt(&world);
 		free(world->prompt);
 		ft_free_ast(&world->tree);
 		ft_free_token(&world->tokenlist);
@@ -76,7 +80,7 @@ t_hashtable	*ft_create_env_hashtable(char **env)
 	ft_env_to_hashtable(env, env_hashtable);
 	if (env_hashtable)
 	{
-		shlvl = ft_itoa(ft_atoi(ft_get_element(env_hashtable, "SHLVL")->value)
+		shlvl = ft_itoa_stop(ft_atoi(ft_get_element(env_hashtable, "SHLVL")->value)
 				+ 1);
 		env_hashtable = ft_modify_value(env_hashtable, "SHLVL", shlvl, 0);
 	}

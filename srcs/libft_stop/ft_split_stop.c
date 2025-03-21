@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_split_stop.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:23:21 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 16:40:05 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/21 16:57:14 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "minishell.h"
 
 static void	ft_skip_quotes(char *str, size_t *size, char quote)
 {
@@ -21,7 +21,7 @@ static void	ft_skip_quotes(char *str, size_t *size, char quote)
 	}
 }
 
-int	ft_countword(char *s, char c)
+static int	ft_countword(char *s, char c)
 {
 	size_t	i;
 	int		count;
@@ -48,7 +48,7 @@ int	ft_countword(char *s, char c)
 	return (count);
 }
 
-void	ft_calcul(char *s, char c, char **tab)
+static void	ft_calcul(char *s, char c, char **tab)
 {
 	int		i;
 	int		k;
@@ -67,7 +67,7 @@ void	ft_calcul(char *s, char c, char **tab)
 			ft_skip_quotes(s, &size, s[i]);
 		while (s[i + size] != c && s[i + size])
 			size++;
-		tab[k] = (char *)ft_calloc((size + 1), sizeof(char));
+		tab[k] = (char *)ft_calloc_stop((size + 1), sizeof(char));
 		if (!tab[k])
 			return ;
 		ft_memcpy(tab[k], s + i, size);
@@ -77,21 +77,21 @@ void	ft_calcul(char *s, char c, char **tab)
 	}
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split_stop(char const *s, char c)
 {
 	char	**tab;
 	int		n_word;
 
 	if (s[0] == '\0')
 	{
-		tab = (char **)malloc(1 * sizeof(char *));
+		tab = (char **)ft_calloc_stop(1, sizeof(char *));
 		if (!tab)
 			return (NULL);
 		tab[0] = NULL;
 		return (tab);
 	}
 	n_word = ft_countword((char *)s, c);
-	tab = (char **)ft_calloc((n_word + 1), sizeof(char *));
+	tab = (char **)ft_calloc_stop((n_word + 1), sizeof(char *));
 	if (!tab)
 		return (NULL);
 	ft_calcul((char *)s, c, tab);

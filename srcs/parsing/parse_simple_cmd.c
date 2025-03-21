@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_simple_cmd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:13:39 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 16:31:41 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/21 18:58:19 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,26 @@ static bool	ft_is_token(int type)
 		|| type == TOKEN_ANDAND);
 }
 
-static void	ft_handle_redir(t_redir **redir, t_token *token, t_ast *node)
+static void	ft_handle_redir(t_redir **redir, t_token **token, t_ast *node)
 {
+	t_redir	*tmp;
+
 	*redir = ft_calloc_stop(sizeof(t_redir), 1);
-	(*redir)->redir_type = token->token_type;
-	token = token->next;
+	(*redir)->redir_type = (*token)->token_type;
+	*token = (*token)->next;
 	if (!token)
 		return (perror("Error in redirection"), free(node));
-	(*redir)->value = onelinetab(token->value);
+	(*redir)->value = onelinetab((*token)->value);
 	new_handle_dollar(&(*redir)->value, (*get_world())->env);
-	(*redir)->next = node->redir;
-	node->redir = *redir;
+	if (!node->redir)
+		node->redir = *redir;
+	else
+	{
+		tmp = node->redir;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = *redir;
+	}
 }
 
 static void	ft_do_something(t_token **tmp, int *count)
@@ -65,9 +74,9 @@ t_ast	*parse_simple_command(t_token *token)
 	while (token && !ft_is_token(token->token_type))
 	{
 		if (ft_isoperator(token->token_type))
-			ft_handle_redir(&redir, token, node);
+			ft_handle_redir(&redir, &token, node);
 		else
-			node->cmd[i++] = ft_strdup(token->value);
+			node->cmd[i++] = ft_strdup_stop(token->value);
 		token = token->next;
 	}
 	return (node);

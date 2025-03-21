@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:26:16 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/19 15:34:45 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/21 18:28:40 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_ast	*ft_create_cmd_solo(t_token *token)
 		i = 0;
 		while (tmp && (tmp->token_type == TOKEN_WORD))
 		{
-			root->cmd[i++] = ft_strdup(tmp->value);
+			root->cmd[i++] = ft_strdup_stop(tmp->value);
 			tmp->created = 1;
 			tmp = tmp->next;
 		}
@@ -38,7 +38,7 @@ t_ast	*ft_new_ast(int node_type)
 {
 	t_ast	*new;
 
-	new = malloc(sizeof(t_ast));
+	new = ft_calloc_stop(sizeof(t_ast), 1);
 	if (!new)
 		return (NULL);
 	new->node_type = node_type;
@@ -55,7 +55,7 @@ t_redir	*ft_new_redir(int redir_type)
 {
 	t_redir	*new;
 
-	new = malloc(sizeof(t_redir));
+	new = ft_calloc_stop(sizeof(t_redir), 1);
 	if (!new)
 		return (NULL);
 	new->value = NULL;

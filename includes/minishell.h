@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 12:25:10 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/21 18:40:38 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/types.h>
+# include "libft_stop.h"
 
 typedef struct s_world
 {
@@ -46,11 +47,12 @@ void	handle_signal_for_stop(int sig);
 t_world	**get_world(void);
 
 // binary_tree
-void	fill_tree(t_world *world);
+void	fill_tree(t_world **world);
 
 // free
 void	free_all(t_world *world);
 void	exit_process(int exit_status);
+void	ft_free_for_exec(t_world *world, char **cmd);
 
 // print.c
 void	print_tab(char **tab);
@@ -67,7 +69,5 @@ char	**manage_wildcards(char **args, int index, char **trunclst);
 char	**onewildtab(void);
 char	**manage_quotes(char **prev_words, char *str, int index);
 char	**onelinetab(char *str);
-
-void	*ft_calloc_stop(size_t nmemb, size_t size);
 
 #endif

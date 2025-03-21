@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:39:11 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/19 14:59:33 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/21 17:39:24 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_world	**world;
+	int		*is_process;
 
 	world = get_world();
 	(void)argv;
 	if (argc == 1)
 	{
+		is_process = is_in_process();
 		*world = ft_calloc(1, sizeof(t_world));
 		(*world)->env = ft_create_env_hashtable(envp);
 		(*world)->new_env = NULL;

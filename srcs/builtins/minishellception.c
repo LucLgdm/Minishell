@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:55:59 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/20 18:01:24 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/21 17:09:41 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*extract_filename(t_ast *node)
 			;
 		while (str[--i] != '/')
 			;
-		file = ft_substr(str, i, ft_strlen(str + i));
+		file = ft_substr_stop(str, i, ft_strlen(str + i));
 	}
 	return (file);
 }

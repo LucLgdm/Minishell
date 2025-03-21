@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:35:06 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/21 12:37:56 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/21 17:17:47 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,9 @@ void	quotes(char *str, int *i, char **word, char quote_type)
 	while (str[*i] && str[*i] != quote_type)
 	{
 		if (word)
-			ft_strncat(word, str + (*i), 1);
+			ft_strncat_stop(word, str + (*i), 1);
 		(*i)++;
 	}
-}
-
-char	*ft_strchr_outofquotes(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	if (!c || !str)
-		return (str);
-	while (str[i])
-	{
-		if (str[i] == '\'' || str[i] == '"')
-			quotes(str, &i, NULL, str[i]);
-		if (str[i] == c)
-			return (str + i);
-		i++;
-	}
-	return (NULL);
 }
 
 void	end_word(char **word, char ***new_words, char ***trunclst)
@@ -49,7 +31,7 @@ void	end_word(char **word, char ***new_words, char ***trunclst)
 	if (**word)
 	{
 		tab = onelinetab(*word);
-		tmp = ft_catchartab(*new_words, tab, ft_arraylen(*new_words));
+		tmp = ft_catchartab_stop(*new_words, tab, ft_arraylen(*new_words));
 		if (trunclst)
 		{
 			*new_words = manage_wildcards(tmp, 0, *trunclst);
@@ -58,13 +40,14 @@ void	end_word(char **word, char ***new_words, char ***trunclst)
 		else
 			*new_words = tmp;
 		free(*word);
-		*word = NULL;
+		*word = ft_strdup_stop("");
 	}
 }
 
 void	get_trunclst_loop(char ***trunclst, char **wild, char **word, char *str)
 {
 	int		i;
+	char	**tmp;
 
 	i = -1;
 	while (str[++i])
@@ -72,14 +55,15 @@ void	get_trunclst_loop(char ***trunclst, char **wild, char **word, char *str)
 		if (str + i == *wild)
 		{
 			end_word(word, trunclst, NULL);
-			*trunclst = ft_catchartab(*trunclst, onewildtab(),
+			tmp = onewildtab();
+			*trunclst = ft_catchartab_stop(*trunclst, tmp,
 					ft_arraylen(*trunclst));
 			*wild = ft_strchr_outofquotes(str + i + 1, '*');
 		}
 		else if (str[i] == '"' || str[i] == '\'')
 			quotes(str, &i, word, str[i]);
 		else
-			ft_strncat(word, str + i, 1);
+			ft_strncat_stop(word, str + i, 1);
 	}
 }
 
@@ -88,14 +72,14 @@ char	**get_trnclst(char *str)
 	char	**trunclst;
 	char	*wild;
 	char	*word;
-	
+
 	if (!str)
 		return (NULL);
 	wild = ft_strchr_outofquotes(str, '*');
 	if (!wild)
 		return (NULL);
 	trunclst = ft_calloc_stop(sizeof(char *), 1);
-	word = ft_strdup("");
+	word = ft_strdup_stop("");
 	get_trunclst_loop(&trunclst, &wild, &word, str);
 	if (*word)
 		end_word(&word, &trunclst, NULL);
@@ -113,7 +97,7 @@ char	**manage_quotes(char **prev_words, char *str, int index)
 	i = -1;
 	if (!str)
 		return (prev_words);
-	word = ft_strdup("");
+	word = ft_strdup_stop("");
 	new_words = ft_calloc_stop(sizeof(char *), 1);
 	trunclst = get_trnclst(str);
 	while (str[++i])
@@ -123,11 +107,11 @@ char	**manage_quotes(char **prev_words, char *str, int index)
 		else if (str[i] == '"')
 			quotes(str, &i, &word, '"');
 		else
-			ft_strncat(&word, str + i, 1);
+			ft_strncat_stop(&word, str + i, 1);
 	}
 	end_word(&word, &new_words, &trunclst);
 	if (!prev_words)
 		prev_words = ft_calloc_stop(sizeof(char *), 1);
-	trunclst = ft_catchartab(prev_words, new_words, index);
-	return (trunclst);
+	trunclst = ft_catchartab_stop(prev_words, new_words, index);
+	return (free(word), trunclst);
 }
