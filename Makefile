@@ -6,7 +6,7 @@
 #    By: andrean <andrean@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/03/20 12:52:44 by andrean          ###   ########.fr        #
+#    Updated: 2025/03/21 12:26:45 by andrean          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRC_FILES = main.c \
 			$(FREE_DIR)free.c \
 			$(FREE_DIR)ft_free_ast.c \
 			$(FREE_DIR)ft_free_token.c \
+			$(FREE_DIR)exit_process.c\
 			$(LEXER_DIR)lexer.c \
 			$(LEXER_DIR)fill_token.c \
 			$(LEXER_DIR)fill_token2.c \
@@ -93,11 +94,7 @@ mkdir_obj:
 	@mkdir -p $(OBJ_DIR)$(BUILTIN_DIR)
 
 # Compilation finale
-$(NAME): $(OBJS)
-	@echo "\033[32mlibft en cours\033[0m"
-	@make -C libft all --silent
-	@echo "\033[0;32mSUCCESS !\033[0m \033[0;33mlibft\033[0m"
-	@make -C libft clean --silent
+$(NAME): makelibft $(OBJS)
 	@echo "\033[32mCompilation minishell en cours\033[0m"
 	@$(CC) $(OBJS) $(FLAGS) -o $(NAME)
 	@echo "\033[0;32mSUCCESS !\033[0m \033[0;33m$(NAME)\033[0m"
@@ -111,6 +108,11 @@ fclean: clean
 	@echo "\033[0;34mSuppression de l'executable $(NAME)\033[0m"
 
 re: fclean all
+
+makelibft:
+	@echo "\033[32mlibft en cours\033[0m"
+	@make -C libft all --silent
+	@echo "\033[0;32mSUCCESS !\033[0m \033[0;33mlibft\033[0m"
 
 val: all
 	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)

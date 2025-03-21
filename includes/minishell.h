@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 17:19:27 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/21 12:25:10 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	fill_tree(t_world *world);
 
 // free
 void	free_all(t_world *world);
+void	exit_process(int exit_status);
 
 // print.c
 void	print_tab(char **tab);

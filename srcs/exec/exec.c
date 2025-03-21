@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:26:44 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/20 18:01:33 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/21 12:26:13 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_execcommand(t_ast *node, char **paths)
 		ft_putstr_fd("command not found: ", 2);
 	ft_putstr_fd(cmd[0], 2);
 	ft_putstr_fd("\n", 2);
-	exit(127);
+	exit_process(127);
 }
 
 pid_t	create_process(t_ast *node, char **paths)

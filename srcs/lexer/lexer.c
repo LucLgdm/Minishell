@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:25:40 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/17 13:11:59 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:16:30 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	token_len(char *input)
 	int	to_add;
 
 	length = 0;
-	to_add = 1;
 	if ((input[0] == '<' && input[1] == '<') || (input[0] == '>'
 			&& input[1] == '>') || (input[0] == '|' && input[1] == '|')
 		|| (input[0] == '&' && input[1] == '&'))
@@ -75,6 +74,7 @@ int	token_len(char *input)
 		while (*input && *input != '|' && *input != '<' && *input != '>'
 			&& *input != ' ' && *input != '&')
 		{
+			to_add = 1;
 			if (*input == CHAR_S_QUOTE || *input == CHAR_D_QUOTE)
 				to_add = ft_length_in_quote(input);
 			length += to_add;

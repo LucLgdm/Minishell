@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:17:24 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 18:01:56 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/21 12:41:28 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ t_hashtable	*ft_create_env_hashtable(char **env)
 {
 	t_hashtable	*env_hashtable;
 	int			len_env;
+	char		*shlvl;
 
 	len_env = ft_arraylen(env);
 	if (len_env == 0)
@@ -75,9 +76,9 @@ t_hashtable	*ft_create_env_hashtable(char **env)
 	ft_env_to_hashtable(env, env_hashtable);
 	if (env_hashtable)
 	{
-		env_hashtable = ft_modify_value(env_hashtable, "SHLVL",
-				ft_itoa(ft_atoi(ft_get_element(env_hashtable, "SHLVL")->value)
-					+ 1), 0);
+		shlvl = ft_itoa(ft_atoi(ft_get_element(env_hashtable, "SHLVL")->value)
+				+ 1);
+		env_hashtable = ft_modify_value(env_hashtable, "SHLVL", shlvl, 0);
 	}
 	return (env_hashtable);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 12:35:06 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/20 16:31:27 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:37:56 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,28 @@ void	end_word(char **word, char ***new_words, char ***trunclst)
 		else
 			*new_words = tmp;
 		free(*word);
-		*word = ft_strdup("");
+		*word = NULL;
+	}
+}
+
+void	get_trunclst_loop(char ***trunclst, char **wild, char **word, char *str)
+{
+	int		i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (str + i == *wild)
+		{
+			end_word(word, trunclst, NULL);
+			*trunclst = ft_catchartab(*trunclst, onewildtab(),
+					ft_arraylen(*trunclst));
+			*wild = ft_strchr_outofquotes(str + i + 1, '*');
+		}
+		else if (str[i] == '"' || str[i] == '\'')
+			quotes(str, &i, word, str[i]);
+		else
+			ft_strncat(word, str + i, 1);
 	}
 }
 
@@ -67,9 +88,7 @@ char	**get_trnclst(char *str)
 	char	**trunclst;
 	char	*wild;
 	char	*word;
-	int		i;
-
-	i = -1;
+	
 	if (!str)
 		return (NULL);
 	wild = ft_strchr_outofquotes(str, '*');
@@ -77,20 +96,7 @@ char	**get_trnclst(char *str)
 		return (NULL);
 	trunclst = ft_calloc_stop(sizeof(char *), 1);
 	word = ft_strdup("");
-	while (str[++i])
-	{
-		if (str + i == wild)
-		{
-			end_word(&word, &trunclst, NULL);
-			trunclst = ft_catchartab(trunclst, onewildtab(),
-					ft_arraylen(trunclst));
-			wild = ft_strchr_outofquotes(str + i + 1, '*');
-		}
-		else if (str[i] == '"' || str[i] == '\'')
-			quotes(str, &i, &word, str[i]);
-		else
-			ft_strncat(&word, str + i, 1);
-	}
+	get_trunclst_loop(&trunclst, &wild, &word, str);
 	if (*word)
 		end_word(&word, &trunclst, NULL);
 	free(word);

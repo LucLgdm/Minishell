@@ -1,38 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_hasht.c                                    :+:      :+:    :+:   */
+/*   exit_process..c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 16:33:57 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 12:32:38 by andrean          ###   ########.fr       */
+/*   Created: 2025/03/21 12:23:11 by andrean           #+#    #+#             */
+/*   Updated: 2025/03/21 12:25:00 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/hashtable.h"
+#include "minishell.h"
 
-void	ft_free_hasht(t_hashtable *hasht)
+void	exit_process(int exit_status)
 {
-	t_element	*next;
-	t_element	*tmp;
-	int	i;
+	t_world	*world;
 
-	i = -1;
-	if (hasht->table)
-	{
-		while (++i < hasht->length)
-		{
-			tmp = hasht->table[i];
-			while (tmp)
-			{
-				next = tmp->next;
-				ft_free_element(&(tmp));
-				tmp = next;
-			}
-		}
-		free(hasht->table);
-	}
-	if (hasht)
-		free(hasht);
+	world = (*get_world());
+	free_all(world);
+	exit(exit_status);
 }
