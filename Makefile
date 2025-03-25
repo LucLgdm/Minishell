@@ -6,7 +6,7 @@
 #    By: andrean <andrean@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/03/21 17:34:45 by andrean          ###   ########.fr        #
+#    Updated: 2025/03/25 11:34:24 by andrean          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,8 @@ SRC_FILES = main.c \
 			$(BUILTIN_DIR)minishellception.c\
 			$(LIBFT_STOP_DIR)libft_stop.c\
 			$(LIBFT_STOP_DIR)ft_split_stop.c\
-			$(LIBFT_STOP_DIR)itoa_stop.c
+			$(LIBFT_STOP_DIR)itoa_stop.c\
+			$(LIBFT_STOP_DIR)ft_arraycpy_stop.c
 
 
 # Transforme chaque fichier source en un fichier objet dans $(OBJ_DIR)

@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:12:49 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 19:14:58 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/25 11:12:02 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ t_token	*split_token(t_token *token, t_token *op, t_token *head, t_token *tail)
 	if (!token || !op)
 		return (NULL);
 	new_token = NULL;
-	head = NULL;
-	tail = NULL;
 	while (token && token != op)
 	{
 		ft_fill_new_token(&new_token, token);

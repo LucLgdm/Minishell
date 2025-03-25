@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 08:31:44 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 18:31:48 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/25 12:20:37 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,17 @@ void	stop_when_calloc_fail(void)
 
 	world = (*get_world());
 	ft_putstr_fd("Malloc failed\n", 2);
-	handle_signal_afterprompt(SIGINT);
-	free(world->prompt);
-	ft_free_ast(&world->tree);
-	ft_free_token(&world->tokenlist);
 	if ((*is_in_process()))
+	{
+		g_stop = 1;
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		// handle_signal_afterprompt(SIGINT);
+		free(world->prompt);
+		ft_free_ast(&world->tree);
+		ft_free_token(&world->tokenlist);
 		prompt(world);
+	}
 	else
 		exit_process(1);
 }

@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:26:44 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/21 18:41:05 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/25 12:25:38 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,16 @@ void	ft_execcommand(t_ast *node, char **paths)
 	char	*path;
 	int		i;
 
-	cmd = node->cmd;
+	cmd = ft_arraycpy_stop(node->cmd);
 	i = -1;
 	envp = ft_create_envp();
-	ft_free_for_exec((*get_world()), cmd);
+	free_all(*get_world());
 	if (paths)
 	{
 		while (paths[++i])
 		{
 			path = ft_strjoin_stop(paths[i], cmd[0]);
-			if (!path)
-				return ;
-			else
-				execve(path, cmd, envp);
+			execve(path, cmd, envp);
 			free(path);
 		}
 	}
