@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:51:35 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/25 12:13:51 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/25 13:56:08 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_pwd(t_ast *node)
 	char	*wd;
 
 	(void)node;
-	wd = ft_calloc_stop(sizeof(char), 250000000000000000);
+	wd = ft_calloc_stop(sizeof(char), 250);
 	if (!wd)
 		return (1);
 	getcwd(wd, 250);

@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:17:28 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 17:29:00 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/25 15:11:58 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,6 @@ char	*ft_extract_var_name(char *str, int *i);
 void	ft_append_char(char **new_word, char c);
 void	ft_replace(char **new_word, char *word, int *i, t_hashtable *env_ht);
 
-void	ft_free_token(t_token **token);
+void	ft_free_token(t_token **token, int freesub);
 
 #endif

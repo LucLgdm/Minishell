@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 08:31:44 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/25 12:20:37 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/25 15:08:15 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	stop_when_calloc_fail(void)
 		// handle_signal_afterprompt(SIGINT);
 		free(world->prompt);
 		ft_free_ast(&world->tree);
-		ft_free_token(&world->tokenlist);
+		ft_free_token(&world->tokenlist, 1);
 		prompt(world);
 	}
 	else

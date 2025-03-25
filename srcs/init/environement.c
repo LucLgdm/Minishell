@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:17:24 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 18:45:09 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/25 16:05:20 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	prompt(t_world *world)
 			handle_prompt(&world);
 		free(world->prompt);
 		ft_free_ast(&world->tree);
-		ft_free_token(&world->tokenlist);
+		ft_free_token(&world->tokenlist, 1);
 	}
 }
 
@@ -83,6 +83,7 @@ t_hashtable	*ft_create_env_hashtable(char **env)
 		shlvl = ft_itoa_stop(ft_atoi(ft_get_element(env_hashtable, "SHLVL")->value)
 				+ 1);
 		env_hashtable = ft_modify_value(env_hashtable, "SHLVL", shlvl, 0);
+		free(shlvl);
 	}
 	return (env_hashtable);
 }

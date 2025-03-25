@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:26:44 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/25 12:25:38 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/25 15:48:14 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,11 @@ void	ft_execcommand(t_ast *node, char **paths)
 		while (paths[++i])
 		{
 			path = ft_strjoin_stop(paths[i], cmd[0]);
-			execve(path, cmd, envp);
+			if (!access(path, X_OK))
+			{
+				ft_free_array(paths);
+				execve(path, cmd, envp);
+			}
 			free(path);
 		}
 	}
@@ -77,7 +81,7 @@ static void	handle_process(int fd_0, int fd_1, t_ast *node, char **paths)
 	close(fd_0);
 	dup2(fd_1, STDOUT_FILENO);
 	close(fd_1);
-	exit(exec_node((*get_world()), node->left, paths));
+	exit_process(exec_node((*get_world()), node->left, paths));
 }
 
 int	ft_do_the_pipe(t_ast *node, char **paths)
@@ -100,10 +104,10 @@ int	ft_do_the_pipe(t_ast *node, char **paths)
 	if (pid[1] == 0)
 	{
 		is_process = is_in_process();
-		*is_process = 1;
+		*is_process = 0;
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
-		exit(exec_node((*get_world()), node->right, paths));
+		exit_process(exec_node((*get_world()), node->right, paths));
 	}
 	close(fd[0]);
 	return (ft_check_for_stop(pid, 2));

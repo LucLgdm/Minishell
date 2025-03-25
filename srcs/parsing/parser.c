@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:29:07 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 19:10:09 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/25 15:13:05 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ t_token	*find_last_pipe(t_token *token)
 t_ast	*parse_pipes(t_token *token)
 {
 	t_token	*op;
+	t_token	*split;
 	t_ast	*node;
 
 	op = find_last_pipe(token);
@@ -67,7 +68,9 @@ t_ast	*parse_pipes(t_token *token)
 		node = ft_new_ast(NODE_PIPE);
 		free(op->value);
 		op->value = NULL;
-		node->left = parse_pipes(split_token(token, op, NULL, NULL));
+		split = split_token(token, op, NULL, NULL);
+		node->left = parse_pipes(split);
+		ft_free_token(&split, 0);
 		node->right = parse_pipes(op->next);
 		return (node);
 	}

@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 09:01:52 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 18:45:25 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/25 16:06:17 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,12 @@ int	exec_one_command(t_ast *node, char **paths)
 int	exec_node(t_world *world, t_ast *node, char **paths)
 {
 	int	retval;
-	int	original_stdin;
-	int	original_stdout;
 
 	if (!node)
 		return (-1);
 	if (node->node_type == TOKEN_PIPE)
 		return (ft_do_the_pipe(node, paths));
-	original_stdin = dup(STDIN_FILENO);
-	original_stdout = dup(STDOUT_FILENO);
 	retval = exec_tree(world, node->left);
-	dup2(original_stdin, STDIN_FILENO);
-	dup2(original_stdout, STDOUT_FILENO);
 	if (node->node_type == TOKEN_ANDAND)
 		if (retval)
 			return (0);
@@ -101,21 +95,20 @@ int	exec_node(t_world *world, t_ast *node, char **paths)
 int	exec_tree(t_world *world, t_ast *node)
 {
 	int		retval;
-	int		original_stdin;
-	int		original_stdout;
 	char	**paths;
+	char	*char_retval;
 
 	if (!node)
 		return (-1);
 	if (!g_stop)
 	{
 		paths = path_tab(world->env);
-		original_stdin = dup(STDIN_FILENO);
-		original_stdout = dup(STDOUT_FILENO);
 		retval = exec_node(world, node, paths);
-		dup2(original_stdin, STDIN_FILENO);
-		dup2(original_stdout, STDOUT_FILENO);
-		ft_modify_value(world->hidden_vars, "?", ft_itoa_stop(retval), 0);
+		dup2(world->fd[0], STDIN_FILENO);
+		dup2(world->fd[1], STDOUT_FILENO);
+		char_retval = ft_itoa_stop(retval);
+		ft_modify_value(world->hidden_vars, "?", char_retval, 0);
+		free(char_retval);
 		ft_free_array(paths);
 	}
 	if (g_stop)

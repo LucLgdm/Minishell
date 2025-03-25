@@ -6,19 +6,29 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:45:13 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 19:02:45 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/25 15:12:32 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer.h"
 
-void	ft_free_token(t_token **token)
+void	ft_free_token(t_token **token, int freesub)
 {
 	if (!token || !*token)
 		return ;
-	ft_free_token(&(*token)->sub_token);
-	ft_free_token(&(*token)->next);
-	free((*token)->value);
-	free(*token);
-	*token = NULL;
+	if ((*token)->sub_token && freesub)
+		ft_free_token(&(*token)->sub_token, 1);
+	if (token && *token)
+		if ((*token)->next)
+			ft_free_token(&(*token)->next, freesub);
+	if (token && (*token) && (*token)->value)
+	{
+		free((*token)->value);
+		(*token)->value = NULL;
+	}
+	if (token && *token)
+	{
+		free(*token);
+		*token = NULL;
+	}
 }

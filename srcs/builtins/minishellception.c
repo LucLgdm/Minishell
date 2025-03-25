@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:55:59 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/21 17:09:41 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/25 16:24:11 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	file_error(int file_type, char *path)
 {
 	ft_putstr_fd(path, 2);
+	free(path);
 	if (file_type == 0)
 	{
 		ft_putstr_fd(": No such file or directory\n", 2);
@@ -30,11 +31,13 @@ void	file_error(int file_type, char *path)
 		ft_putstr_fd(": Permission denied\n", 2);
 		exit(126);
 	}
+	exit(126);
 }
 
 int	ft_exec_file(char *path, char **args)
 {
 	pid_t	pid;
+	char	**envp;
 	int		retval;
 
 	pid = fork();
@@ -42,9 +45,14 @@ int	ft_exec_file(char *path, char **args)
 		perror("");
 	if (pid == 0)
 	{
-		execve(path, args, ft_create_envp());
+		envp = ft_create_envp();
+		free_all((*get_world()));
+		if (!access(path, X_OK))
+			execve(path, args, envp);
 		file_error(file_exists(path), path);
 	}
+	free(args);
+	free(path);
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &retval, 0);
 	signal(SIGINT, handle_signal_afterprompt);
@@ -60,6 +68,8 @@ char	*extract_filename(t_ast *node)
 	i = -1;
 	file = NULL;
 	str = node->cmd[0];
+	if (ft_strcmp(str, "/") == 0)
+		return (ft_strdup_stop("/"));
 	if (str)
 	{
 		while (str[++i])
@@ -74,16 +84,20 @@ char	*extract_filename(t_ast *node)
 int	ft_minishellception(t_ast *node)
 {
 	char	**args;
+	char	**tmp;
 	int		i;
 
 	i = 0;
-	args = ft_calloc_stop(sizeof(char *), get_arg_nb(node) + 1);
-	if (!args)
+	tmp = ft_calloc_stop(sizeof(char *), get_arg_nb(node) + 1);
+	if (!tmp)
 		return (perror(""), 1);
-	args[0] = extract_filename(node);
-	if (!args[0])
+	tmp[0] = extract_filename(node);
+	if (!tmp[0])
 		return (perror(""), 1);
 	while (node->cmd[++i])
-		args[i] = node->cmd[i];
-	return (ft_exec_file(node->cmd[0], args));
+		tmp[i] = node->cmd[i];
+	args = ft_arraycpy_stop(tmp);
+	free(tmp[0]);
+	free(tmp);
+	return (ft_exec_file(ft_strdup_stop(node->cmd[0]), args));
 }

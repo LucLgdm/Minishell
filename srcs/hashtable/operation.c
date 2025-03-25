@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:40:21 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 17:14:22 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/25 16:06:41 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ t_hashtable	*ft_modify_value(t_hashtable *ht, char *key, char *value, int add)
 	else
 		element->value = ft_strdup_stop(value);
 	free(value_tmp);
-	free(value);
 	return (ht);
 }
 

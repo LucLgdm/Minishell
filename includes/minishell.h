@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 18:40:38 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/25 13:44:22 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 typedef struct s_world
 {
 	char		*prompt;
+	int			fd[2];
 	t_hashtable	*env;
 	t_hashtable	*new_env;
 	t_hashtable	*hidden_vars;

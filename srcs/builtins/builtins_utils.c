@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:35:41 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/21 17:09:38 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/25 16:20:21 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,31 +41,42 @@ static void	ft_fill_dir(char *dir)
 	dir = getcwd(dir, 255);
 }
 
-int	file_exists(char *path_name)
+int	sub_file_exists(char *path, char *dir)
 {
-	char			*dir;
 	DIR				*opened;
 	struct dirent	*entry;
 
-	dir = NULL;
-	if (ft_strrchr(path_name, '/'))
-	{
-		dir = ft_substr_stop(path_name, 0, ft_strrchr(path_name, '/') - path_name);
-		path_name = ft_strrchr(path_name, '/') + 1;
-	}
-	else
-		ft_fill_dir(dir);
 	opened = opendir(dir);
 	if (!opened)
 		return (no_open(errno));
-	if (!*path_name)
+	if (!*path)
 		return (free(dir), closedir(opened), 4);
 	entry = readdir(opened);
 	while (entry)
 	{
-		if (!ft_strcmp(entry->d_name, path_name))
+		if (!ft_strcmp(entry->d_name, path))
 			return (free(dir), closedir(opened), entry->d_type);
 		entry = readdir(opened);
 	}
-	return (closedir(opened), free(dir), 0);
+	closedir(opened);
+	free(dir);
+	return (0);
+}
+
+int	file_exists(char *path_name)
+{
+	char			*dir;
+
+	dir = NULL;
+	if (ft_strcmp(path_name, "/") == 0)
+		return (4);
+	if (ft_strrchr(path_name, '/'))
+	{
+		dir = ft_substr_stop(path_name, 0,
+				ft_strrchr(path_name, '/') - path_name);
+		path_name = ft_strrchr(path_name, '/') + 1;
+	}
+	else
+		ft_fill_dir(dir);
+	return (sub_file_exists(path_name, dir));
 }

@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:25:40 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 18:15:21 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/25 14:26:18 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ t_token	*tokenization_token(char *prompt)
 		if (ft_isspace(*prompt))
 			prompt++;
 		else if (*prompt == '(')
+		{
 			token_lst = handle_parenthesis(&prompt, &token_lst);
+			if (!token_lst)
+				return (NULL);
+		}
 		else
 		{
 			len_token = token_len(prompt);

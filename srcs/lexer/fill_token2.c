@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 15:48:26 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 17:09:48 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/25 15:12:58 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_token	*handle_parenthesis(char **prompt, t_token **token_lst)
 			p_count--;
 	}
 	if (p_count != 0)
-		return (NULL);
+		return (ft_putstr_fd("syntax error\n", 2), NULL);
 	sub_prompt = ft_substr_stop(*prompt, 1, i - 2);
 	(*token_lst) = fill_token(*token_lst, "(", 1);
 	tmp = *token_lst;

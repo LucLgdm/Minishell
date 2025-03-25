@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:12:49 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/25 11:12:02 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/25 15:13:21 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_ast	*parse_token(t_token *token)
 		op->value = NULL;
 		split_t = split_token(token, op, NULL, NULL);
 		node->left = parse_token(split_t);
+		ft_free_token(&split_t, 0);
 		if (op->next)
 			node->right = parse_token(op->next);
 		else
@@ -42,6 +43,7 @@ static void	ft_fill_new_token(t_token **new_token, t_token *token)
 	(*new_token) = ft_calloc_stop(sizeof(t_token), 1);
 	(*new_token)->value = ft_strdup_stop(token->value);
 	(*new_token)->token_type = token->token_type;
+	(*new_token)->sub_token = NULL;
 	(*new_token)->next = NULL;
 }
 
@@ -69,6 +71,5 @@ t_token	*split_token(t_token *token, t_token *op, t_token *head, t_token *tail)
 		}
 		token = token->next;
 	}
-	token->sub_token = head;
 	return (head);
 }
