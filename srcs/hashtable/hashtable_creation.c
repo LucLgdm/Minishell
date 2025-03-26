@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable_creation.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:35:36 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 18:26:43 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/26 11:11:49 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ t_hashtable	*ft_create_hashtable(int length)
 	if (!new_hashtable)
 		return (NULL);
 	new_hashtable->length = length;
-	new_hashtable->table = (t_element **)ft_calloc_stop(sizeof(t_element *), length);
+	new_hashtable->table = (t_element **)ft_calloc_stop(sizeof(t_element *),
+			length);
 	if (!new_hashtable->table)
 	{
 		free(new_hashtable);

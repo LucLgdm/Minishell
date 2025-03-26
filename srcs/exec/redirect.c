@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 16:35:04 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/21 14:19:07 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/26 11:12:29 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ void	redirect_input(char *file, int *fd)
 	if (*fd)
 		close(*fd);
 	*fd = newfd;
-	// if (dup2(newfd, fd) == -1)
-	// 	return (perror(""));
 }
 
 void	ft_here_doc(char *limit, int *fdin)

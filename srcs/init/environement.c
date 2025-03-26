@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environement.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:17:24 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/25 16:05:20 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/26 11:11:56 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ t_hashtable	*ft_create_env_hashtable(char **env)
 	ft_env_to_hashtable(env, env_hashtable);
 	if (env_hashtable)
 	{
-		shlvl = ft_itoa_stop(ft_atoi(ft_get_element(env_hashtable, "SHLVL")->value)
-				+ 1);
+		shlvl = ft_itoa_stop(ft_atoi(ft_get_element(env_hashtable,
+						"SHLVL")->value) + 1);
 		env_hashtable = ft_modify_value(env_hashtable, "SHLVL", shlvl, 0);
 		free(shlvl);
 	}

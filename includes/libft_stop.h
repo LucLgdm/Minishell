@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   libft_stop.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:58:38 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/25 11:33:03 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/26 11:11:35 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_STOP_H
 # define LIBFT_STOP_H
 
-#include "../libft/libft.h"
+# include "../libft/libft.h"
 
 void	*ft_calloc_stop(size_t nmemb, size_t size);
 char	*ft_strjoin_stop(char const *s1, char const *s2);
