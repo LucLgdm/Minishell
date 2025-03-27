@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:26:44 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/27 14:11:16 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:30:59 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ void	ft_execcommand(t_ast *node, char **paths)
 			free(path);
 		}
 	}
+	ft_free_for_exec(cmd, envp);
 	ft_command_not_found(cmd, paths, envp);
-	exit_process(127);
+	exit_process(127, paths);
 }
 
 pid_t	create_process(t_ast *node, char **paths)
@@ -81,7 +82,7 @@ static void	handle_process(int fd_0, int fd_1, t_ast *node, char **paths)
 	close(fd_0);
 	dup2(fd_1, STDOUT_FILENO);
 	close(fd_1);
-	exit_process(exec_node((*get_world()), node->left, paths));
+	exit_process(exec_node((*get_world()), node->left, paths), paths);
 }
 
 int	ft_do_the_pipe(t_ast *node, char **paths)
@@ -107,7 +108,7 @@ int	ft_do_the_pipe(t_ast *node, char **paths)
 		*is_process = 0;
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
-		exit_process(exec_node((*get_world()), node->right, paths));
+		exit_process(exec_node((*get_world()), node->right, paths), paths);
 	}
 	close(fd[0]);
 	return (ft_check_for_stop(pid, 2));

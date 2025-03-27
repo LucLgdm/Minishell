@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/27 14:18:05 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:29:48 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ void	fill_tree(t_world **world);
 
 // free
 void	free_all(t_world **world);
-void	exit_process(int exit_status);
+void	exit_process(int exit_status, char **paths);
 void	ft_syntaxe_error(t_world *world);
+void	ft_free_for_exec(char **cmd, char **envp);
 
 // print.c
 void	print_tab(char **tab);

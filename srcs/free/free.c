@@ -6,11 +6,19 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:56:03 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/27 14:12:11 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:30:32 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_free_for_exec(char **cmd, char **envp)
+{
+	if (cmd)
+		ft_free_array(cmd);
+	if (envp)
+		ft_free_array(envp);
+}
 
 void	free_all(t_world **world)
 {
