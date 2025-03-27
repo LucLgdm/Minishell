@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:25:40 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/25 14:26:18 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/27 14:18:34 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ static int	ft_length_in_quote(char *ptr)
 			return (length);
 		ptr++;
 	}
-	return (length);
+	ft_syntaxe_error(*get_world());
+	return (1);
 }
 
 int	token_len(char *input)

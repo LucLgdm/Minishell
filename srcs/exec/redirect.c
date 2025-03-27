@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 16:35:04 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/26 11:12:29 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:05:59 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	ft_here_doc(char *limit, int *fdin)
 	herefd = open(".heredoc", O_CREAT | O_WRONLY, 0644);
 	if (herefd == -1)
 		return (perror(""));
-	printf("there, limit : %s, herefd: %d\n", limit, herefd);
 	line = readline("heredoc>");
 	while (line && ft_strcmp(line, limit))
 	{

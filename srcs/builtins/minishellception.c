@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishellception.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:55:59 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/25 16:24:11 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/27 14:11:19 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_exec_file(char *path, char **args)
 	if (pid == 0)
 	{
 		envp = ft_create_envp();
-		free_all((*get_world()));
+		free_all(get_world());
 		if (!access(path, X_OK))
 			execve(path, args, envp);
 		file_error(file_exists(path), path);

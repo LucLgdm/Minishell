@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:39:11 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/25 13:49:22 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/27 14:13:00 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **envp)
 			(*world)->new_env = ft_create_new_env();
 		printf("\033[0;32mWelcome to Minishell!\033[0m\n");
 		prompt(*world);
-		free_all(*world);
+		free_all(world);
 	}
 	return (0);
 }

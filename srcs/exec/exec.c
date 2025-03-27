@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:26:44 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/25 15:48:14 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/27 14:11:16 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_execcommand(t_ast *node, char **paths)
 	cmd = ft_arraycpy_stop(node->cmd);
 	i = -1;
 	envp = ft_create_envp();
-	free_all(*get_world());
+	free_all(get_world());
 	if (paths)
 	{
 		while (paths[++i])

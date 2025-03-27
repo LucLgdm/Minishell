@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:17:24 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/26 11:11:56 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:11:33 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	prompt(t_world *world)
 		if (!world->prompt || (strcmp(world->prompt, "exit") == 0))
 		{
 			printf("\033[0;32mFrom Minishell with Love !\033[0m\n");
-			free_all(world);
+			free_all(&world);
 			exit(EXIT_SUCCESS);
 		}
 		if (ft_strlen(world->prompt) > 0)

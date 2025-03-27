@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/25 13:44:22 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/27 14:18:05 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ t_world	**get_world(void);
 void	fill_tree(t_world **world);
 
 // free
-void	free_all(t_world *world);
+void	free_all(t_world **world);
 void	exit_process(int exit_status);
-void	ft_free_for_exec(t_world *world, char **cmd);
+void	ft_syntaxe_error(t_world *world);
 
 // print.c
 void	print_tab(char **tab);

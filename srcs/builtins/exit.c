@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:05:07 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/26 12:12:44 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:11:03 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_exit(t_ast *node)
 		printf("minishell: exit: too many arguments\n");
 		return ;
 	}
-	free_all(*get_world());
+	free_all(get_world());
 	printf("\033[0;32mexit\nFrom Minishell with Love !\033[0m\n");
 	exit(exit_value);
 }
