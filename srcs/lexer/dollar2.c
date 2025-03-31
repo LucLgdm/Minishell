@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:05:36 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 18:27:11 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/27 15:48:52 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ char	*ft_extract_var_name(char *str, int *i)
 	{
 		(*i)++;
 		return (ft_strdup_stop("?"));
+	}
+	if (ft_isdigit(str[start]))
+	{
+		(*i)++;
+		return (ft_substr_stop(str, start, 1));
 	}
 	while ((str[start + len] && (ft_isalnum(str[start + len]) || \
 	str[start + len] == '_')) && !(ft_isdigit(str[start])))

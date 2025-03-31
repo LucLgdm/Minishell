@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 08:31:44 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/26 11:12:19 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:38:04 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	stop_when_calloc_fail(void)
 		prompt(world);
 	}
 	else
-		exit_process(1);
+		exit_process(1, NULL);
 }
 
 void	handle_signal(int sig)

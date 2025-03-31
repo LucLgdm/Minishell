@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:55:59 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/27 14:11:19 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:30:46 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ int	ft_exec_file(char *path, char **args)
 
 	pid = fork();
 	if (pid == -1)
+	{
 		perror("");
+		return (1);
+	}
 	if (pid == 0)
 	{
 		envp = ft_create_envp();
@@ -51,7 +54,7 @@ int	ft_exec_file(char *path, char **args)
 			execve(path, args, envp);
 		file_error(file_exists(path), path);
 	}
-	free(args);
+	ft_free_array(args);
 	free(path);
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &retval, 0);

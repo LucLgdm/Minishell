@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:26:44 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/27 14:30:59 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:01:15 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 extern int	g_stop;
 
-void	ft_command_not_found(char **cmd, char **paths, char **envp)
+static void	ft_command_not_found(char **cmd, char **paths)
 {
-	ft_free_array(envp);
 	if (ft_strchr(cmd[0], '/') || !paths)
 		ft_putstr_fd("no such file or directory: ", 2);
 	else
@@ -49,8 +48,8 @@ void	ft_execcommand(t_ast *node, char **paths)
 			free(path);
 		}
 	}
+	ft_command_not_found(cmd, paths);
 	ft_free_for_exec(cmd, envp);
-	ft_command_not_found(cmd, paths, envp);
 	exit_process(127, paths);
 }
 

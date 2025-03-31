@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:17:28 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/25 15:11:58 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/27 17:18:00 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_token {
 //	lexer.c
 t_token	*tokenization_token(char *prompt);
 int		token_len(char *input);
-
+bool	ft_is_redir(t_token *token);
 //	fill_token.c
 t_token	*fill_token(t_token *token_lst, char *prompt, int len_token);
 t_token	*ft_create_token(int len_token, char *prompt);

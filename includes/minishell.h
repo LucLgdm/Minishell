@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/27 14:29:48 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:01:15 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	print_token(t_token *token_lst, int i);
 void	print_tree(t_ast *root, int i);
 
 // exec
-int		exec_tree(t_world *world, t_ast *node);
+int		exec_tree(t_world *world, t_ast *node, int reset);
 int		exec_node(t_world *world, t_ast *node, char **paths);
 
 // wildcards

@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:49:34 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/27 14:17:39 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:37:47 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static bool	ft_is_operator(t_token *token)
 		|| type == TOKEN_PIPEPIPE);
 }
 
-static bool	ft_is_redir(t_token *token)
+bool	ft_is_redir(t_token *token)
 {
 	int	type;
 
@@ -34,11 +34,18 @@ static bool	ft_check_syntaxe(t_token *token_lst)
 {
 	if (ft_is_operator(token_lst))
 		return (false);
+	if (!token_lst->next && token_lst->token_type == TOKEN_PARENTHESES)
+		if (!ft_check_syntaxe(token_lst->sub_token))
+			return (false);
 	while (token_lst->next)
 	{
 		if (ft_is_operator(token_lst) && ft_is_operator(token_lst->next))
 			return (false);
 		if (ft_is_redir(token_lst) && token_lst->next->token_type != TOKEN_WORD)
+			return (false);
+		if (token_lst->token_type == TOKEN_PARENTHESES
+			&& !(ft_is_operator(token_lst->next)
+				|| ft_is_redir(token_lst->next)))
 			return (false);
 		if (token_lst->token_type == TOKEN_PARENTHESES)
 			if (!ft_check_syntaxe(token_lst->sub_token))
@@ -54,6 +61,7 @@ void	ft_syntaxe_error(t_world *world)
 {
 	ft_putstr_fd("Syntax error\n", 2);
 	ft_free_token(&world->tokenlist, 1);
+	ft_free_ast(&world->tree);
 	free(world->prompt);
 	prompt(world);
 }

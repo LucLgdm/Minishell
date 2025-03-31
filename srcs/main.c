@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:39:11 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/27 14:13:00 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:03:16 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv, char **envp)
 	if (argc == 1)
 	{
 		is_process = is_in_process();
-		*world = ft_calloc(1, sizeof(t_world));
+		*world = ft_calloc_stop(1, sizeof(t_world));
 		(*world)->fd[0] = dup(STDIN_FILENO);
 		(*world)->fd[1] = dup(STDOUT_FILENO);
 		(*world)->env = ft_create_env_hashtable(envp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:12:49 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/25 15:13:21 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/27 17:35:36 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ t_ast	*parse_token(t_token *token)
 			printf("Error, manque une commande\n");
 		return (node);
 	}
-	if (token->token_type == TOKEN_PARENTHESES)
-		return (parse_parentheses(token));
 	return (parse_pipes(token));
 }
 

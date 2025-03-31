@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:51:35 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/25 13:56:08 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/28 12:56:36 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,10 @@
 
 int	ft_pwd(t_ast *node)
 {
-	char	*wd;
+	char	wd[255];
 
 	(void)node;
-	wd = ft_calloc_stop(sizeof(char), 250);
-	if (!wd)
-		return (1);
 	getcwd(wd, 250);
 	printf("%s\n", wd);
-	free(wd);
 	return (0);
 }

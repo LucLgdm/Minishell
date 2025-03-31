@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_simple_cmd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:13:39 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 18:58:19 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/27 16:29:16 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static bool	ft_is_token(int type)
 		|| type == TOKEN_ANDAND);
 }
 
-static void	ft_handle_redir(t_redir **redir, t_token **token, t_ast *node)
+void	ft_handle_redir(t_redir **redir, t_token **token, t_ast *node)
 {
 	t_redir	*tmp;
 

@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:17:24 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/27 14:11:33 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:36:41 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	handle_prompt(t_world **world)
 	else
 	{
 		fill_tree(world);
-		exec_tree(*world, (*world)->tree);
+		exec_tree(*world, (*world)->tree, 1);
 		unlink(".heredoc");
 	}
 }
@@ -43,7 +43,7 @@ void	prompt(t_world *world)
 		world->prompt = readline("\001\033[3;33m\002Minishell > \001\033[0m\002 ");
 		g_stop = 0;
 		signal(SIGINT, handle_signal_afterprompt);
-		if (!world->prompt || (strcmp(world->prompt, "exit") == 0))
+		if (!world->prompt)
 		{
 			printf("\033[0;32mFrom Minishell with Love !\033[0m\n");
 			free_all(&world);

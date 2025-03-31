@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:30:48 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 17:28:37 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/27 16:28:54 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_ast
 
 // Parser.c
 t_ast	*parse_token(t_token *token);
+void	ft_handle_redir(t_redir **redir, t_token **token, t_ast *node);
 // void	ft_create_tree(t_ast **root, t_token *token);
 t_token	*find_last_logical_operator(t_token *token);
 t_token	*find_last_pipe(t_token *token);

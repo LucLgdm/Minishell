@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:35:36 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/26 11:11:49 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/28 13:05:16 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,15 @@ t_element	*ft_create_element(char *key, char *value)
 {
 	t_element	*new_element;
 
-	new_element = (t_element *)ft_calloc_stop(sizeof(t_element), 1);
+	new_element = (t_element *)ft_calloc(sizeof(t_element), 1);
 	if (!new_element)
 		return (NULL);
-	new_element->key = ft_strdup_stop(key);
-	new_element->value = ft_strdup_stop(value);
+	new_element->key = ft_strdup(key);
+	if (!new_element->key)
+		return (free(new_element), NULL);
+	new_element->value = ft_strdup(value);
+	if (!new_element->value)
+		return (free(new_element), free(key), NULL);
 	new_element->next = NULL;
 	return (new_element);
 }

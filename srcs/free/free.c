@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:56:03 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/27 14:30:32 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:59:15 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	ft_free_for_exec(char **cmd, char **envp)
 {
-	if (cmd)
+	if (cmd && *cmd)
 		ft_free_array(cmd);
-	if (envp)
+	if (envp && *envp)
 		ft_free_array(envp);
 }
 

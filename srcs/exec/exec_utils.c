@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:24:49 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/21 17:25:11 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/27 17:02:05 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,33 @@
 
 extern int	g_stop;
 
-void	ft_redirect(t_ast *node)
+int	ft_redirect(t_ast *node)
 {
 	int		final_fdin;
+	int		error;
 	t_redir	*redir;
 
+	error = 0;
 	final_fdin = 0;
 	redir = node->redir;
 	while (redir)
 	{
 		if (redir->redir_type == TOKEN_LESSER)
-			redirect_input(redir->value[0], &final_fdin);
+			error += redirect_input(redir->value[0], &final_fdin);
 		if (redir->redir_type == TOKEN_GREATGREATER)
-			redirect_output(redir->value[0], STDOUT_FILENO, 1);
+			error += redirect_output(redir->value[0], STDOUT_FILENO, 1);
 		if (redir->redir_type == TOKEN_GREATER)
-			redirect_output(redir->value[0], STDOUT_FILENO, 0);
+			error += redirect_output(redir->value[0], STDOUT_FILENO, 0);
 		if (redir->redir_type == TOKEN_LESSLESSER)
-			ft_here_doc(redir->value[0], &final_fdin);
+			error += ft_here_doc(redir->value[0], &final_fdin);
 		redir = redir->next;
+		if (error)
+			return (0);
 	}
 	if (final_fdin)
 		if (dup2(final_fdin, STDIN_FILENO) == -1)
-			return (perror(""));
+			return (perror(""), 0);
+	return (1);
 }
 
 static void	kill_to_stop(pid_t *pid, int pid_nb, int *intab, pid_t endpid)

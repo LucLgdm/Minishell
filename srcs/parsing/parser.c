@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:29:07 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/25 15:13:05 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/27 17:37:40 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,26 @@
 t_ast	*parse_parentheses(t_token *token)
 {
 	t_ast	*sub_ast;
+	t_redir	*redir;
 
+	sub_ast = NULL;
 	if (!token || token->token_type != TOKEN_PARENTHESES)
 		return (NULL);
 	if (token->sub_token)
-	{
 		sub_ast = parse_token(token->sub_token);
-		if (sub_ast)
-			return (sub_ast);
+	if (!sub_ast)
+		return (NULL);
+	token = token->next;
+	while (token && ft_is_redir(token))
+	{
+		ft_handle_redir(&redir, &token, sub_ast);
+		token = token->next;
+		if (token)
+			token = token->next;
 	}
-	return (NULL);
+	if (token && token->token_type == TOKEN_WORD)
+		ft_syntaxe_error((*get_world()));
+	return (sub_ast);
 }
 
 t_token	*find_last_logical_operator(t_token *token)
@@ -74,5 +84,7 @@ t_ast	*parse_pipes(t_token *token)
 		node->right = parse_pipes(op->next);
 		return (node);
 	}
+	if (token->token_type == TOKEN_PARENTHESES)
+		return (parse_parentheses(token));
 	return (parse_simple_command(token));
 }

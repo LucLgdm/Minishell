@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 09:01:52 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/25 16:06:17 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/28 12:50:14 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,10 @@ int	get_builtins(t_ast *node)
 	else if (!strcmp(node->cmd[0], "env"))
 		return (ft_env(node));
 	else if (!strcmp(node->cmd[0], "exit"))
-		ft_exit(node);
+		return (ft_exit(node), 1);
 	else if (ft_strchr(node->cmd[0], '/'))
 		return (ft_minishellception(node));
-	else
-		return (-1);
-	return (1);
+	return (-2);
 }
 
 int	exec_one_command(t_ast *node, char **paths)
@@ -63,10 +61,9 @@ int	exec_one_command(t_ast *node, char **paths)
 		new_handle_dollar(&node->cmd, (*get_world())->env);
 	else
 		new_handle_dollar(&node->cmd, (*get_world())->new_env);
-	ft_redirect(node);
 	if (!node->cmd || !node->cmd[0])
 		return (0);
-	exit_status = get_builtins(node);
+	exit_status = get_builtins(node, paths);
 	if (exit_status == -1)
 		exit_status = create_process(node, paths);
 	return (exit_status);
@@ -78,21 +75,23 @@ int	exec_node(t_world *world, t_ast *node, char **paths)
 
 	if (!node)
 		return (-1);
+	if (!ft_redirect(node))
+		return (1);
 	if (node->node_type == TOKEN_PIPE)
 		return (ft_do_the_pipe(node, paths));
-	retval = exec_tree(world, node->left);
+	retval = exec_tree(world, node->left, 0);
 	if (node->node_type == TOKEN_ANDAND)
 		if (retval)
-			return (0);
+			return (retval);
 	if (node->node_type == TOKEN_PIPEPIPE)
 		if (!retval)
 			return (retval);
 	if (node->node_type == TOKEN_WORD)
 		return (exec_one_command(node, paths));
-	return (exec_tree(world, node->right));
+	return (exec_tree(world, node->right, 1));
 }
 
-int	exec_tree(t_world *world, t_ast *node)
+int	exec_tree(t_world *world, t_ast *node, int reset)
 {
 	int		retval;
 	char	**paths;
@@ -104,8 +103,11 @@ int	exec_tree(t_world *world, t_ast *node)
 	{
 		paths = path_tab(world->env);
 		retval = exec_node(world, node, paths);
-		dup2(world->fd[0], STDIN_FILENO);
-		dup2(world->fd[1], STDOUT_FILENO);
+		if (reset)
+		{
+			dup2(world->fd[0], STDIN_FILENO);
+			dup2(world->fd[1], STDOUT_FILENO);
+		}
 		char_retval = ft_itoa_stop(retval);
 		ft_modify_value(world->hidden_vars, "?", char_retval, 0);
 		free(char_retval);

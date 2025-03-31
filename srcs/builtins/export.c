@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:29:58 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/21 17:09:40 by andrean          ###   ########.fr       */
+/*   Updated: 2025/03/28 13:12:09 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ int	check_key(char *key)
 
 	i = 0;
 	if (ft_isdigit(key[i]))
-		return (0);
+		return (1);
 	while (key[i] && (ft_isalnum(key[i]) || key[i] == '_'))
 		i++;
 	if (key[i])
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }
 
 static void	delete_quotes(char *value)
@@ -67,17 +67,21 @@ int	export_one(char *str)
 		key = str;
 	else
 	{
-		key = ft_substr_stop(str, 0, equalsign - str);
-		value = ft_substr_stop(equalsign, 1, ft_strlen(equalsign + 1));
-		if (!key || !value)
-			return (1);
+		key = ft_substr(str, 0, equalsign - str);
+		value = ft_substr(equalsign, 1, ft_strlen(equalsign + 1));
+		if (!value || !key)
+			return (safe_free(key), safe_free(value), -1);
 	}
-	if (!check_key(key))
+	if (check_key(key))
 		return (export_error(key));
+	if (str == key)
+		return (0);
 	if (ft_get_element(env, key))
 		ft_remove_element(env, key);
 	delete_quotes(value);
 	env = ft_add_element(&env, key, value);
+	if (!env)
+		return (free(key), free(value), -1);
 	return (free(key), free(value), 0);
 }
 
@@ -86,8 +90,9 @@ int	ft_export(t_ast *node)
 	int	arg_nb;
 	int	count;
 	int	retval;
-
-	retval = 0;
+	int	error;
+	
+	error = 0;
 	arg_nb = get_arg_nb(node);
 	if (arg_nb == 1)
 	{
@@ -96,8 +101,13 @@ int	ft_export(t_ast *node)
 	}
 	count = 0;
 	while (++count < arg_nb)
-		retval += export_one(node->cmd[count]);
-	if (retval)
+	{
+		retval = export_one(node->cmd[count]);
+		if (retval == -1)
+			return (retval);
+		error += retval;
+	}
+	if (error)
 		return (1);
 	return (0);
 }

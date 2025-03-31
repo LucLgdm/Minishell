@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:34:49 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/20 11:44:32 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/03/28 12:54:28 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,13 @@ int	ft_cd(t_ast *node)
 	if (get_arg_nb(node) == 1)
 	{
 		if (ft_get_element(env, "HOME"))
-		{
 			if (chdir(ft_get_element(env, "HOME")->value) != 0)
 				return (cd_error(1, ft_get_element(env, "HOME")->value));
-		}
 		else
 			return (cd_error(2, NULL));
 	}
+	else if(ft_strcmp(node->cmd[1], "-") == 0)
+		return (cd_error(1, node->cmd[1]));
 	else
 		if (chdir(node->cmd[1]) != 0)
 			return (cd_error(1, node->cmd[1]));
