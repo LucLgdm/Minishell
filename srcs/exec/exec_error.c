@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 11:47:46 by andrean           #+#    #+#             */
-/*   Updated: 2025/04/04 11:49:11 by andrean          ###   ########.fr       */
+/*   Updated: 2025/04/04 17:08:03 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,12 @@ void	ft_command_not_found(char **cmd, char **paths)
 		ft_putstr_fd("command not found: ", 2);
 	ft_putstr_fd(cmd[0], 2);
 	ft_putstr_fd("\n", 2);
+}
+
+int	ft_no_yes_here(t_ast *node)
+{
+	(void)node;
+
+	printf("no.\n");
+	return (1);
 }

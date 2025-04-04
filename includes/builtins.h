@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:41:04 by andrean           #+#    #+#             */
-/*   Updated: 2025/04/04 10:54:11 by andrean          ###   ########.fr       */
+/*   Updated: 2025/04/04 17:06:54 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ long long	exit_long(t_ast *node, long long *exit_value);
 // builtins_utils.c
 int			file_exists(char *path_name);
 int			get_arg_nb(t_ast *node);
+int			ft_no_yes_here(t_ast *node);
 
 #endif

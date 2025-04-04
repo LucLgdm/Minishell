@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 09:01:52 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/04/04 14:44:18 by andrean          ###   ########.fr       */
+/*   Updated: 2025/04/04 17:09:00 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,24 @@ char	*ft_strchr_outofquotes(char *str, char c)
 
 int	get_builtins(t_ast *node, char **paths)
 {
-	if (!strcmp(node->cmd[0], "echo"))
+	if (!ft_strcmp(node->cmd[0], "echo"))
 		return (ft_echo(node));
-	else if (!strcmp(node->cmd[0], "cd"))
+	else if (!ft_strcmp(node->cmd[0], "cd"))
 		return (ft_cd(node));
-	else if (!strcmp(node->cmd[0], "pwd"))
+	else if (!ft_strcmp(node->cmd[0], "pwd"))
 		return (ft_pwd(node));
-	else if (!strcmp(node->cmd[0], "export"))
+	else if (!ft_strcmp(node->cmd[0], "export"))
 		return (ft_export(node));
-	else if (!strcmp(node->cmd[0], "unset"))
+	else if (!ft_strcmp(node->cmd[0], "unset"))
 		return (ft_unset(node));
-	else if (!strcmp(node->cmd[0], "env"))
+	else if (!ft_strcmp(node->cmd[0], "env"))
 		return (ft_env(node));
-	else if (!strcmp(node->cmd[0], "exit"))
+	else if (!ft_strcmp(node->cmd[0], "exit"))
 		return (ft_exit(node, paths), 1);
 	else if (ft_strchr(node->cmd[0], '/'))
 		return (ft_minishellception(node, paths));
+	else if (!ft_strcmp(node->cmd[0], "yes"))
+		return (ft_no_yes_here(node));
 	return (-2);
 }
 
