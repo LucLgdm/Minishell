@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environement.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:17:24 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/27 17:36:41 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/04 16:09:32 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ extern int	g_stop;
 static void	handle_prompt(t_world **world)
 {
 	add_history((*world)->prompt);
-	if (strcmp((*world)->prompt, "clean") == 0)
+	if (ft_strcmp((*world)->prompt, "clean") == 0)
 	{
 		rl_clear_history();
 		printf("\033[0;32mHistory cleaned\033[0m\n");
@@ -57,16 +57,8 @@ void	prompt(t_world *world)
 	}
 }
 
-t_world	**get_world(void)
+t_hashtable	*ft_create_env_hashtable(char **env, t_hashtable **env_hashtable)
 {
-	static t_world	*world;
-
-	return (&world);
-}
-
-t_hashtable	*ft_create_env_hashtable(char **env)
-{
-	t_hashtable	*env_hashtable;
 	int			len_env;
 	char		*shlvl;
 
@@ -74,23 +66,49 @@ t_hashtable	*ft_create_env_hashtable(char **env)
 	if (len_env == 0)
 		return (NULL);
 	len_env = ft_next_prime(3 * len_env);
-	env_hashtable = ft_create_hashtable(len_env);
-	if (!env_hashtable)
-		return (NULL);
-	ft_env_to_hashtable(env, env_hashtable);
-	if (env_hashtable)
+	*env_hashtable = ft_create_hashtable(len_env);
+	if (!*env_hashtable)
+		stop_when_calloc_fail();
+	ft_env_to_hashtable(env, *env_hashtable);
+	if (*env_hashtable)
 	{
-		shlvl = ft_itoa_stop(ft_atoi(ft_get_element(env_hashtable,
+		shlvl = ft_itoa_stop(ft_atoi(ft_get_element(*env_hashtable,
 						"SHLVL")->value) + 1);
-		env_hashtable = ft_modify_value(env_hashtable, "SHLVL", shlvl, 0);
+		*env_hashtable = ft_modify_value(*env_hashtable, "SHLVL", shlvl, 0);
 		free(shlvl);
 	}
-	return (env_hashtable);
+	return (*env_hashtable);
+}
+
+char	**ft_sub_envp(int *i, int *j, t_element *element, char **envp)
+{
+	char	*str;
+	char	**newline;
+
+	while (element)
+	{
+		newline = ft_calloc(sizeof(char *), 2);
+		if (!newline)
+			return (NULL);
+		str = htab_element_to_str(element);
+		if (!str)
+			return (ft_free_array(newline), NULL);
+		newline[0] = str;
+		envp = ft_catchartab(envp, newline, ft_arraylen(envp));
+		if (!envp)
+			return (NULL);
+		(*i)++;
+		if (element->next)
+			(*j)--;
+		element = element->next;
+	}
+	return (envp);
 }
 
 char	**ft_create_envp(void)
 {
 	t_hashtable	*env;
+	t_element	*element;
 	char		**envp;
 	int			i;
 	int			j;
@@ -100,15 +118,16 @@ char	**ft_create_envp(void)
 		env = (*get_world())->new_env;
 	i = 0;
 	j = 0;
-	envp = ft_calloc_stop(sizeof(char *), env->length);
-	while ((i) + j < env->length)
+	envp = ft_calloc(sizeof(char *), 1);
+	if (!envp)
+		return (NULL);
+	while (i + j < env->length)
 	{
-		if (env->table[i + j])
-		{
-			envp[i] = htab_element_to_str(env->table[i + j]);
-			i++;
-		}
-		else
+		element = env->table[i + j];
+		envp = ft_sub_envp(&i, &j, element, envp);
+		if (!envp)
+			return (NULL);
+		if (!env->table[i + j])
 			j++;
 	}
 	return (envp);

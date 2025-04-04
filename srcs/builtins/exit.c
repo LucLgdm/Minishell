@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:05:07 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/27 15:55:31 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/04 10:28:55 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 // 	exit(exit_value);
 // }
 
-void	ft_exit(t_ast *node)
+void	ft_exit(t_ast *node, char **paths)
 {
 	long long	exit_value;
 	t_hashtable	*env;
@@ -44,6 +44,7 @@ void	ft_exit(t_ast *node)
 	free_all(get_world());
 	if (*is_in_process())
 		printf("\033[0;32mexit\nFrom Minishell with Love !\033[0m\n");
+	ft_free_array(paths);
 	exit(exit_value);
 }
 

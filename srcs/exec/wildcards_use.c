@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards_use.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 08:37:57 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/26 11:12:42 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/04 16:42:44 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ char	**onewildtab(void)
 {
 	char	**tab;
 
-	tab = ft_calloc_stop(sizeof(char *), 2);
+	tab = ft_calloc(sizeof(char *), 2);
 	if (!tab)
 		return (NULL);
-	tab[0] = ft_strdup_stop("*");
+	tab[0] = ft_strdup("*");
 	if (!tab[0])
 	{
 		free(tab);
@@ -34,8 +34,10 @@ char	**onelinetab(char *str)
 
 	if (!str)
 		return (NULL);
-	tab = ft_calloc_stop(sizeof(char *), 2);
-	tab[0] = ft_strdup_stop(str);
+	tab = ft_calloc(sizeof(char *), 2);
+	if (!tab)
+		return (NULL);
+	tab[0] = ft_strdup(str);
 	if (!tab[0])
 	{
 		free(tab);

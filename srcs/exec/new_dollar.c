@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:00:21 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 17:17:40 by andrean          ###   ########.fr       */
+/*   Updated: 2025/04/04 14:56:23 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@ void	new_handle_dollar(char ***cmd, t_hashtable *env)
 			expanded = ft_expand((*cmd)[i], env);
 			if (expanded)
 			{
-				splitted = ft_split_stop(expanded, ' ');
+				splitted = ft_split_stop(expanded, ' ', 1);
 				new_cmd = ft_catchartab_stop(*cmd, splitted, i);
-				free(expanded);
 				*cmd = new_cmd;
 			}
 			else

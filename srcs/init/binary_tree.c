@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   binary_tree.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:49:34 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/27 17:37:47 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/04 16:51:42 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ void	ft_syntaxe_error(t_world *world)
 
 void	fill_tree(t_world **world)
 {
-	t_token	*token_lst;
+	t_token	**token_lst;
 
-	token_lst = tokenization_token((*world)->prompt);
-	if (!token_lst)
+	token_lst = &(*world)->tokenlist;
+	*token_lst = tokenization_token((*world)->prompt, token_lst);
+	if (!*token_lst)
 		return ;
-	(*world)->tokenlist = token_lst;
 	if (!ft_check_syntaxe((*world)->tokenlist))
 		ft_syntaxe_error(*world);
-	(*world)->tree = parse_token(token_lst);
+	(*world)->tree = parse_token(*token_lst, &(*world)->tree);
 }

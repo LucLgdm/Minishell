@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishellception.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:55:59 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/27 15:30:46 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:38:16 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	file_error(int file_type, char *path)
 {
 	ft_putstr_fd(path, 2);
+	free_all(get_world());
 	free(path);
 	if (file_type == 0)
 	{
@@ -34,26 +35,32 @@ void	file_error(int file_type, char *path)
 	exit(126);
 }
 
-int	ft_exec_file(char *path, char **args)
+static void	ft_child(char **paths, char **envp, char **args, char *path)
+{
+	ft_free_array(paths);
+	envp = ft_create_envp();
+	free_all(get_world());
+	if (!access(path, X_OK))
+		execve(path, args, envp);
+	ft_free_array(envp);
+	ft_free_array(args);
+	file_error(file_exists(path), path);
+}
+
+int	ft_exec_file(char *path, char **args, char **paths)
 {
 	pid_t	pid;
 	char	**envp;
 	int		retval;
 
+	envp = NULL;
+	if (!path)
+		return (ft_free_array(args), -1);
 	pid = fork();
 	if (pid == -1)
-	{
-		perror("");
-		return (1);
-	}
+		return (perror(""), 1);
 	if (pid == 0)
-	{
-		envp = ft_create_envp();
-		free_all(get_world());
-		if (!access(path, X_OK))
-			execve(path, args, envp);
-		file_error(file_exists(path), path);
-	}
+		ft_child(paths, envp, args, path);
 	ft_free_array(args);
 	free(path);
 	signal(SIGINT, SIG_IGN);
@@ -72,35 +79,37 @@ char	*extract_filename(t_ast *node)
 	file = NULL;
 	str = node->cmd[0];
 	if (ft_strcmp(str, "/") == 0)
-		return (ft_strdup_stop("/"));
+		return (ft_strdup("/"));
 	if (str)
 	{
 		while (str[++i])
 			;
 		while (str[--i] != '/')
 			;
-		file = ft_substr_stop(str, i, ft_strlen(str + i));
+		file = ft_substr(str, i, ft_strlen(str + i));
 	}
 	return (file);
 }
 
-int	ft_minishellception(t_ast *node)
+int	ft_minishellception(t_ast *node, char **paths)
 {
 	char	**args;
 	char	**tmp;
 	int		i;
 
 	i = 0;
-	tmp = ft_calloc_stop(sizeof(char *), get_arg_nb(node) + 1);
+	tmp = ft_calloc(sizeof(char *), get_arg_nb(node) + 1);
 	if (!tmp)
-		return (perror(""), 1);
+		return (-1);
 	tmp[0] = extract_filename(node);
 	if (!tmp[0])
-		return (perror(""), 1);
+		return (-1);
 	while (node->cmd[++i])
 		tmp[i] = node->cmd[i];
-	args = ft_arraycpy_stop(tmp);
+	args = ft_arraycpy(tmp);
 	free(tmp[0]);
 	free(tmp);
-	return (ft_exec_file(ft_strdup_stop(node->cmd[0]), args));
+	if (!args)
+		return (-1);
+	return (ft_exec_file(ft_strdup(node->cmd[0]), args, paths));
 }

@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:59:16 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/25 15:12:49 by andrean          ###   ########.fr       */
+/*   Updated: 2025/04/04 16:13:42 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_token	*ft_create_token(int len_token, char *prompt)
 	new_token = ft_calloc_stop(sizeof(t_token), 1);
 	if (!new_token)
 		return (NULL);
-	new_token->value = ft_substr_stop(prompt, 0, len_token);
+	new_token->value = ft_substr(prompt, 0, len_token);
 	if (!new_token->value)
 	{
 		free(new_token);

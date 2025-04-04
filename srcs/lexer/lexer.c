@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:25:40 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/27 14:18:34 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/04 16:17:55 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_token	*tokenization_token(char *prompt)
+t_token	*tokenization_token(char *prompt, t_token **token_lst)
 {
 	int		len_token;
-	t_token	*token_lst;
 
-	token_lst = NULL;
 	len_token = 0;
 	while (*prompt)
 	{
@@ -25,18 +23,18 @@ t_token	*tokenization_token(char *prompt)
 			prompt++;
 		else if (*prompt == '(')
 		{
-			token_lst = handle_parenthesis(&prompt, &token_lst);
+			*token_lst = handle_parenthesis(&prompt, token_lst);
 			if (!token_lst)
 				return (NULL);
 		}
 		else
 		{
 			len_token = token_len(prompt);
-			token_lst = fill_token(token_lst, prompt, len_token);
+			*token_lst = fill_token(*token_lst, prompt, len_token);
 			prompt += len_token;
 		}
 	}
-	return (token_lst);
+	return (*token_lst);
 }
 
 static int	ft_length_in_quote(char *ptr)

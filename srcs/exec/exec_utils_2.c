@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 09:01:52 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/28 12:50:14 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:44:18 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_strchr_outofquotes(char *str, char c)
 	return (NULL);
 }
 
-int	get_builtins(t_ast *node)
+int	get_builtins(t_ast *node, char **paths)
 {
 	if (!strcmp(node->cmd[0], "echo"))
 		return (ft_echo(node));
@@ -47,9 +47,9 @@ int	get_builtins(t_ast *node)
 	else if (!strcmp(node->cmd[0], "env"))
 		return (ft_env(node));
 	else if (!strcmp(node->cmd[0], "exit"))
-		return (ft_exit(node), 1);
+		return (ft_exit(node, paths), 1);
 	else if (ft_strchr(node->cmd[0], '/'))
-		return (ft_minishellception(node));
+		return (ft_minishellception(node, paths));
 	return (-2);
 }
 
@@ -65,6 +65,11 @@ int	exec_one_command(t_ast *node, char **paths)
 		return (0);
 	exit_status = get_builtins(node, paths);
 	if (exit_status == -1)
+	{
+		ft_free_array(paths);
+		return (exit_status);
+	}
+	if (exit_status == -2)
 		exit_status = create_process(node, paths);
 	return (exit_status);
 }
@@ -108,10 +113,10 @@ int	exec_tree(t_world *world, t_ast *node, int reset)
 			dup2(world->fd[0], STDIN_FILENO);
 			dup2(world->fd[1], STDOUT_FILENO);
 		}
+		ft_free_array(paths);
 		char_retval = ft_itoa_stop(retval);
 		ft_modify_value(world->hidden_vars, "?", char_retval, 0);
 		free(char_retval);
-		ft_free_array(paths);
 	}
 	if (g_stop)
 		retval = 130;

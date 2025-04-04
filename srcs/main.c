@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:39:11 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/27 15:03:16 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/04 16:53:38 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,23 @@ int	main(int argc, char **argv, char **envp)
 		*world = ft_calloc_stop(1, sizeof(t_world));
 		(*world)->fd[0] = dup(STDIN_FILENO);
 		(*world)->fd[1] = dup(STDOUT_FILENO);
-		(*world)->env = ft_create_env_hashtable(envp);
+		(*world)->tokenlist = NULL;
+		(*world)->tree = NULL;
+		ft_create_env_hashtable(envp, &(*world)->env);
 		(*world)->new_env = NULL;
-		(*world)->hidden_vars = ft_create_hidden();
+		ft_create_hidden(&(*world)->hidden_vars);
 		if (!(*world)->env)
-			(*world)->new_env = ft_create_new_env();
+			ft_create_new_env(&(*world)->new_env);
 		printf("\033[0;32mWelcome to Minishell!\033[0m\n");
 		prompt(*world);
 		free_all(world);
 	}
 	return (0);
+}
+
+t_world	**get_world(void)
+{
+	static t_world	*world;
+
+	return (&world);
 }

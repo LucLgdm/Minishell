@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:24:34 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 17:20:59 by andrean          ###   ########.fr       */
+/*   Updated: 2025/04/04 16:01:28 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ t_hashtable	*ft_modify_value(t_hashtable *ht, char *key, char *value, int add);
 t_hashtable	*ft_remove_element(t_hashtable *htable, char *key);
 
 // hashtable_env.c
-t_hashtable	*ft_create_env_hashtable(char **env);
-t_hashtable	*ft_create_hidden(void);
-t_hashtable	*ft_create_new_env(void);
+t_hashtable	*ft_create_env_hashtable(char **env, t_hashtable **env_hashtable);
+void		ft_create_hidden(t_hashtable **hashtable);
+void		ft_create_new_env(t_hashtable **hashtable);
 void		ft_env_to_hashtable(char **env, t_hashtable *env_hastable);
 char		*htab_element_to_str(t_element *element);
 

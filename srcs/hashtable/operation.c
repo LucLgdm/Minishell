@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:40:21 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/25 16:06:41 by andrean          ###   ########.fr       */
+/*   Updated: 2025/04/04 15:56:06 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_hashtable	*ft_add_element(t_hashtable **htable, char *key, char *value)
 	hash = ft_hash(key, (*htable)->length);
 	new_element = ft_create_element(key, value);
 	if (!new_element)
-		return (NULL);
+		stop_when_calloc_fail();
 	current = (*htable)->table[hash];
 	if (!current)
 		(*htable)->table[hash] = new_element;
@@ -60,38 +60,39 @@ t_hashtable	*ft_modify_value(t_hashtable *ht, char *key, char *value, int add)
 		return (ht);
 	value_tmp = element->value;
 	if (add)
-		element->value = ft_strjoin_stop(element->value, value);
+		element->value = ft_strjoin(element->value, value);
 	else
-		element->value = ft_strdup_stop(value);
+		element->value = ft_strdup(value);
 	free(value_tmp);
+	if (!element->value)
+		stop_when_calloc_fail();
 	return (ht);
 }
 
 t_hashtable	*ft_remove_element(t_hashtable *htable, char *key)
 {
-	t_element	**tmp_table;
-	t_element	*tmp;
-	t_element	*prev;
+	t_element	**tmp;
+	t_element	**prev;
 	int			index;
+	t_element	*next;
 
-	tmp_table = htable->table;
+	prev = NULL;
 	index = ft_hash(key, htable->length);
-	while (tmp_table[index])
+	tmp = &(htable->table[index]);
+	while (*tmp)
 	{
-		tmp = tmp_table[index];
-		while (tmp)
+		if (ft_strcmp((*tmp)->key, key) == 0)
 		{
-			if (ft_strcmp(tmp->key, key) == 0)
-			{
-				ft_free_element(&tmp);
-				if (tmp_table[index] != tmp)
-					prev->next = NULL;
-				break ;
-			}
-			prev = tmp;
-			tmp = tmp->next;
+			next = (*tmp)->next;
+			ft_free_element(tmp);
+			if (prev)
+				(*prev)->next = next;
+			else
+				htable->table[index] = next;
+			break ;
 		}
-		index = (index + 1) % htable->length;
+		prev = tmp;
+		tmp = &((*tmp)->next);
 	}
 	return (htable);
 }

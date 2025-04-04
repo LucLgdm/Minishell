@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+         #
+#    By: andrean <andrean@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/21 10:49:30 by lde-merc          #+#    #+#              #
-#    Updated: 2025/03/26 12:34:36 by lde-merc         ###   ########.fr        #
+#    Updated: 2025/04/04 15:58:51 by andrean          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,11 +63,13 @@ SRC_FILES = main.c \
 			$(EXEC_DIR)redirect.c \
 			$(EXEC_DIR)new_dollar.c \
 			$(EXEC_DIR)is_in_process.c\
+			$(EXEC_DIR)exec_error.c\
 			$(BUILTIN_DIR)builtins_utils.c\
 			$(BUILTIN_DIR)cd.c\
 			$(BUILTIN_DIR)echo.c\
 			$(BUILTIN_DIR)exit.c\
 			$(BUILTIN_DIR)export.c\
+			$(BUILTIN_DIR)export2.c\
 			$(BUILTIN_DIR)pwd.c\
 			$(BUILTIN_DIR)unset.c\
 			$(BUILTIN_DIR)env.c\
@@ -75,7 +77,8 @@ SRC_FILES = main.c \
 			$(LIBFT_STOP_DIR)libft_stop.c\
 			$(LIBFT_STOP_DIR)ft_split_stop.c\
 			$(LIBFT_STOP_DIR)itoa_stop.c\
-			$(LIBFT_STOP_DIR)ft_arraycpy_stop.c
+			$(LIBFT_STOP_DIR)ft_arraycpy_stop.c\
+			$(LIBFT_STOP_DIR)ft_catchartab_stop.c
 
 
 # Transforme chaque fichier source en un fichier objet dans $(OBJ_DIR)

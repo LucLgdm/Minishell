@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_stop.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:58:38 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/26 11:11:35 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:59:52 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ char	*ft_strdup_stop(const char *s);
 void	ft_strncat_stop(char **dest, const char *src, size_t n);
 char	*ft_substr_stop(char const *s, unsigned int start, size_t len);
 char	*ft_itoa_stop(int n);
-char	**ft_split_stop(char const *s, char c);
-char	**ft_arraycpy_stop(char **tab);
+char	**ft_split_stop(char const *s, char c, int free_s);
+char	**ft_arraycpy(char **tab);
+void	stop_when_calloc_fail(void);
 
 #endif

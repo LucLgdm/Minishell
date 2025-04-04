@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:26:44 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/27 15:01:15 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/04 11:48:59 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,50 @@
 
 extern int	g_stop;
 
-static void	ft_command_not_found(char **cmd, char **paths)
+static int	ft_final_exec(char **cmd, char **paths, char **envp)
 {
-	if (ft_strchr(cmd[0], '/') || !paths)
-		ft_putstr_fd("no such file or directory: ", 2);
-	else
-		ft_putstr_fd("command not found: ", 2);
-	ft_putstr_fd(cmd[0], 2);
-	ft_putstr_fd("\n", 2);
+	char	*path;
+	int		i;
+
+	i = -1;
+	while (paths[++i])
+	{
+		path = ft_strjoin(paths[i], cmd[0]);
+		if (!path)
+			return (-1);
+		if (!access(path, X_OK))
+		{
+			ft_free_array(paths);
+			execve(path, cmd, envp);
+		}
+		free(path);
+	}
+	return (1);
 }
 
 void	ft_execcommand(t_ast *node, char **paths)
 {
 	char	**envp;
 	char	**cmd;
-	char	*path;
-	int		i;
+	int		retval;
 
-	cmd = ft_arraycpy_stop(node->cmd);
-	i = -1;
+	retval = 0;
+	cmd = ft_arraycpy(node->cmd);
 	envp = ft_create_envp();
 	free_all(get_world());
-	if (paths)
+	if (!envp || !cmd)
 	{
-		while (paths[++i])
-		{
-			path = ft_strjoin_stop(paths[i], cmd[0]);
-			if (!access(path, X_OK))
-			{
-				ft_free_array(paths);
-				execve(path, cmd, envp);
-			}
-			free(path);
-		}
+		ft_putstr_fd("malloc failed\n", 2);
+		ft_free_array(envp);
+		ft_free_array(cmd);
+		exit_process(-1, paths);
 	}
-	ft_command_not_found(cmd, paths);
+	if (paths)
+		retval = ft_final_exec(cmd, paths, envp);
+	if (retval == -1)
+		ft_putstr_fd("malloc failed\n", 2);
+	if (retval == 1)
+		ft_command_not_found(cmd, paths);
 	ft_free_for_exec(cmd, envp);
 	exit_process(127, paths);
 }
@@ -73,7 +82,7 @@ pid_t	create_process(t_ast *node, char **paths)
 
 static void	handle_process(int fd_0, int fd_1, t_ast *node, char **paths)
 {
-	int		*is_process;
+	int	*is_process;
 
 	is_process = is_in_process();
 	*is_process = 0;

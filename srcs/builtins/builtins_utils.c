@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:35:41 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/25 16:20:21 by andrean          ###   ########.fr       */
+/*   Updated: 2025/04/04 11:58:58 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,12 @@ int	get_arg_nb(t_ast *node)
 	return (i);
 }
 
-static void	ft_fill_dir(char *dir)
+static void	ft_fill_dir(char **dir)
 {
-	dir = ft_calloc_stop(255, 1);
-	dir = getcwd(dir, 255);
+	*dir = ft_calloc(255, 1);
+	if (!(*dir))
+		return ;
+	*dir = getcwd(*dir, 255);
 }
 
 int	sub_file_exists(char *path, char *dir)
@@ -46,6 +48,8 @@ int	sub_file_exists(char *path, char *dir)
 	DIR				*opened;
 	struct dirent	*entry;
 
+	if (!dir)
+		return (-1);
 	opened = opendir(dir);
 	if (!opened)
 		return (no_open(errno));
@@ -72,11 +76,11 @@ int	file_exists(char *path_name)
 		return (4);
 	if (ft_strrchr(path_name, '/'))
 	{
-		dir = ft_substr_stop(path_name, 0,
+		dir = ft_substr(path_name, 0,
 				ft_strrchr(path_name, '/') - path_name);
 		path_name = ft_strrchr(path_name, '/') + 1;
 	}
 	else
-		ft_fill_dir(dir);
+		ft_fill_dir(&dir);
 	return (sub_file_exists(path_name, dir));
 }

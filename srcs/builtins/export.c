@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:29:58 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/28 13:12:09 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:05:51 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	export_error(char *key)
 {
+	if (!key)
+		return (-1);
 	ft_putstr_fd("export: '", 2);
 	ft_putstr_fd(key, 2);
 	ft_putstr_fd("': not a valid identifier\n", 2);
@@ -25,6 +27,8 @@ int	check_key(char *key)
 	int	i;
 
 	i = 0;
+	if (!key)
+		return (1);
 	if (ft_isdigit(key[i]))
 		return (1);
 	while (key[i] && (ft_isalnum(key[i]) || key[i] == '_'))
@@ -66,18 +70,13 @@ int	export_one(char *str)
 	if (!equalsign)
 		key = str;
 	else
-	{
-		key = ft_substr(str, 0, equalsign - str);
-		value = ft_substr(equalsign, 1, ft_strlen(equalsign + 1));
-		if (!value || !key)
-			return (safe_free(key), safe_free(value), -1);
-	}
+		get_key_value(&key, &value, equalsign, str);
 	if (check_key(key))
 		return (export_error(key));
 	if (str == key)
 		return (0);
 	if (ft_get_element(env, key))
-		ft_remove_element(env, key);
+		env = ft_remove_element(env, key);
 	delete_quotes(value);
 	env = ft_add_element(&env, key, value);
 	if (!env)
@@ -91,7 +90,7 @@ int	ft_export(t_ast *node)
 	int	count;
 	int	retval;
 	int	error;
-	
+
 	error = 0;
 	arg_nb = get_arg_nb(node);
 	if (arg_nb == 1)

@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:49:25 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/21 17:07:35 by andrean          ###   ########.fr       */
+/*   Updated: 2025/04/04 15:26:04 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,35 +75,6 @@ char	*ft_strdup_stop(const char *s)
 	}
 	cpy[i] = '\0';
 	return (cpy);
-}
-
-char	**ft_catchartab_stop(char **tab1, char **tab2, int pos)
-{
-	int		n;
-	int		m;
-	char	**output;
-	int		i;
-
-	n = ft_arraylen(tab1);
-	m = ft_arraylen(tab2);
-	output = ft_calloc_stop((n + m + 1), sizeof(char *));
-	if (!output)
-		return (NULL);
-	i = -1;
-	while (++i < pos)
-		output[i] = ft_strdup_stop(tab1[i]);
-	i = -1;
-	while (++i < m)
-		output[pos + i] = ft_strdup_stop(tab2[i]);
-	i = pos + 1;
-	while (i < n)
-	{
-		output[i + m - 1] = ft_strdup_stop(tab1[i]);
-		i++;
-	}
-	ft_free_array(tab1);
-	ft_free_array(tab2);
-	return (output);
 }
 
 char	*ft_strjoin_stop(char const *s1, char const *s2)

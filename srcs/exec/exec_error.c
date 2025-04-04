@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   exec_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 16:26:53 by andrean           #+#    #+#             */
-/*   Updated: 2025/04/04 14:05:51 by andrean          ###   ########.fr       */
+/*   Created: 2025/04/04 11:47:46 by andrean           #+#    #+#             */
+/*   Updated: 2025/04/04 11:49:11 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_unset(t_ast *node)
+void	ft_command_not_found(char **cmd, char **paths)
 {
-	t_hashtable	*env;
-	int			arg_nb;
-	int			count;
-
-	env = (*get_world())->env;
-	if (!env)
-		env = (*get_world())->new_env;
-	arg_nb = get_arg_nb(node);
-	count = 0;
-	while (++count < arg_nb)
-		env = ft_remove_element(env, node->cmd[count]);
-	return (0);
+	if (ft_strchr(cmd[0], '/') || !paths)
+		ft_putstr_fd("no such file or directory: ", 2);
+	else
+		ft_putstr_fd("command not found: ", 2);
+	ft_putstr_fd(cmd[0], 2);
+	ft_putstr_fd("\n", 2);
 }

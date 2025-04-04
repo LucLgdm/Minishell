@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:24:49 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/27 17:02:05 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/04 14:56:08 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,11 +116,10 @@ char	**path_tab(t_hashtable *hashtable)
 		path = ft_get_element(hashtable, "PATH")->value;
 	if (!path)
 		return (NULL);
-	tab = ft_split_stop(path, ':');
-	if (!tab)
-		return (NULL);
 	if (!hashtable && !ft_get_element((*get_world())->new_env, "PATH"))
-		free(path);
+		tab = ft_split_stop(path, ':', 1);
+	else
+		tab = ft_split_stop(path, ':', 0);
 	join_tab(tab);
 	return (tab);
 }

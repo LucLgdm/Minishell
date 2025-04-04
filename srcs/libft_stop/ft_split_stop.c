@@ -6,7 +6,7 @@
 /*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:23:21 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/21 16:57:14 by andrean          ###   ########.fr       */
+/*   Updated: 2025/04/04 15:17:08 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,11 @@ static int	ft_countword(char *s, char c)
 	return (count);
 }
 
-static void	ft_calcul(char *s, char c, char **tab)
+static char	**ft_calcul(char *s, char c, char ***tab, int i)
 {
-	int		i;
 	int		k;
 	size_t	size;
 
-	i = 0;
 	k = 0;
 	while (s[i])
 	{
@@ -67,34 +65,42 @@ static void	ft_calcul(char *s, char c, char **tab)
 			ft_skip_quotes(s, &size, s[i]);
 		while (s[i + size] != c && s[i + size])
 			size++;
-		tab[k] = (char *)ft_calloc_stop((size + 1), sizeof(char));
-		if (!tab[k])
-			return ;
-		ft_memcpy(tab[k], s + i, size);
-		tab[k][size] = '\0';
+		(*tab)[k] = (char *)ft_calloc((size + 1), sizeof(char));
+		if (!(*tab)[k])
+			return (ft_free_array((*tab)), (*tab) = NULL);
+		ft_memcpy((*tab)[k], s + i, size);
+		(*tab)[k][size] = '\0';
 		k++;
 		i += size;
 	}
+	return (NULL);
 }
 
-char	**ft_split_stop(char const *s, char c)
+char	**ft_split_stop(char const *s, char c, int free_s)
 {
 	char	**tab;
 	int		n_word;
 
 	if (s[0] == '\0')
 	{
-		tab = (char **)ft_calloc_stop(1, sizeof(char *));
-		if (!tab)
+		tab = (char **)ft_calloc(1, sizeof(char *));
+		if (!tab && free_s)
+			return (free((char *)s), NULL);
+		else if (!tab)
 			return (NULL);
 		tab[0] = NULL;
 		return (tab);
 	}
 	n_word = ft_countword((char *)s, c);
-	tab = (char **)ft_calloc_stop((n_word + 1), sizeof(char *));
-	if (!tab)
+	tab = (char **)ft_calloc((n_word + 1), sizeof(char *));
+	if (!tab && free_s)
+		return (free((char *)s), NULL);
+	else if (!tab)
 		return (NULL);
-	ft_calcul((char *)s, c, tab);
-	tab[n_word] = NULL;
+	ft_calcul((char *)s, c, &tab, 0);
+	if (free_s)
+		free((char *)s);
+	if (!tab)
+		stop_when_calloc_fail();
 	return (tab);
 }

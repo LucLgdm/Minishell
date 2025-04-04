@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/27 17:01:15 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/04 09:36:48 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	free_all(t_world **world);
 void	exit_process(int exit_status, char **paths);
 void	ft_syntaxe_error(t_world *world);
 void	ft_free_for_exec(char **cmd, char **envp);
+void	safe_free(char *str);
 
 // print.c
 void	print_tab(char **tab);

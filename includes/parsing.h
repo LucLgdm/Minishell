@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:30:48 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/27 16:28:54 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/04 16:46:11 by andrean          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,15 @@ typedef struct s_ast
 }	t_ast;
 
 // Parser.c
-t_ast	*parse_token(t_token *token);
-void	ft_handle_redir(t_redir **redir, t_token **token, t_ast *node);
+t_ast	*parse_token(t_token *token, t_ast **node);
+void	ft_handle_redir(t_redir **redir, t_token **token, t_ast **node);
 // void	ft_create_tree(t_ast **root, t_token *token);
 t_token	*find_last_logical_operator(t_token *token);
 t_token	*find_last_pipe(t_token *token);
-t_ast	*parse_pipes(t_token *token);
-t_ast	*parse_simple_command(t_token *token);
+t_ast	*parse_pipes(t_token *token, t_ast **node);
+t_ast	*parse_simple_command(t_token *token, t_ast **node);
 t_token	*split_token(t_token *token, t_token *op, t_token *head, t_token *tail);
-t_ast	*parse_parentheses(t_token *token);
+t_ast	*parse_parentheses(t_token *token, t_ast **node);
 
 // Node_cmd.c
 t_ast	*ft_create_cmd_solo(t_token *token);
