@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environement.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:17:24 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/04/04 16:09:32 by andrean          ###   ########.fr       */
+/*   Updated: 2025/04/07 14:45:30 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,19 +87,22 @@ char	**ft_sub_envp(int *i, int *j, t_element *element, char **envp)
 
 	while (element)
 	{
-		newline = ft_calloc(sizeof(char *), 2);
-		if (!newline)
-			return (NULL);
-		str = htab_element_to_str(element);
-		if (!str)
-			return (ft_free_array(newline), NULL);
-		newline[0] = str;
-		envp = ft_catchartab(envp, newline, ft_arraylen(envp));
-		if (!envp)
-			return (NULL);
+		if (element->value)
+		{
+			newline = ft_calloc(sizeof(char *), 2);
+			if (!newline)
+				return (NULL);
+			str = htab_element_to_str(element);
+			if (!str)
+				return (ft_free_array(newline), NULL);
+			newline[0] = str;
+			envp = ft_catchartab(envp, newline, ft_arraylen(envp));
+			if (!envp)
+				return (NULL);
 		(*i)++;
 		if (element->next)
 			(*j)--;
+		}
 		element = element->next;
 	}
 	return (envp);
@@ -127,7 +130,7 @@ char	**ft_create_envp(void)
 		envp = ft_sub_envp(&i, &j, element, envp);
 		if (!envp)
 			return (NULL);
-		if (!env->table[i + j])
+		if (!env->table[i + j] || !env->table[i + j]->value)
 			j++;
 	}
 	return (envp);

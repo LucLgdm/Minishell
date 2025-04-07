@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/04/04 09:36:48 by andrean          ###   ########.fr       */
+/*   Updated: 2025/04/07 13:57:36 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	safe_free(char *str);
 void	print_tab(char **tab);
 void	print_token(t_token *token_lst, int i);
 void	print_tree(t_ast *root, int i);
+void	ft_print_export(t_hashtable *env);
 
 // exec
 int		exec_tree(t_world *world, t_ast *node, int reset);

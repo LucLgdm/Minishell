@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:29:58 by andrean           #+#    #+#             */
-/*   Updated: 2025/04/04 14:05:51 by andrean          ###   ########.fr       */
+/*   Updated: 2025/04/07 14:27:41 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,21 @@ int	export_one(char *str)
 	if (!env)
 		env = (*get_world())->new_env;
 	equalsign = ft_strchr(str, '=');
+	value = NULL;
 	if (!equalsign)
-		key = str;
+		key = ft_strdup(str);
 	else
 		get_key_value(&key, &value, equalsign, str);
 	if (check_key(key))
 		return (export_error(key));
-	if (str == key)
-		return (0);
 	if (ft_get_element(env, key))
 		env = ft_remove_element(env, key);
-	delete_quotes(value);
+	if(equalsign)
+		delete_quotes(value);
 	env = ft_add_element(&env, key, value);
 	if (!env)
-		return (free(key), free(value), -1);
-	return (free(key), free(value), 0);
+		return (safe_free(key), safe_free(value), -1);
+	return (safe_free(key), safe_free(value), 0);
 }
 
 int	ft_export(t_ast *node)
@@ -95,7 +95,7 @@ int	ft_export(t_ast *node)
 	arg_nb = get_arg_nb(node);
 	if (arg_nb == 1)
 	{
-		ft_print_env((*get_world())->env);
+		ft_print_export((*get_world())->env);
 		return (0);
 	}
 	count = 0;

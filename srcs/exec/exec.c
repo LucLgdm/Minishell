@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:26:44 by andrean           #+#    #+#             */
-/*   Updated: 2025/04/04 11:48:59 by andrean          ###   ########.fr       */
+/*   Updated: 2025/04/07 14:46:03 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,10 @@ int	ft_do_the_pipe(t_ast *node, char **paths)
 	int		*is_process;
 
 	if (pipe(fd) == -1)
-		perror("");
+		return (perror(""), -4);
 	pid[0] = fork();
 	if (pid[0] == -1)
-		perror("");
+		return (perror(""), -3);
 	if (pid[0] == 0)
 		handle_process(fd[0], fd[1], node, paths);
 	close(fd[1]);

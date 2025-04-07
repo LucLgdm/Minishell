@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable_creation.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 16:35:36 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/04/04 15:39:39 by andrean          ###   ########.fr       */
+/*   Updated: 2025/04/07 14:08:20 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ t_hashtable	*ft_create_hashtable(int length)
 	if (!new_hashtable)
 		return (NULL);
 	new_hashtable->length = length;
-	new_hashtable->table = (t_element **)ft_calloc(sizeof(t_element *),
-			length);
+	new_hashtable->table = (t_element **)ft_calloc(sizeof(t_element *), length);
 	if (!new_hashtable->table)
 	{
 		free(new_hashtable);
@@ -42,11 +41,15 @@ t_element	*ft_create_element(char *key, char *value)
 	if (!new_element)
 		return (NULL);
 	new_element->key = ft_strdup(key);
+	new_element->value = NULL;
 	if (!new_element->key)
 		return (free(new_element), NULL);
-	new_element->value = ft_strdup(value);
-	if (!new_element->value)
-		return (free(new_element), free(key), NULL);
+	if (value)
+	{
+		new_element->value = ft_strdup(value);
+		if (!new_element->value)
+			return (free(new_element), free(key), NULL);
+	}
 	new_element->next = NULL;
 	return (new_element);
 }

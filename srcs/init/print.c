@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:59:21 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/20 09:20:06 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/07 14:01:30 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	print_token(t_token *token_lst, int i)
 	printf("\n");
 }
 
-void	ft_print_env(t_hashtable *env)
+void	ft_print_export(t_hashtable *env)
 {
 	int			i;
 	t_element	*tmp;
@@ -111,7 +111,10 @@ void	ft_print_env(t_hashtable *env)
 		tmp = env->table[i];
 		while (tmp)
 		{
-			ft_printf("%s=%s\n", tmp->key, tmp->value);
+			if (tmp->value)
+				ft_printf("export %s=\"%s\"\n", tmp->key, tmp->value);
+			else
+				ft_printf("export %s\n", tmp->key);
 			tmp = tmp->next;
 		}
 	}

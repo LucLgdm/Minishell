@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:18:07 by andrean           #+#    #+#             */
-/*   Updated: 2025/03/20 18:02:27 by andrean          ###   ########.fr       */
+/*   Updated: 2025/04/07 14:11:32 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	ft_env(t_ast *node)
 		tmp = env->table[i];
 		while (tmp)
 		{
-			ft_printf("%s=%s\n", tmp->key, tmp->value);
+			if (tmp->value)
+				ft_printf("%s=%s\n", tmp->key, tmp->value);
 			tmp = tmp->next;
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:41:04 by andrean           #+#    #+#             */
-/*   Updated: 2025/04/04 17:06:54 by andrean          ###   ########.fr       */
+/*   Updated: 2025/04/07 13:57:26 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int			ft_unset(t_ast *node);
 int			ft_env(t_ast *node);
 int			ft_minishellception(t_ast *node, char **paths);
 
-void		ft_print_env(t_hashtable *env);
 long long	exit_long(t_ast *node, long long *exit_value);
 
 // builtins_utils.c

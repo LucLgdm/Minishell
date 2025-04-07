@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_token2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 15:48:26 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/04/04 16:52:13 by andrean          ###   ########.fr       */
+/*   Updated: 2025/04/07 13:02:44 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ t_token	*handle_parenthesis(char **prompt, t_token **token_lst)
 			p_count--;
 	}
 	if (p_count != 0)
-		return (ft_putstr_fd("syntax error\n", 2), NULL);
+		return (ft_putstr_fd("Syntax error\n", 2), NULL);
 	sub_prompt = ft_substr_stop(*prompt, 1, i - 2);
 	(*token_lst) = fill_token(*token_lst, "(", 1);
 	tmp = *token_lst;
 	while (tmp->next)
 		tmp = tmp->next;
-	tmp->sub_token = tokenization_token(sub_prompt, token_lst);
+	tmp->sub_token = tokenization_token(sub_prompt, &tmp->sub_token);
 	free(sub_prompt);
 	*prompt += i;
 	return (*token_lst);
