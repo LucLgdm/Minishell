@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:15:58 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/04/07 13:57:36 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/07 15:18:20 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	prompt(t_world *world);
 void	handle_signal(int sig);
 void	handle_signal_afterprompt(int sig);
 void	handle_signal_for_stop(int sig);
+void	handle_sigquit(int sig);
 t_world	**get_world(void);
 
 // binary_tree

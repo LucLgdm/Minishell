@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:29:58 by andrean           #+#    #+#             */
-/*   Updated: 2025/04/07 14:27:41 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:05:28 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	export_one(char *str)
 		return (export_error(key));
 	if (ft_get_element(env, key))
 		env = ft_remove_element(env, key);
-	if(equalsign)
+	if (equalsign)
 		delete_quotes(value);
 	env = ft_add_element(&env, key, value);
 	if (!env)

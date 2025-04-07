@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:59:16 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/04/07 15:08:26 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:06:29 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ t_token	*ft_create_token(int len_token, char *prompt)
 		return (NULL);
 	}
 	new_token->token_type = ft_get_token_type(new_token->value);
-	
 	new_token->prev = NULL;
 	new_token->next = NULL;
 	new_token->sub_token = NULL;

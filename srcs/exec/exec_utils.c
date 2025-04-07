@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:24:49 by andrean           #+#    #+#             */
-/*   Updated: 2025/04/04 14:56:08 by andrean          ###   ########.fr       */
+/*   Updated: 2025/04/07 15:49:15 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int	ft_check_for_stop(pid_t *pid, int pid_nb)
 	pid_t	endpid;
 
 	intab[0] = 0;
+	if (*is_in_process())
+		signal(SIGQUIT, handle_sigquit);
 	while (g_stop == 0)
 	{
 		endpid = waitpid(-1, &intab[2], WNOHANG);
@@ -78,6 +80,9 @@ int	ft_check_for_stop(pid_t *pid, int pid_nb)
 	}
 	if (intab[0] != pid_nb)
 		kill_to_stop(pid, pid_nb, intab, endpid);
+	if (g_stop == 1)
+		intab[1] = 130;
+	signal(SIGQUIT, SIG_IGN);
 	return (intab[1]);
 }
 

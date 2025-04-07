@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:17:24 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/04/07 14:45:30 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:06:06 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	prompt(t_world *world)
 
 t_hashtable	*ft_create_env_hashtable(char **env, t_hashtable **env_hashtable)
 {
-	int			len_env;
-	char		*shlvl;
+	int		len_env;
+	char	*shlvl;
 
 	len_env = ft_arraylen(env);
 	if (len_env == 0)
@@ -99,9 +99,9 @@ char	**ft_sub_envp(int *i, int *j, t_element *element, char **envp)
 			envp = ft_catchartab(envp, newline, ft_arraylen(envp));
 			if (!envp)
 				return (NULL);
-		(*i)++;
-		if (element->next)
-			(*j)--;
+			(*i)++;
+			if (element->next)
+				(*j)--;
 		}
 		element = element->next;
 	}

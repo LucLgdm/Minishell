@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 08:31:44 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/03/27 14:38:04 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:06:22 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,15 @@
 
 volatile int	g_stop = 0;
 
-int	ft_stop(void)
+void	handle_sigquit(int sig)
 {
-	if (g_stop)
-		return (1);
-	return (0);
+	if (sig == SIGQUIT)
+	{
+		ft_putstr_fd("Quitted", 2);
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+	}
 }
 
 void	handle_signal_afterprompt(int sig)
@@ -28,10 +32,15 @@ void	handle_signal_afterprompt(int sig)
 	world = (*get_world());
 	if (sig == SIGINT)
 	{
-		g_stop = 1;
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
+		if (*is_in_process())
+		{
+			g_stop = 1;
+			write(1, "\n", 1);
+			rl_on_new_line();
+			rl_replace_line("", 0);
+		}
+		else
+			g_stop = 1;
 	}
 }
 
@@ -60,6 +69,7 @@ void	handle_signal(int sig)
 	if (sig == SIGINT)
 	{
 		g_stop = 1;
+		ft_modify_value((*get_world())->hidden_vars, "?", "130", 0);
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);

@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:26:44 by andrean           #+#    #+#             */
-/*   Updated: 2025/04/07 14:46:03 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/07 15:46:26 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ pid_t	create_process(t_ast *node, char **paths)
 		is_process = is_in_process();
 		*is_process = 0;
 		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_DFL);
 		ft_execcommand(node, paths);
 	}
 	return (ft_check_for_stop(pid, 1));
