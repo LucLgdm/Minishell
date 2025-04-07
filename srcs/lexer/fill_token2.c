@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 15:48:26 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/04/07 13:02:44 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/07 14:55:29 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_token	*handle_parenthesis(char **prompt, t_token **token_lst)
 			p_count--;
 	}
 	if (p_count != 0)
-		return (ft_putstr_fd("Syntax error\n", 2), NULL);
+		ft_syntaxe_error(*get_world());
 	sub_prompt = ft_substr_stop(*prompt, 1, i - 2);
 	(*token_lst) = fill_token(*token_lst, "(", 1);
 	tmp = *token_lst;

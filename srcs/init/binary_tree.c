@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   binary_tree.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 09:49:34 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/04/04 16:51:42 by andrean          ###   ########.fr       */
+/*   Updated: 2025/04/07 15:09:57 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static bool	ft_check_syntaxe(t_token *token_lst)
 void	ft_syntaxe_error(t_world *world)
 {
 	ft_putstr_fd("Syntax error\n", 2);
+	ft_modify_value(world->hidden_vars, "?", "2", 0);
 	ft_free_token(&world->tokenlist, 1);
 	ft_free_ast(&world->tree);
 	free(world->prompt);

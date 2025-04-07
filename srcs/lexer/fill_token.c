@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrean <andrean@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:59:16 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/04/04 16:13:42 by andrean          ###   ########.fr       */
+/*   Updated: 2025/04/07 15:08:26 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ static int	ft_get_token_type(char *value)
 		return (TOKEN_ANDAND);
 	else if (ft_strncmp(value, "(", 2) == 0)
 		return (TOKEN_PARENTHESES);
+	else if (ft_strncmp(value, "&", 2) == 0)
+	{
+		ft_syntaxe_error(*get_world());
+		return (0);
+	}
 	else
 		return (TOKEN_WORD);
 }
@@ -48,9 +53,15 @@ t_token	*ft_create_token(int len_token, char *prompt)
 		return (NULL);
 	}
 	new_token->token_type = ft_get_token_type(new_token->value);
+	
 	new_token->prev = NULL;
 	new_token->next = NULL;
 	new_token->sub_token = NULL;
+	if (new_token->token_type == TOKEN_ANDAND && prompt[2] == '&')
+	{
+		ft_free_token(&new_token, 0);
+		ft_syntaxe_error(*get_world());
+	}
 	return (new_token);
 }
 

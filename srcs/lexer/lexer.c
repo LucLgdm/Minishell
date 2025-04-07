@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:25:40 by lde-merc          #+#    #+#             */
-/*   Updated: 2025/04/07 13:03:07 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/07 15:07:15 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	token_len(char *input)
 			&& input[1] == '>') || (input[0] == '|' && input[1] == '|')
 		|| (input[0] == '&' && input[1] == '&'))
 		length = 2;
-	else if (*input == '|' || *input == '<' || *input == '>')
+	else if (*input == '|' || *input == '<' || *input == '>' || *input == '&')
 		length = 1;
 	else
 	{
