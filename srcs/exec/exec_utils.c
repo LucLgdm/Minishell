@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:24:49 by andrean           #+#    #+#             */
-/*   Updated: 2025/04/07 15:49:15 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:53:25 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	ft_redirect(t_ast *node)
 			return (0);
 	}
 	if (final_fdin)
-		if (dup2(final_fdin, STDIN_FILENO) == -1)
-			return (perror(""), 0);
+		if (dup2(final_fdin, STDIN_FILENO) != -1)
+			close(final_fdin);
 	return (1);
 }
 

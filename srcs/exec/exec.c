@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:26:44 by andrean           #+#    #+#             */
-/*   Updated: 2025/04/07 15:46:26 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:07:59 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_execcommand(t_ast *node, char **paths)
 	char	**cmd;
 	int		retval;
 
-	retval = 0;
+	retval = 1;
 	cmd = ft_arraycpy(node->cmd);
 	envp = ft_create_envp();
 	free_all(get_world());
