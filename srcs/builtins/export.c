@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 15:29:58 by andrean           #+#    #+#             */
-/*   Updated: 2025/04/07 16:05:28 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/09 12:24:24 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	check_key(char *key)
 	int	i;
 
 	i = 0;
-	if (!key)
+	if (!key || !*key)
 		return (1);
 	if (ft_isdigit(key[i]))
 		return (1);
