@@ -6,7 +6,7 @@
 /*   By: lde-merc <lde-merc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 11:24:49 by andrean           #+#    #+#             */
-/*   Updated: 2025/04/07 16:53:25 by lde-merc         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:33:12 by lde-merc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,22 +109,18 @@ char	**path_tab(t_hashtable *hashtable)
 	path = NULL;
 	if (!hashtable)
 	{
-		if (!ft_get_element((*get_world())->new_env, "PATH"))
-		{
-			path = "/usr/local/sbin:/usr/local/bin";
-			path = ft_strjoin_stop(path, ":/usr/sbin:/usr/bin:/sbin:/bin");
-		}
-		else
+		if (ft_get_element((*get_world())->new_env, "PATH"))
 			path = ft_get_element((*get_world())->new_env, "PATH")->value;
+		else if (ft_get_element((*get_world())->hidden_vars, "PATH"))
+			path = ft_get_element((*get_world())->hidden_vars, "PATH")->value;
 	}
 	else if (ft_get_element(hashtable, "PATH"))
 		path = ft_get_element(hashtable, "PATH")->value;
+	else if (ft_get_element((*get_world())->hidden_vars, "PATH"))
+		path = ft_get_element((*get_world())->hidden_vars, "PATH")->value;
 	if (!path)
 		return (NULL);
-	if (!hashtable && !ft_get_element((*get_world())->new_env, "PATH"))
-		tab = ft_split_stop(path, ':', 1);
-	else
-		tab = ft_split_stop(path, ':', 0);
+	tab = ft_split_stop(path, ':', 0);
 	join_tab(tab);
 	return (tab);
 }
